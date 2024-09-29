@@ -1,0 +1,4 @@
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+-- lazyvim 并没有添加自己的快捷键，他所有的快捷键都是默认的，我们可以自己添加自己的快捷键

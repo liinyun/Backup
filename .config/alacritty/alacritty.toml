@@ -1,0 +1,47 @@
+[env]
+TERM = "xterm-256color"
+
+[window]
+# 这个是将标题栏隐藏
+decorations = "buttonless"
+# 这两个控制的是文本的内容和窗口边缘的距离
+padding.x = 10
+padding.y = 10
+
+dynamic_padding = false
+
+# 这个是不透明度
+opacity = 0.7
+# 这是是毛玻璃，或者叫磨砂
+blur = true
+# 这个调整的是打开的时候的窗口大小
+dimensions.columns = 100
+dimensions.lines = 30
+# 这个配置是用于macos 中的，将 option 当作alt，
+# 如果是linux 的话，是没有这个问题的
+# option_as_alt = "Both"
+
+[font]
+# 这个是字体的设置
+normal.family = "MesloLGLDZ Nerd Font"
+bold.family = "MesloLGLDZ Nerd Font"
+italic.family = "MesloLGLDZ Nerd Font"
+bold_italic.family = "MesloLGLDZ Nerd Font"
+size = 16
+# 说实话，我也不是很确定这个配置是干什么用的
+builtin_box_drawing = true
+
+[scrolling]
+# 这里控制的是最大的scrollback 行数，当然是越多越好了，不差这点空间
+history = 100000
+# 每次向上滚动鼠标的时候会移动多少行
+multiplier = 3
+
+
+[terminal]
+# 可以复制粘贴了
+osc52 = "CopyPaste"
+
+[cursor]
+style.shape = "Beam"
+style.blinking = "On"
