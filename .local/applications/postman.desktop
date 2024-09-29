@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Postman
+Comment=Postman
+Exec=/home/linya/applications/PostmanAgent/'Postman Agent'
+Path=/home/linya/applications/PostmanAgent
+Icon=/home/linya/applications/PostmanAgent/app/icons/icon_128x128.png
+Terminal=false
+Type=Application
+Categories=Application;Develop;
+Name[zh_CN]=Postman
+Comment[zh_CN]=Postman
+

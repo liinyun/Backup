@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Dead_Cells
+Comment=Dead_Cells Game 
+Exec=/home/linya/applications/Dead_Cells/start.sh
+Path=/home/linya/applications/Dead_Cells
+Icon=/home/linya/applications/Dead_Cells/support/icon.png
+Terminal=false
+Type=Application
+Categories=Application;Office;
+Name[zh_CN]=Dead_Cells
+Comment[zh_CN]=Dead_Cells
+

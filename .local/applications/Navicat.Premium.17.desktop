@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Development
+Comment=Database Development Tool
+Exec=/home/linya/applications/navicat17-premium-en-x86_64.AppImage
+Icon=/home/linya/.local/share/icons/hicolor/256x256/apps/Navicat Premium 17.png
+Name=Navicat Premium 17
+StartupNotify=true
+StartupWMClass=Navicat Premium
+Terminal=false
+Type=Application

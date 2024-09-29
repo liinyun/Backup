@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=/home/linya/applications/navicat17-premium-en-x86_64.AppImage -uri %u
+MimeType=x-scheme-handler/navicat;x-scheme-handler/navicat+mysql;x-scheme-handler/navicat+pgsql;x-scheme-handler/navicat+mssql;x-scheme-handler/navicat+ora;x-scheme-handler/navicat+sqlite;x-scheme-handler/navicat+mariadb;x-scheme-handler/navicat+mongodb;x-scheme-handler/navicat+redis;x-scheme-handler/navicat+biworkspace;x-scheme-handler/navicat+modelworkspace;x-scheme-handler/navicatbi;x-scheme-handler/navicatmodel;
+Name=Navicat Premium 17
+NoDisplay=true
+StartupNotify=true
+StartupWMClass=Navicat Premium
+Terminal=false
+Type=Application
