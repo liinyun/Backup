@@ -1,0 +1,24 @@
+history: 100000
+multiplier: 3
+terminal:
+  osc52: CopyPaste
+cursor:
+  style:
+    shape: Beam
+    blinking: 'On'
+keyboard:
+  bindings:
+    - key: F11
+      action: ToggleFullscreen
+colors:
+  normal:
+    green: '#31748f'
+  bright:
+    green: '#31748f'
+  hints:
+    start:
+      foreground: '#908caa'
+      background: '#1f1d2e'
+    end:
+      foreground: '#6e6a86'
+      background: '#1f1d2e'
