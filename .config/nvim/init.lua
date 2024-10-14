@@ -1,10 +1,11 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
-require("config.lazy")
+require("core.options")
+require("plugins.plugins-setup")
+require("core.keymaps")
 
--- 其他配置选项
-
--- 这个是将剪切板和nvim 的复制操作打通
-vim.o.clipboard = "unnamedplus"
+vim.cmd([[
+  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  autocmd VimLeave * set guicursor=a:ver25
+]])
 
 -- 在 copy 后高亮
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
