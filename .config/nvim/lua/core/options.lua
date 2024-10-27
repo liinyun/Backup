@@ -1,41 +1,55 @@
--- 行号
-vim.opt.relativenumber = true
-vim.opt.number = true
+local opt = vim.opt
 
--- 缩进
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.autoindent = true
+-- Session Management
+opt.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
--- 防止包裹
-vim.opt.wrap = false
+-- Line Numbers
+opt.relativenumber = true
+opt.number = true
 
--- 光标行高亮
-vim.opt.cursorline = true
+-- Tabs & Indentation
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.expandtab = true
+opt.autoindent = true
+vim.bo.softtabstop = 2
 
--- 启用鼠标
-vim.o.mouse = "a"
--- 这里使用 
--- vim.opt.mouse:append("a") 也是可以的
+-- Line Wrapping
+opt.wrap = false
 
--- 系统剪切板 
-vim.opt.clipboard = "unnamedplus"
+-- Search Settings
+opt.ignorecase = true
+opt.smartcase = true
 
--- 默认新窗口右和下
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+-- Cursor Line
+opt.cursorline = true
 
--- 搜索
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+-- Appearance
+opt.termguicolors = true
+opt.background = "dark"
+opt.signcolumn = "yes"
+vim.diagnostic.config {
+  float = { border = "rounded" }, -- add border to diagnostic popups
+}
 
--- 外观
-vim.opt.termguicolors = true
-vim.opt.signcolumn = "yes"
+-- Backspace
+opt.backspace = "indent,eol,start"
 
+-- Clipboard
+opt.clipboard:append("unnamedplus")
 
+-- Split Windows
+opt.splitright = true
+opt.splitbelow = true
 
+-- Consider - as part of keyword
+opt.iskeyword:append("-")
 
+-- Disable the mouse while in nvim
+opt.mouse = "a"
 
+-- Folding
+opt.foldlevel = 20
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
 
