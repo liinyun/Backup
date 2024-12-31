@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@delance/runtime": "^2024.12.1"
+  }
+}
