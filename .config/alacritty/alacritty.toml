@@ -1,9 +1,6 @@
-
-# 实时重载配置文件，不用重启测试配置选项
-live_config_reload = true
-
 [env]
-TERM = "xterm-256color"
+# WINIT_UNIX_BACKENED = x11
+# TERM = "xterm-256color"
 http_proxy = "http://127.0.0.1:7897"
 https_proxy = "http://127.0.0.1:7897"
 
@@ -19,13 +16,14 @@ dynamic_padding = false
 # 这个是不透明度
 opacity = 0.75
 # 这是是毛玻璃，或者叫磨砂
-blur = true
+# blur = true
 # 这个调整的是打开的时候的窗口大小
-dimensions.columns = 80
-dimensions.lines = 30
+dimensions.columns = 120
+dimensions.lines = 39
 # 这个配置是用于macos 中的，将 option 当作alt，
 # 如果是linux 的话，是没有这个问题的
 # option_as_alt = "Both"
+# dpi = 192
 
 [font]
 # 这个是字体的设置
@@ -49,7 +47,7 @@ multiplier = 3
 osc52 = "CopyPaste"
 
 [cursor]
-style.shape = "Beam"
+style.shape = "Block"
 style.blinking = "On"
 
 [keyboard]
@@ -61,6 +59,19 @@ green = '#31748f'
 [colors.bright]
 green = '#31748f'
 
-[colors.hints]
-start = {foreground = '#908caa', background = '#1f1d2e' }
-end = { foreground = '#6e6a86', background = '#1f1d2e' }
+# [colors.hints]
+# start = {foreground = '#908caa', background = '#1f1d2e' }
+# end = { foreground = '#6e6a86', background = '#1f1d2e' }
+#
+
+[colors.primary]
+background = '#000000'
+foreground = '#FFFFFF'
+
+
+[general]
+
+
+# 实时重载配置文件，不用重启测试配置选项
+live_config_reload = true
+

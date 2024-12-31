@@ -31,7 +31,9 @@ rsync -av --delete "$NVIM_PATH_SOURCE" "$CONFIG_PATH_TARGET"
 MPV_PATH_SOURCE="$HOME/.config/mpv"
 rsync -av --delete "$MPV_PATH_SOURCE" "$CONFIG_PATH_TARGET"
 
-
+# kitty
+KITTY_PATH_SOURCE="$HOME/.config/kitty"
+rsync -av --delete "$KITTY_PATH_SOURCE" "$CONFIG_PATH_TARGET"
 
 
 
