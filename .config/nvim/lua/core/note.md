@@ -25,6 +25,10 @@ e              jump to next none empty symble
 I              jump to start of this line line and switch to insert mode
 A              jump to end of this line and switch to insert mode
 gf             if it is a location, it will jump directly to the location
+ctrl+o         jump frome commandline to coc getchar() list then I can use ctrl+w shortcut
+
+)              jump to the end of a function
+}              jump to the next block start
 
 
 

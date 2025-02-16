@@ -1,11 +1,10 @@
-# 这里是加载 blesh 但是不激活 blesh
+# this config is to load the blesh, but not attach to shell
 [[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --noattach
 # .bashrc
 # Source global definitions
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
-
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
   PATH="$HOME/.local/bin:$HOME/bin:$PATH"
@@ -55,13 +54,20 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# 一些自定义的命令
+# my alias
 alias easyconnect="~/codes/shell_scripts/easyconnect.sh"
+alias disablekvm="sudo ~/codes/shell_scripts/virtualbox.sh"
+# alias newterm="alacritty --working-directory "$(pwd)" &"
 # alias idea="/opt/idea-IU-243.22562.145/bin/idea"
 
+newterm(){
+  alacritty --working-directory "$(pwd)" &
+}
 
-# 这个是终端美化的脚本
-# 我添加了一个判断，如果使用的是 tmux 就不开启美化了
+
+# this is the shortcoming of powerline.
+# it will not work properly in tmux, so I write this conditional statement to check current evnironment
+# if the environment is tmux, it will close powerline 
 if [[ -z "$TMUX" && -z "$STY" ]]; then
     source ~/codes/github/pureline/pureline ~/codes/github/pureline/configs/powerline_full_8col.conf
 fi
@@ -83,18 +89,18 @@ function y() {
 alias scp=~/.ssh/scp.sh
 alias ssh=~/.ssh/ssh.sh
 
-# 为什么我这里选择创建一个函数然后使用别名的方式
-# 这个是可以 nvim folder 直接打开一个文件夹
-# 为了如果直接让这个函数的名字变成 nvim 那么别的程序如果要使用nvim 的时候可能就会使用这个函数，可能会造成错误
-# 这个方案依旧是最好的方案，因为可以传递所有的参数
-nvimcd() {
-  if [ -d "$1" ]; then
-    TO_PATH=$1 nvim --cmd 'cd $TO_PATH' "${@:2}"
-  else
-    nvim "$@"
-  fi
-}
-alias nvim='nvimcd'
+# actually, this config is useless, because the only reason I use this config is to open directory with nvim
+# now, I just need to run nvim in the folder
+# nvimcd() {
+#   if [ -d "$1" ]; then
+#     TO_PATH=$1 nvim --cmd 'cd $TO_PATH' "${@:2}"
+#   else
+#     nvim "$@"
+#   fi
+# }
+# alias nvim='nvimcd'
+
+
 # direnv
 eval "$(direnv hook bash)"
 
@@ -108,9 +114,14 @@ fi
 
 
 
-# 这里才是激活，就是防止执行一些脚本的时候也把 blesh 也执行了，blesh 只能在交互式的shell 中执行
+# this will attach blesh to the shell
 # source ~/.local/share/blesh/ble.sh
 [[ ! ${BLE_VERSION-} ]] || ble-attach
 
 
 
+
+# lingo config
+export LINGO_20_HOME="/home/linya/applications/lingo"
+
+export PATH="/home/linya/applications/lingo:$PATH"

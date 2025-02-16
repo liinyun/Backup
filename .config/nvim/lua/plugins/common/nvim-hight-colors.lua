@@ -1,3 +1,4 @@
+-- this plugin is to show the color of hex code or known highlight group
 local M = {}
 M = {
 	"brenoprata10/nvim-highlight-colors",

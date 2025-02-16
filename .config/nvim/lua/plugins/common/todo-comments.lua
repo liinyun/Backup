@@ -1,3 +1,4 @@
+-- the most important functionality of this plugin is to add comment in blink line
 return {
   'folke/todo-comments.nvim',
   event = { 'BufReadPre', 'BufNewFile' },

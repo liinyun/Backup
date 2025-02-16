@@ -17,6 +17,10 @@ return {
   },
   opts = {
     defaults = {
+      file_ignore_patterns = {
+        -- ignore node_modules
+        "node_modules/*"
+      },
       layout_config = {
         vertical = {
           width = 0.75

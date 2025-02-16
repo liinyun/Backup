@@ -1,57 +1,61 @@
 -- Code Tree Support / Syntax Highlighting
 return {
-  -- https://github.com/nvim-treesitter/nvim-treesitter
-  'nvim-treesitter/nvim-treesitter',
-  event = 'VeryLazy',
-  dependencies = {
-    -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    -- 这个是用来自动补全前端的括号的，事实上我感觉放在这里作为依赖有点不太合适，应该单独拿出来和autopairs放一起的
-    "windwp/nvim-ts-autotag",
-  },
-  -- 这里的意思是每次 treesitter 插件安装或者更新后都会自动更新他的解析器
-  -- 这里的 treesitter 和treesitter 的解析器 不是
-  build = ':TSUpdate',
-  opts = {
-    highlight = {
-      enable = true,
-      disable = { 'latex' }
-    },
-    rainbow = {
-      enable = true,        -- 启用彩虹括号
-      extended_mode = true, -- 给注释内容的括号也上色
-      max_file_lines = nil, -- 不限制文件大小
-    },
-    indent = { enable = true },
-    auto_install = true, -- automatically install syntax support when entering new file type buffer
-    autotag = {
-      enable = true,
-    },
-    ensure_installed = {
-      'json',
-      'javascript',
-      'typescript',
-      'tsx',
-      'yaml',
-      'html',
-      'css',
-      'prisma',
-      'lua',
-      'vim',
-      'svelte',
-      'graphql',
-      'bash',
-      'dockerfile',
-      'gitignore',
-      'query',
-      'c',
-      'markdown_inline',
-      'markdown',
-      'python'
-    },
-  },
-  config = function(_, opts)
-    local configs = require("nvim-treesitter.configs")
-    configs.setup(opts)
-  end
+	-- https://github.com/nvim-treesitter/nvim-treesitter
+	"nvim-treesitter/nvim-treesitter",
+	-- event = "VeryLazy",
+	dependencies = {
+		-- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		-- 这个是用来自动补全前端的括号的，事实上我感觉放在这里作为依赖有点不太合适，应该单独拿出来和autopairs放一起的
+		"windwp/nvim-ts-autotag",
+		-- {
+		-- 	"HiPhish/rainbow-delimiters.nvim",
+		-- 	event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
+		-- },
+	},
+  -- treesitter will auto update its parser everytime it updates
+	build = ":TSUpdate",
+	opts = {
+		highlight = {
+			enable = true,
+			disable = { "latex" },
+		},
+		rainbow = {
+			enable = true, -- enable rainbow parenthesis
+			extended_mode = true, -- enable rainbow parenthesis in comment codes 
+			max_file_lines = nil, -- don't restrain the file size 
+		},
+		indent = { enable = true },
+		auto_install = true, -- automatically install syntax support when entering new file type buffer
+		autotag = {
+			enable = true,
+		},
+		ensure_installed = {
+			"json",
+			"javascript",
+			"typescript",
+			"tsx",
+			"yaml",
+			"html",
+			"css",
+			"prisma",
+			"lua",
+			"vim",
+			"svelte",
+			"graphql",
+			"bash",
+			"dockerfile",
+			"gitignore",
+			"query",
+			"c",
+			"markdown_inline",
+			"markdown",
+			"python",
+			"vue",
+		},
+	},
+	config = function(_, opts)
+		local configs = require("nvim-treesitter.configs")
+		configs.setup(opts)
+	end,
 }

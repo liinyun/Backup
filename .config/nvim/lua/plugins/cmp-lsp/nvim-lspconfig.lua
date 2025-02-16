@@ -1,5 +1,23 @@
 -- LSP Support
 local M = {}
+
+local lsp_attach = function(client, bufnr)
+	-- Create your keybindings here...
+end
+
+local on_init = function(client, bufnr)
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end
+
+local function quit_floating_win()
+	local win_id = vim.api.nvim_get_current_win()
+	local config = vim.api.nvim_win_get_config(win_id)
+	local flag = config.relative ~= ""
+	if flag then
+		vim.api.nvim_win_close(win_id, true)
+	end
+end
+
 M = {
 	-- LSP Configuration
 	-- https://github.com/neovim/nvim-lspconfig
@@ -24,6 +42,11 @@ M = {
 		-- https://github.com/folke/neodev.nvim
 		-- { 'folke/neodev.nvim',                        opts = {} },
 		{ "folke/lazydev.nvim" },
+		-- schemas
+		{ "b0o/schemastore.nvim" },
+	},
+	key = {
+		vim.keymap.set("n", "<M-\\>", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true }),
 	},
 	config = function()
 		require("mason").setup()
@@ -37,10 +60,11 @@ M = {
 				-- fronted
 				"cssls",
 				"html",
-				"emmet_ls",
+				-- "emmet_ls",
 				"jsonls",
 				"volar",
 				"ts_ls",
+				-- "vtsls"
 				"lemminx",
 				"quick_lint_js",
 				"tailwindcss",
@@ -93,9 +117,6 @@ M = {
 
 		local lspconfig = require("lspconfig")
 		local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-		local lsp_attach = function(client, bufnr)
-			-- Create your keybindings here...
-		end
 
 		-- Call setup on each LSP server
 		require("mason-lspconfig").setup_handlers({
@@ -105,21 +126,21 @@ M = {
 					capabilities = lsp_capabilities,
 				})
 			end,
-			["svelte"] = function()
-				-- configure svelte server
-				lspconfig["svelte"].setup({
-					capabilities = lsp_capabilities,
-					on_attach = function(client, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.js", "*.ts" },
-							callback = function(ctx)
-								-- Here use ctx.match instead of ctx.file
-								client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-							end,
-						})
-					end,
-				})
-			end,
+			-- ["svelte"] = function()
+			-- 	-- configure svelte server
+			-- 	lspconfig["svelte"].setup({
+			-- 		capabilities = lsp_capabilities,
+			-- 		on_attach = function(client, bufnr)
+			-- 			vim.api.nvim_create_autocmd("BufWritePost", {
+			-- 				pattern = { "*.js", "*.ts" },
+			-- 				callback = function(ctx)
+			-- 					-- Here use ctx.match instead of ctx.file
+			-- 					client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+			-- 				end,
+			-- 			})
+			-- 		end,
+			-- 	})
+			-- end,
 			["graphql"] = function()
 				-- configure graphql language server
 				lspconfig["graphql"].setup({
@@ -144,82 +165,26 @@ M = {
 			-- 		},
 			-- 	})
 			-- end,
-			["ts_ls"] = function()
-				lspconfig["ts_ls"].setup({
-					capabilities = lsp_capabilities,
-					init_options = {
-						plugins = {
-							{
-								name = "@vue/typescript-plugin",
-								location = vim.fn.stdpath("data")
-									.. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-								languages = { "vue" },
-							},
-						},
-					},
-					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-					settings = {
-						typescript = {
-							tsserver = {
-								useSyntaxServer = false,
-							},
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-					},
-				})
-			end,
-			["volar"] = function()
-				-- Vue 3
-				lspconfig["volar"].setup({
-					capabilities = lsp_capabilities,
-					filetypes = { "vue" },
-					init_options = {
-						vue = {
-							hybridMode = false,
-						},
-					},
-					settings = {
-						typescript = {
-							inlayHints = {
-								enumMemberValues = {
-									enabled = true,
-								},
-								functionLikeReturnTypes = {
-									enabled = true,
-								},
-								propertyDeclarationTypes = {
-									enabled = true,
-								},
-								parameterTypes = {
-									enabled = true,
-									suppressWhenArgumentMatchesName = true,
-								},
-								variableTypes = {
-									enabled = true,
-								},
-							},
-						},
-					},
-				})
-			end,
+
 			["lua_ls"] = function()
 				-- configure lua server (with special settings)
 				lspconfig["lua_ls"].setup({
 					capabilities = lsp_capabilities,
+					on_init = on_init,
 					settings = {
 						Lua = {
 							-- make the language server recognize "vim" global
 							diagnostics = {
 								globals = { "vim" },
+							},
+							hint = {
+								enable = true,
+								arrayIndex = "Enable",
+								await = true,
+								paramName = "All",
+								paramType = true,
+								semicolon = "All",
+								setType = true,
 							},
 							workspace = {
 								-- 就算加上了也没不一定有用处，首先，我已经有
@@ -290,14 +255,110 @@ M = {
 
 		lspconfig["basedpyright"].setup({
 			capabilities = lsp_capabilities,
+			on_init = on_init,
 			settings = {
 				basedpyright = {
 					typeCheckingMode = "basic",
 					analysis = {
 						diagnosticMode = "openFilesOnly",
+						strictGenericNarrowing = true,
+						inlayHints = {
+							variableTypes = true,
+							callArgumentNames = true,
+							functionReturnTypes = true,
+							genericTypes = true,
+						},
 					},
 				},
 			},
+		})
+
+		lspconfig["jsonls"].setup({
+			capabilities = lsp_capabilities,
+			on_attach = lsp_attach,
+			filetypes = { "json", "jsonc" },
+			settings = {
+				http = {
+					proxy = "127.0.0.1:7897",
+					proxyStrictSSL = true,
+				},
+				json = {
+					schemas = require("schemastore").json.schemas(),
+					validate = { enable = true },
+				},
+			},
+		})
+
+		lspconfig["ts_ls"].setup({
+			capabilities = lsp_capabilities,
+			on_attach = lsp_attach,
+			init_options = {
+				plugins = {
+					{
+						name = "@vue/typescript-plugin",
+						location = vim.fn.stdpath("data")
+							.. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+						languages = { "vue" },
+					},
+				},
+			},
+			-- filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+			settings = {
+				typescript = {
+					tsserver = {
+						useSyntaxServer = true,
+					},
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				},
+			},
+		})
+
+		lspconfig["volar"].setup({
+			capabilities = lsp_capabilities,
+			on_attach = lsp_attach,
+			on_init = on_init,
+			filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+			init_options = {
+				vue = {
+					hybridMode = false,
+				},
+			},
+			settings = {
+				typescript = {
+					inlayHints = {
+						enumMemberValues = {
+							enabled = true,
+						},
+						functionLikeReturnTypes = {
+							enabled = true,
+						},
+						propertyDeclarationTypes = {
+							enabled = true,
+						},
+						parameterTypes = {
+							enabled = true,
+							suppressWhenArgumentMatchesName = true,
+						},
+						variableTypes = {
+							enabled = true,
+						},
+					},
+				},
+			},
+		})
+
+		lspconfig["cssls"].setup({
+			capabilities = lsp_capabilities,
+			on_attach = lsp_attach,
 		})
 
 		-- lspconfig["emmet_ls"].setup({
@@ -386,6 +447,8 @@ M = {
 			},
 		})
 
+		-- it is the same shortcut in coc, I may addd this to the overall config
+		vim.keymap.set("n", "<Esc>", quit_floating_win, { noremap = true, silent = true })
 		-- Globally configure all LSP floating preview popups (like hover, signature help, etc)
 		local open_floating_preview = vim.lsp.util.open_floating_preview
 		-- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)

@@ -1,6 +1,6 @@
 -- Bootstrap lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -23,7 +23,7 @@ require("lazy").setup({
   { import = "plugins.ui" },
   -- { import = "plugins.coc" },
   { import = "plugins.cmp-lsp" },
-  { import = "plugins.others" }
+  -- { import = "plugins.others" }
   -- { import = "plugins.lsp.lspconfig" },
   -- { import = "plugins.lsp.mason" }
 }, {

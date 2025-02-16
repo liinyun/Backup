@@ -1,3 +1,4 @@
+-- this plugin has too many bugs, it is unable to use anymore
 return {
   'rmagatti/auto-session',
   lazy = false,

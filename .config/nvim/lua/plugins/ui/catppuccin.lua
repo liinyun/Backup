@@ -3,6 +3,7 @@ local M = {}
 
 M = {
 	"catppuccin/nvim",
+	event = "BufReadPre",
 	name = "catppuccin",
 	priority = 1000,
 	config = function()
@@ -14,6 +15,7 @@ M = {
 			},
 			transparent_background = true,
 			show_end_of_buffer = true,
+			rainbow_delimiters = true,
 		})
 	end,
 }

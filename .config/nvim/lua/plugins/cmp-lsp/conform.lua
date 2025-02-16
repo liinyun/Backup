@@ -1,3 +1,4 @@
+-- this plugin is to format the codes 
 return {
   "stevearc/conform.nvim",
   event = { "BufWritePre" },
@@ -36,6 +37,7 @@ return {
     },
     -- Set up format-on-sav
     formatters = {
+      -- this is formatter for sh
       shfmt = {
         prepend_args = { "-i", "2" },
       },
@@ -46,13 +48,13 @@ return {
           "-",
           "--indent", "2",
           "--profile", "django", }, -- "-" tells it to read from stdin
-
         stdin = true,
       },
     },
   },
   init = function()
     -- If you want the formatexpr, here is the place to set it
+    -- change the default formater to this plugin's formater
     vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   end,
 }
