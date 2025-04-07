@@ -4,6 +4,7 @@
 --   -- ordinary Neovim
 --
 -- This has to be set before initializing lazy
+-- this config is to set leader key 
 vim.g.mapleader = " "
 -- enable 24-bit RGB support in the terminal
 vim.opt.termguicolors = true
@@ -15,6 +16,7 @@ require("core.keymaps")
 -- require("core.keymaps-bak")
 require("core.scripts.scripts")
 
+-- require("public.rust")
 vim.o.autoread = true
 -- 这个是支持ssh 的时候将 nvim 复制的东西传到本地的剪切板
 -- 这里

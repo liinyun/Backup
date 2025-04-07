@@ -16,18 +16,29 @@ return {
   },
   opts = {
     controls = {
-      element = "repl",
+      element = "console",
       enabled = false,
       icons = {
+        -- disconnect = "",
+        -- pause = "",
+        -- play = "",
+        -- run_last = "",
+        -- step_back = "",
+        -- step_into = "",
+        -- step_out = "",
+        -- step_over = "",
+        -- terminate = ""
+
         disconnect = "",
-        pause = "",
-        play = "",
-        run_last = "",
-        step_back = "",
-        step_into = "",
-        step_out = "",
-        step_over = "",
-        terminate = ""
+        pause = " 󱊲",
+        play = " 󱊫",
+        run_last = " 󱊰",
+        step_back = " 󱊳",
+        step_into = " 󱊭",
+        step_out = " 󱊮",
+        step_over = " 󱊬",
+        terminate = " 󱊱",
+
       }
     },
     element_mappings = {},

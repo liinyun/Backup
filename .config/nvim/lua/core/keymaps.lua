@@ -1,6 +1,7 @@
 --  I have to explain the reason why I don't use the local keymap = vim.keymap
 --  because all of my shortcut settings is done setp by setp, I am not add these at one time
 --  so I don't have to worry about repeaatly entering a large number of the same characters
+
 -- =====================================================================================
 -- ================================== insert mode ======================================
 -- =====================================================================================
@@ -34,6 +35,13 @@ vim.api.nvim_set_keymap("n", "<M-k>", "#", { noremap = true, silent = true })
 -- it is a stupid shortcut totally waste of key. it works to merge the next line to the current line
 -- I can't image which coding language would do this frequently
 vim.api.nvim_set_keymap("n", "J", "<nop>", { noremap = true, silent = true })
+-- well, this config may be good, but I don't appreciate this config. I think this two keys can do something more interesting
+-- vim.api.nvim_set_keymap("n", "H", "0", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "L", "$", { noremap = true, silent = true })
+
+-- this two keymaps append my function after the default zo and zc
+vim.api.nvim_set_keymap("n", "zo", "zo:lua UpdateFoldSigns()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "zc", "zc:lua UpdateFoldSigns()<CR>", { noremap = true, silent = true })
 
 -- ==================== plugins ==================== --
 -- neo-tree
@@ -59,6 +67,21 @@ vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 vim.keymap.set("n", "<leader>tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
 vim.keymap.set("n", "<M-CR>", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 
+-- quickfix
+
+vim.keymap.set("n", "<leader>q",
+  function()
+    local is_open = vim.fn.getqflist({ winid = 0 }).winid ~= 0
+    if is_open then
+      vim.cmd("cclose")
+    else
+      vim.cmd("copen")
+    end
+  end
+  , {
+    desc = "Toggle quickfix",
+  })
+
 -- telescope
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
@@ -73,11 +96,11 @@ vim.keymap.set("n", "<leader>fs", require("telescope.builtin").current_buffer_fu
 -- =========================================================================
 -- =========================== command mode ================================
 -- =========================================================================
--- 这个是 候选的时候 ctrl+n 选择下一个，这个快捷键我修改成 ctrl+j 了，下面同理
+-- this is for auto completing in command line. I set the select next to ctrl+j and ctrl+k instead of ctrl+n or ctrl+print
 vim.keymap.set("c", "<C-j>", "<C-n>", { noremap = true, silent = true })
 vim.keymap.set("c", "<C-k>", "<C-p>", { noremap = true, silent = true })
--- vim.keymap.set("c", "<C-w>", "<C-p>", { noremap = true, silent = true })
--- vim.keymap.set('c', '<C-h>', '<C-w>h', { noremap = true, silent = true })
--- vim.keymap.set('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
--- vim.keymap.set('c', '<C-k>', '<C-w>k', { noremap = true, silent = true })
--- vim.keymap.set('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+
+-- =========================================================================
+-- =========================== terminal mode ===============================
+-- =========================================================================
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })

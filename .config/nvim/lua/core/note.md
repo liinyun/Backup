@@ -29,6 +29,7 @@ ctrl+o         jump frome commandline to coc getchar() list then I can use ctrl+
 
 )              jump to the end of a function
 }              jump to the next block start
+gx             jump to the hyper link
 
 
 
@@ -43,6 +44,7 @@ y+w   y+e   y+a+w   I'm not fully understand
 bd              close current buffer
 bdelete         the full command of bd    
 Trouble diagnostic  diagnostic in quicklike pattern
+scc             actually it is a terminal tool to count code lines
 
 
 ------ persisted -------

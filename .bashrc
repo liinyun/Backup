@@ -23,6 +23,7 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export INPUT_METHOD=fcitx
 export CLUTTER_IM_MODULE=fcitx
+export HISTSIZE=100000
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
@@ -57,12 +58,9 @@ unset __conda_setup
 # my alias
 alias easyconnect="~/codes/shell_scripts/easyconnect.sh"
 alias disablekvm="sudo ~/codes/shell_scripts/virtualbox.sh"
-# alias newterm="alacritty --working-directory "$(pwd)" &"
+alias gt="source ~/codes/shell_scripts/jump_dir.sh"
 # alias idea="/opt/idea-IU-243.22562.145/bin/idea"
 
-newterm(){
-  alacritty --working-directory "$(pwd)" &
-}
 
 
 # this is the shortcoming of powerline.
@@ -72,7 +70,6 @@ if [[ -z "$TMUX" && -z "$STY" ]]; then
     source ~/codes/github/pureline/pureline ~/codes/github/pureline/configs/powerline_full_8col.conf
 fi
 
-. "$HOME/.cargo/env"
 
 
 # yazi
@@ -125,3 +122,4 @@ fi
 export LINGO_20_HOME="/home/linya/applications/lingo"
 
 export PATH="/home/linya/applications/lingo:$PATH"
+. "$HOME/.cargo/env"

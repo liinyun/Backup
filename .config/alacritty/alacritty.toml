@@ -25,6 +25,7 @@ dimensions.lines = 39
 # option_as_alt = "Both"
 # dpi = 192
 
+
 [font]
 # 这个是字体的设置
 normal.family = "MesloLGS NF"
@@ -51,7 +52,9 @@ style.shape = "Block"
 style.blinking = "On"
 
 [keyboard]
-bindings = [{key="F11",action="ToggleFullscreen"}]
+bindings = [{key="F11",action="ToggleFullscreen"},
+            {key="n", mods="Control|Shift", action="CreateNewWindow"},
+]
 
 
 [colors.normal]

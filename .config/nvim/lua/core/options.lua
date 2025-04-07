@@ -1,7 +1,9 @@
 -- 这个配置太零散了，以后要找机会将这个配置整理一下
+
+local scripts = require("core.scripts.scripts")
 local opt = vim.opt
 
--- Session Management
+-- Session Management it is the default session manager in neovin
 -- opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- this is global spell check. if opened, it create undercurl under words
@@ -23,11 +25,11 @@ opt.autoindent = true
 vim.bo.softtabstop = 2
 
 -- Line Wrapping
-opt.wrap = false
+opt.wrap = true
 -- opt.formatoptions = "croqn2mB1"
 -- opt.textwidth = 72
 -- vim.wo.wrap = true --soft wrapping
--- vim.wo.linebreak = true
+vim.wo.linebreak = false
 -- vim.formatoptions = "croqn2mB1"
 vim.textwidth = 72
 
@@ -50,7 +52,6 @@ vim.diagnostic.config({
   undofile = true,
 })
 
-
 -- this is to add node_modules to the path, this will search node_modules in the whole project
 vim.opt.path:append("**/node_modules/**")
 -- this config is set for ts, for gf will recognize @ as a special character, so here I change it
@@ -64,17 +65,24 @@ opt.backspace = "indent,eol,start"
 -- 所以这里就设置成默认在 右边和下面打开
 opt.splitright = true
 opt.splitbelow = true
-
--- Consider - as part of keyword
+-- it would view word connected with "-" one when you use alt+k to find next match
 opt.iskeyword:append("-")
 
 -- Disable the mouse while in nvim
 opt.mouse = "a"
 
 -- Folding
-opt.foldlevel = 100
+-- opt.foldlevel = 100
+local function myFoldText()
+  return "++-"
+end
+
+
+opt.foldlevelstart = 100
 opt.foldmethod = "indent"
 opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
+opt.foldtext = myFoldText()
+vim.opt.fillchars:append("fold:-")
 -- vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
 
 -- 设置撤销文件的保存路径
@@ -89,22 +97,3 @@ vim.opt.undofile = true
 -- 这里是使用空格来代替制表符，这个肯定是必须的，这样就能保证在不同的文件
 -- 中的格式是一样的
 vim.opt.expandtab = true
-
--- local original_notify = vim.notify
---
--- -- 重写 vim.notify，避免显示任何消息
--- original_notify = function(msg, level, opts)
---   -- 不处理任何消息，直接返回
---   return
--- end
-
--- -- 这个是用来markdown的中文不会显示下面的波浪线
--- -- wrap and check for spell in text filetypes
--- vim.api.nvim_create_autocmd("FileType", {
--- 	group = vim.api.nvim_create_augroup("markdown", { clear = true }),
--- 	pattern = { "gitcommit", "markdown" },
--- 	callback = function()
--- 		vim.opt_local.wrap = true
--- 		vim.opt_local.spell = false -- 覆盖默认的 true
--- 	end,
--- })
