@@ -63,12 +63,13 @@ alias gt="source ~/codes/shell_scripts/jump_dir.sh"
 
 
 
-# this is the shortcoming of powerline.
 # it will not work properly in tmux, so I write this conditional statement to check current evnironment
-# if the environment is tmux, it will close powerline 
-if [[ -z "$TMUX" && -z "$STY" ]]; then
-    source ~/codes/github/pureline/pureline ~/codes/github/pureline/configs/powerline_full_8col.conf
-fi
+# but I don't find it has any problem, so I open it again 
+# if [[ -z "$TMUX" && -z "$STY" ]]; then
+# source ~/codes/github/pureline/pureline ~/codes/github/pureline/configs/powerline_full_8col.conf
+source ~/codes/shell_scripts/ps1/line
+    # source ~/codes/github/pureline/pureline 
+# fi
 
 
 

@@ -1,0 +1,373 @@
+#!/usr/bin/env bash
+# I don't need too many functionalities for my line, so I just make it for myself
+
+# clear all variables and declare to prevent issues when re-sourcing
+unset PL_SYMBOLS;  declare -A PL_SYMBOLS   # Hash table to reference symbols
+unset PL_COLORS;   declare -A PL_COLORS    # Hash table to reference colors
+unset PL_SEGMENTS; declare -a PL_SEGMENTS  # Array to hold segments and their arguments
+
+PL_PROMPT_ROOT_BG=None
+PL_PROMPT_ROOT_FG=Red
+
+
+# -----------------------------------------------------------------------------
+# returns a string with the powerline symbol for a segment end
+# arg: $1 is foreground color of the next segment
+# arg: $2 is background color of the next segment
+function segment_end {
+    local end_char
+    local fg
+    # segment colors are the same, use a foreground separator
+    end_char="${PL_SYMBOLS[soft_separator]}"
+    fg="$1"
+    echo "${PL_COLORS[$fg]}${PL_COLORS[On_$2]}$end_char"
+}
+
+# -----------------------------------------------------------------------------
+# returns a string with background and foreground colours set
+# arg: $1 foreground color
+# arg: $2 background color
+# arg: $3 content
+function segment_content {
+    echo "${PL_COLORS[$1]}${PL_COLORS[On_$2]}$3"
+}
+
+#------------------------------------------------------------------------------
+# Helper function for User segment - also used in external ssh segment
+function ip_address {
+    local ip_address
+    local ip_loc
+    local ifconfig_loc
+
+    if ip_loc="$(type -p "ip")" || [[ -n $ip_loc ]]; then
+        ip_address="$(ip route get 1 | tr -s ' ' | cut -d' ' -f7)"
+    elif ifconfig_loc="$(type -p "ifconfig")" || [[ -n $ifconfig_loc ]]; then
+        while IFS=$': \t' read -ra _line ;do
+            [ -z "${_line%inet}"   ] &&
+                _ip=${_line[${#_line[1]}>4?1:2]} &&
+                [ "${_ip#127.0.0.1}"   ] && ip_address=$_ip
+        done< <(LANG=C /sbin/ifconfig)
+    else
+        ip_address="127.0.0.1"
+    fi
+    echo $ip_address
+}
+
+#------------------------------------------------------------------------------
+# Helper function to return normal or super user prompt character
+function prompt_char {
+    [[ ${EUID} -eq 0 ]] && echo "#" || echo "\$"
+}
+
+#------------------------------------------------------------------------------
+# append to prompt: user@host or user or root@host
+# arg: $1 background color
+# arg: $2 foreground color
+# option variables;
+#   PL_USER_SHOW_HOST: true/false to show host name/ip
+#   PL_USER_USE_IP: true/false to show IP instead of hostname
+function user_segment {
+    local bg_color="$1"
+    local fg_color="$2"
+    local content="\u"
+    # Show host if true or when user is remote/root
+    if [ "$PL_USER_SHOW_HOST" = true ]; then
+        if [ "$PL_USER_USE_IP" = true ]; then
+            content+="@$(ip_address)"
+        else
+            content+="@\h"
+        fi
+    fi
+    # PS1+="$(segment_end "$fg_color" "$bg_color")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" " $content ")"
+}
+
+# -----------------------------------------------------------------------------
+# append to prompt: current directory
+# arg: $1 background color
+# arg: $2 foreground color
+# option variables;
+#   PL_PATH_TRIM: 0—fullpath, 1—current dir, [x]—trim to x number of dir
+function path_segment {
+    local bg_color="$1"
+    local fg_color="$2"
+    local content="\w"
+    if [ "$PL_PATH_TRIM" -eq 1 ]; then
+        local content="\W"
+    elif [ "$PL_PATH_TRIM" -gt 1 ]; then
+        PROMPT_DIRTRIM="$PL_PATH_TRIM"
+    fi
+    PS1+="$(segment_end "$fg_color" "$bg_color")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" " $content ")"
+}
+
+# -----------------------------------------------------------------------------
+# append to prompt: the number of background jobs running
+# arg: $1 background color
+# arg: $2 foreground color
+function background_jobs_segment {
+    local bg_color="$1"
+    local fg_color="$2"
+    local number_jobs
+    number_jobs=$(jobs | grep -cv "Done" | tr -d '[:space:]')
+    if [ ! "$number_jobs" -eq 0 ]; then
+        PS1+="$(segment_end "$fg_color" "$bg_color")"
+        PS1+="$(segment_content "$fg_color" "$bg_color" " ${PL_SYMBOLS[background_jobs]} $number_jobs ")"
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# append to prompt: indicator is the current directory is ready-only
+# arg: $1 background color
+# arg: $2 foreground color
+function read_only_segment {
+    local bg_color="$1"
+    local fg_color="$2"
+    if [ ! -w "$PWD" ]; then
+        PS1+="$(segment_end "$fg_color" "$bg_color")"
+        PS1+="$(segment_content "$fg_color" "$bg_color" " ${PL_SYMBOLS[read_only]} ")"
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# append to prompt: append the normal '$' or super-user '#' prompt character
+# arg: $1 background color
+# arg: $2 foreground color
+# option variables;
+#   PL_PROMPT_SHOW_SHLVL: true/relative/false to show the shell level
+#       true      Show the value of $SHLVL
+#       relative  Show the shell level relatively to the first shell sourcing pureline.
+#                   Useful when that first shell is already a sub-shell,
+#                   like in vscode integrated terminals.
+#       false     Show nothing
+function prompt_segment {
+    local bg_color="$1"
+    local fg_color="$2"
+
+    if [[ -n $PL_PROMPT_SHOW_SHLVL ]]; then
+        # create local variable 'shell_level' ...
+        if [[ $PL_PROMPT_SHOW_SHLVL == true ]]; then
+            local shell_level=$SHLVL
+        elif [[ $PL_PROMPT_SHOW_SHLVL == relative ]]; then
+            [[ -v __pl_starting_shlvl ]] || export __pl_starting_shlvl=$SHLVL
+            local shell_level=$((SHLVL - __pl_starting_shlvl + 1))
+        fi
+        # ... except if its value is 1
+        ((shell_level != 1)) || unset shell_level
+    fi
+
+    local content
+    content=" ${shell_level:-}$(prompt_char) "
+    if [ ${EUID} -eq 0 ]; then
+        if [ -n "$PL_PROMPT_ROOT_FG" ]; then
+            fg_color="$PL_PROMPT_ROOT_FG"
+        fi
+        if [ -n "$PL_PROMPT_ROOT_BG" ]; then
+            bg_color="$PL_PROMPT_ROOT_BG"
+        fi
+    fi
+    # PS1+="$(segment_end "$fg_color" "$bg_color")"
+    PS1+="$(segment_content "$fg_color" "$bg_color" "$content")"
+    # PS1+="$content"
+}
+
+# -----------------------------------------------------------------------------
+# append to prompt: return code for previous command
+# arg: $1 background color
+# arg: $2 foreground color
+function return_code_segment {
+    if [ ! "$__return_code" -eq 0 ]; then
+        local bg_color="$1"
+        local fg_color="$2"
+        local content=" ${PL_SYMBOLS[return_code]} $__return_code "
+        PS1+="$(segment_end "$fg_color" "$bg_color")"
+        PS1+="$(segment_content "$fg_color" "$bg_color" "$content")"
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# append to prompt: end the current promptline and start a newline
+function newline_segment {
+    # PS1+="$(segment_end "Blue" 'Default')"
+    PS1+="\n"
+}
+
+# -----------------------------------------------------------------------------
+# code to run before processing the inherited $PROMPT_COMMAND
+function __pureline_pre {
+    __return_code=$?                    # save return code of last command
+
+    if [[ -n $PL_TITLEBAR ]]; then
+        if (( ${BASH_VERSINFO[0]:-0} > 4 || (${BASH_VERSINFO[0]:-0} == 4 && ${BASH_VERSINFO[1]:-0} >= 4) )); then
+            # since bash 4.4, @P allows variable expansion as if it were a prompt string (like PS1)
+            echo -ne "\e]2;${PL_TITLEBAR@P}\a"  # set the gui window title
+        else
+            echo -ne "\e]2;'${PL_TITLEBAR}'\a"  # set the gui window title
+        fi
+    fi
+
+    return $__return_code  # forward it to the inherited $PROMPT_COMMAND
+}
+
+# -----------------------------------------------------------------------------
+# code to run after processing the inherited $PROMPT_COMMAND
+function __pureline_post {
+    local segment_index
+    PS1=""                                  # reset the command prompt
+
+    # load the segments
+    for segment_index in "${!PL_SEGMENTS[@]}"; do
+        ${PL_SEGMENTS[$segment_index]}
+    done
+
+    # cleanup
+    PS1+="${PL_COLORS[Color_Off]}"
+    if [ "$PL_ERASE_TO_EOL" = true ]; then
+        PS1+="\[\e[K\]"
+    fi
+    unset __return_code
+}
+
+# -----------------------------------------------------------------------------
+# define the default color set
+function set_default_colors() {
+    PL_COLORS=(
+        [Color_Off]='\[\e[0m\]'       # Text Reset
+        # Foreground
+        [Default]='\[\e[0;39m\]'      # Default
+        [Black]='\[\e[0;30m\]'        # Black
+        [Red]='\[\e[0;31m\]'          # Red
+        [Green]='\[\e[0;32m\]'        # Green
+        [Yellow]='\[\e[0;33m\]'       # Yellow
+        [Blue]='\[\e[0;34m\]'         # Blue
+        [Purple]='\[\e[0;35m\]'       # Purple
+        [Cyan]='\[\e[0;36m\]'         # Cyan
+        [White]='\[\e[0;37m\]'        # White
+        # Background
+        [On_Default]='\[\e[49m\]'     # Default
+        [On_Black]='\[\e[40m\]'       # Black
+        [On_Red]='\[\e[41m\]'         # Red
+        [On_Green]='\[\e[42m\]'       # Green
+        [On_Yellow]='\[\e[43m\]'      # Yellow
+        [On_Blue]='\[\e[44m\]'        # Blue
+        [On_Purple]='\[\e[45m\]'      # Purple
+        [On_Cyan]='\[\e[46m\]'        # Cyan
+        [On_White]='\[\e[47m\]'       # White
+    )
+}
+
+# -----------------------------------------------------------------------------
+# default symbols are intended for 'out-of-the-box' compatibility.
+# symbols from code page 437: character set of the original IBM PC
+function set_default_symbols {
+    PL_SYMBOLS=(
+        [hard_separator]=""
+        [soft_separator]="❯"
+
+        # [read_only]="Θ"
+        # [return_code]="x"
+        # [background_jobs]="↨"
+        # [background_jobs]="↔"
+                                
+        [git_branch]=""
+        [git_untracked]="↔"
+        [git_stash]="§"
+        [git_ahead]="↑"
+        [git_behind]="↓"
+        [git_modified]="✚ "
+        [git_staged]="✔ "
+        [git_conflicts]="✘ "
+                                  
+        [read_only]=""
+        [return_code]="⚑"
+        [background_jobs]="⏎"
+                                  
+        [battery_charging]="⚡"
+        [battery_discharging]="▮"
+                                  
+        [aws_profile]='☁'
+        [screen]='💻'
+        [duration]='⏳'
+    )
+}
+
+# -----------------------------------------------------------------------------
+# default set of segments
+function set_default_segments {
+    PL_SEGMENTS=(
+        'user_segment            None       Blue'
+        'ssh_segment             None       Yellow'
+        'screen_session_segment  None       Purple'
+        'virtual_env_segment     None       Blue'
+        'conda_env_segment       None       Blue'
+        'aws_profile_segment     None       Yellow'
+        'kubernetes_segment      None       Yellow'
+        'path_segment            None       Blue'
+        'read_only_segment       None       Red'
+        'background_jobs_segment None       Purple'
+        'git_segment             None       Green'
+        'return_code_segment     None       White'
+        'newline_segment' 
+        'prompt_segment          None       Purple'
+    )
+    PL_USER_SHOW_HOST=true
+    # 0 Full path, 1, Current, 2+ trim level
+    PL_PATH_TRIM=0
+}
+
+# -----------------------------------------------------------------------------
+# entry point to setup pureline
+function main() {
+    local segment_index
+    local segment_function
+
+    set_default_colors
+    set_default_symbols
+    set_default_segments
+
+    # set some defaults
+    # PL_TITLEBAR="\u@\h: \w" # title bar setting can use PS1 style \u etc
+    PL_TITLEBAR="\u@\h: \w" # title bar setting can use PS1 style \u etc
+    PL_ERASE_TO_EOL=false   # need on some terminals to prevent glitches
+
+    # If using tmux, allow pane titles to persist
+    # [[ -n $TMUX ]] && unset PL_TITLEBAR
+
+    # check if an argument has been given for a config file
+    if [ -f "$1" ]; then
+        # shellcheck source=/dev/null
+        source "$1"
+    fi
+
+    # source external segments
+    local segment_dir
+    # BASH_SOURCE[0] here is the current script here is pureline
+    # it get the segments directory in the os 
+    segment_dir=$(dirname "${BASH_SOURCE[0]}")'/segments'
+    for segment_index in "${!PL_SEGMENTS[@]}"; do
+        # check if segment function is not defined
+        segment_function=${PL_SEGMENTS[$segment_index]%% *}
+        if [ -z "$(type -t "$segment_function")" ]; then
+            # if not defined, source external function
+            # shellcheck source=/dev/null
+            source "$segment_dir"'/'"$segment_function"
+        fi
+    done
+
+    # dynamically set the PS1
+    if [[ ! ${PROMPT_COMMAND} =~ 'pureline_ps1' ]]; then
+        eval "$(echo -e "
+            function pureline_ps1 {
+                __pureline_pre
+                $PROMPT_COMMAND
+                __pureline_post
+            }
+        ")"
+        PROMPT_COMMAND="pureline_ps1"
+        # Note: defining PROMPT_COMMAND as a call to a single function simplifies a lot
+        #   the integration of pureline in other prompt-modifying tools 
+        #   (like the 'shell integration' feature of the integrated terminals of VSCode).
+    fi
+}
+
+main 
