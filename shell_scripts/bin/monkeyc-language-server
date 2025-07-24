@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+java -jar /home/linya/.Garmin/ConnectIQ/Sdks/connectiq-sdk-lin-8.2.2-2025-07-17-cf29b22d5/bin/LanguageServer.jar com.garmin.monkeybrains.languageserver.LSLauncher

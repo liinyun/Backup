@@ -73,3 +73,8 @@ yst - Add surrounding tag
 
 
 
+------- Comment.nvom -----
+gcO    create a commandline above current line
+
+icon neotree use also defined by web-dev-icon.nvim
+

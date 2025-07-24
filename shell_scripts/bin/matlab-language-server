@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+node /home/linya/applications/lsp/MATLAB-language-server/out/index.js --stdio 

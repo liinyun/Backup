@@ -56,38 +56,44 @@ vim.api.nvim_set_keymap("n", "zc", "zc:lua UpdateFoldSigns()<CR>", { noremap = t
 -- keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
 vim.keymap.set("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 -- shortcut to view the source code
-vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-
+-- vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+-- vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
 vim.keymap.set("n", "<leader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
 vim.keymap.set("n", "<leader>gr", "<cmd>lua vim.lsp.buf.references()<CR>")
 vim.keymap.set("n", "<leader>gs", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>")
+vim.keymap.set("n", "<M-\\>", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true })
+
 vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 vim.keymap.set("n", "<leader>tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
-vim.keymap.set("n", "<M-CR>", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+vim.keymap.set("n", "<M-CR>", "<cmd>lua vim.ls .buf.code_action()<CR>")
+
+vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+vim.keymap.set("n", "gp", "<cmd>Lspsaga goto_definition<CR>")
+-- vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+-- vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+-- vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 
 -- quickfix
 
-vim.keymap.set("n", "<leader>q",
-  function()
-    local is_open = vim.fn.getqflist({ winid = 0 }).winid ~= 0
-    if is_open then
-      vim.cmd("cclose")
-    else
-      vim.cmd("copen")
-    end
-  end
-  , {
-    desc = "Toggle quickfix",
-  })
+vim.keymap.set("n", "<leader>q", function()
+	local is_open = vim.fn.getqflist({ winid = 0 }).winid ~= 0
+	if is_open then
+		vim.cmd("cclose")
+	else
+		vim.cmd("copen")
+	end
+end, {
+	desc = "Toggle quickfix",
+})
 
 -- telescope
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fs", require("telescope.builtin").current_buffer_fuzzy_find, {})
+-- local builtin = require("telescope.builtin")
+-- vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+-- vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+-- vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+-- vim.keymap.set("n", "<leader>fs", require("telescope.builtin").current_buffer_fuzzy_find, {})
 -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 -- This shortcut is for Floaterm
@@ -103,4 +109,4 @@ vim.keymap.set("c", "<C-k>", "<C-p>", { noremap = true, silent = true })
 -- =========================================================================
 -- =========================== terminal mode ===============================
 -- =========================================================================
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
+vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", { noremap = true })

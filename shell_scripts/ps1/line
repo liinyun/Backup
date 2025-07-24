@@ -270,11 +270,13 @@ function set_default_symbols {
         # [background_jobs]="↔"
                                 
         [git_branch]=""
-        [git_untracked]="↔"
+        # [git_untracked]="↔"
+        [git_untracked]="untracked "
         [git_stash]="§"
         [git_ahead]="↑"
         [git_behind]="↓"
-        [git_modified]="✚ "
+        # [git_modified]="✚ "
+        [git_modified]="modified "
         [git_staged]="✔ "
         [git_conflicts]="✘ "
                                   

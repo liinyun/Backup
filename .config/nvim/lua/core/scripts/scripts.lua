@@ -3,30 +3,28 @@
 
 -- define my own highlight group
 vim.api.nvim_set_hl(0, "MySlimeHighlight", {
-  fg = "#9399b2", -- Your chosen foreground color
-  -- fg = "#9370DB",
-  -- bg = "#9399b2",
-  underline = true, -- Add underline style
-  bold = true,
+	fg = "#9399b2", -- Your chosen foreground color
+	-- fg = "#9370DB",
+	-- bg = "#9399b2",
+	underline = true, -- Add underline style
+	bold = true,
 })
 
 vim.api.nvim_create_namespace("SlimeSign")
 
 vim.fn.sign_define("SlimeCell", {
-  text = "▶", -- The symbol to show
-  texthl = "MySlimeHighlight", -- Highlight group for the sign
-  linehl = "MySlimeHighlight", -- Optional: highlight for the whole line
-  -- numhl = "", -- Optional: highlight for the line number
+	text = "▶", -- The symbol to show
+	texthl = "MySlimeHighlight", -- Highlight group for the sign
+	linehl = "MySlimeHighlight", -- Optional: highlight for the whole line
+	-- numhl = "", -- Optional: highlight for the line number
 })
-
 
 -- my test function to test highlight
 function HighlightWord(word)
-  -- vim.fn.matchadd("MySlimeHighlight", "vim")
+	-- vim.fn.matchadd("MySlimeHighlight", "vim")
 end
 
 vim.api.nvim_create_user_command("TestHigh", HighlightWord, { nargs = "*" })
-
 
 -- 运行脚本并捕获输出
 -- 这是为了 可以使用nvim的
@@ -36,73 +34,113 @@ vim.api.nvim_create_user_command("TestHigh", HighlightWord, { nargs = "*" })
 -- RunScript "! bash run.sh"   或者  RunScript "! python run.py"
 -- 如果看了下面的源码就知道 这个命令是直接放到 cmd 中执行的
 vim.api.nvim_create_user_command("RunScript", function(opts)
-  -- Split the command arguments into an array
-  -- for vim.system demand cmd a table
-  -- local cmd = vim.split(opts.args, " ", { trimempty = true })
-  -- Insert 'run.sh' at the end of our command array
-  local result = vim.system(opts.fargs, { text = true }):wait()
-  local items = {}
+	-- Split the command arguments into an array
+	-- for vim.system demand cmd a table
+	-- local cmd = vim.split(opts.args, " ", { trimempty = true })
+	-- Insert 'run.sh' at the end of our command array
+	local result = vim.system(opts.fargs, { text = true }):wait()
+	local items = {}
 
-  if result.stdout then
-    for line in result.stdout:gmatch("[^\r\n]+") do
-      table.insert(items, { text = line })
-    end
-  end
+	if result.stdout then
+		for line in result.stdout:gmatch("[^\r\n]+") do
+			table.insert(items, { text = line })
+		end
+	end
 
-  vim.fn.setqflist(items)
-  vim.cmd("copen")
+	vim.fn.setqflist(items)
+	vim.cmd("copen")
 end, { nargs = "*" }) -- Allow any number of arguments
 
 -- transfer dos to unix
 vim.api.nvim_create_user_command("Dos2Unix", function()
-  -- Execute the commands in sequence
-  vim.cmd("e ++ff=dos")
-  vim.cmd("set fileformat=unix")
-  vim.cmd("update")
+	-- Execute the commands in sequence
+	vim.cmd("e ++ff=dos")
+	vim.cmd("set fileformat=unix")
+	vim.cmd("update")
 end, {})
 
 -- Auto-save when leaving Insert mode (entering Normal mode)
 local function SaveFileEnteringNormalMode()
-  vim.cmd("silent! update")
-  local filetype = vim.bo.filetype
-  if filetype == "rust" then
-    -- this function could get an error. If I change mode before rust lsp is fully loaded, it may rings error, but it's ok, it's just because the lsp is not fully loaded
-    vim.cmd("RustLsp flyCheck")
-    vim.lsp.codelens.refresh()
-  end
+	vim.cmd("silent! update")
+	local filetype = vim.bo.filetype
+	if filetype == "rust" then
+		-- this function could get an error. If I change mode before rust lsp is fully loaded, it may rings error, but it's ok, it's just because the lsp is not fully loaded
+		vim.cmd("RustLsp flyCheck")
+		vim.lsp.codelens.refresh()
+	end
 end
 
 vim.api.nvim_create_autocmd("ModeChanged", {
-  -- nested = true,
-  callback = SaveFileEnteringNormalMode,
+	-- nested = true,
+	callback = SaveFileEnteringNormalMode,
 })
-
 
 -- set self defined comment pattern
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*.dae",              -- Replace with your file extension (e.g., *.foo)
-  callback = function()
-    vim.bo.commentstring = "# %s" -- Example: Use `#` for comments (like Python)
-    -- Alternatives:
-    -- vim.bo.commentstring = "// %s"  (C-style)
-    -- vim.bo.commentstring = "<!-- %s -->"  (HTML)
-  end,
+	pattern = "*.dae", -- Replace with your file extension (e.g., *.foo)
+	callback = function()
+		vim.bo.commentstring = "# %s" -- Example: Use `#` for comments (like Python)
+		-- Alternatives:
+		-- vim.bo.commentstring = "// %s"  (C-style)
+		-- vim.bo.commentstring = "<!-- %s -->"  (HTML)
+	end,
 })
 
 -- don't use any method to open a folder with nvim, just enter folder and operate nvim
 
-
+-- although tmux offer optioin to sync clipboard in tmux with system clipboard. the proble is that it can only send content in tmux clipbaord to system clipboard when copy, but not synchronizes content of system clipboard to tmux clipboard.
+-- so the most important problem is to make tmux refresh its clipbaord to make it read the content from system clipbaord again
 function RefreshTmuxClipboard()
-  vim.fn.system("tmux refresh-client -l")
+	-- local status = vim.system({ "which", "tmux" }, { text = true })
+	-- if status then
+	vim.system({ "tmux", "refresh-client", "-l" }, { text = true })
+	-- vim.fn.system("tmux refresh-client -l")
+	-- end
 end
+
+-- timer has some problem with vim.system, so this approach is not good
+-- 我现在传入 on_exit
+-- local cnt = 0
+-- local timer = vim.uv.new_timer()
+-- if timer then
+-- 	timer:start(0, 1, function()
+-- 		print(cnt)
+-- 		cnt = cnt + 1
+--
+-- 		local on_exit = function(obj)
+-- 			local a = 0
+-- 			-- print("onexit", vim.inspect(obj))
+-- 		end
+--
+-- 		-- vim.system({ "tmux", "refresh-client", "-l" }, { text = true }, on_exit)
+-- 		vim.system({ "echo", "hello" }, { text = true }, on_exit)
+-- 	end)
+-- end
+
+-- local cnt = 0
+-- local timer = assert(vim.uv.new_timer())
+-- timer:start(0, 1, function()
+-- 	print(cnt)
+-- 	cnt = cnt + 1
+--
+-- 	vim.system({ "echo", "hello" }, { text = true }, function(obj)
+-- 		print("onexit", vim.inspect(obj))
+-- 		if obj.code == 0 and timer:is_active() and not timer:is_closing() then
+-- 			timer:stop()
+-- 			timer:close()
+-- 		end
+-- 	end)
+-- end)
 
 if os.getenv("TMUX") ~= nil then
-  vim.api.nvim_set_keymap("n", "p", [[:lua RefreshTmuxClipboard()<CR>p]], { noremap = true, silent = true })
-  vim.api.nvim_set_keymap("n", "P", [[:lua RefreshTmuxClipboard<CR>P]], { noremap = true, silent = true })
+	vim.api.nvim_create_autocmd("InsertLeave", {
+		pattern = "*",
+		callback = RefreshTmuxClipboard,
+	})
+
+	vim.api.nvim_set_keymap("n", "p", [[:lua RefreshTmuxClipboard()<CR>p]], { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "P", [[:lua RefreshTmuxClipboard()<CR>P]], { noremap = true, silent = true })
 end
-
-
-
 
 -- defin the correspond highlightt group
 vim.api.nvim_set_hl(0, "MyFoldColumn", { fg = "#85EEA7" })
@@ -110,25 +148,21 @@ vim.api.nvim_set_hl(0, "MyFoldColumn", { fg = "#85EEA7" })
 vim.fn.sign_define("FoldClosed", { text = "▼", texthl = "MyFoldColumn" })
 
 function UpdateFoldSigns()
-  local bufnr = vim.api.nvim_get_current_buf()
-  -- Clear previous fold signs
-  vim.fn.sign_unplace("FoldSigns", { buffer = bufnr })
-  -- Iterate through all lines and place fold signs only for closed folds
-  for lnum = 1, vim.api.nvim_buf_line_count(bufnr) do
-    if vim.fn.foldclosed(lnum) ~= -1 then -- Only place if fold is closed
-      vim.fn.sign_place(0, "FoldSigns", "FoldClosed", bufnr, { lnum = lnum, priority = 10 })
-    end
-  end
+	local bufnr = vim.api.nvim_get_current_buf()
+	-- Clear previous fold signs
+	vim.fn.sign_unplace("FoldSigns", { buffer = bufnr })
+	-- Iterate through all lines and place fold signs only for closed folds
+	for lnum = 1, vim.api.nvim_buf_line_count(bufnr) do
+		if vim.fn.foldclosed(lnum) ~= -1 then -- Only place if fold is closed
+			vim.fn.sign_place(0, "FoldSigns", "FoldClosed", bufnr, { lnum = lnum, priority = 10 })
+		end
+	end
 end
 
 -- refresh folder symbol in gutter everytime enter a buffer
 vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    UpdateFoldSigns()
-  end,
+	callback = UpdateFoldSigns,
 })
-
-
 
 -- why the below command is no use because I always enter TMUX first then open nvim
 -- every time I launch nvim, it's Term will never be changed

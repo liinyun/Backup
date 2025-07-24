@@ -26,6 +26,8 @@ return {
 			-- python = { "isort", "black", stop_after_first = true },
 			python = { "ruff" },
 			javascript = { "prettierd", "prettier", stop_after_first = true },
+      -- jsonc = { "prettierd", "prettier", stop_after_first = true },
+      jsonc = { "biome" },
 			-- htmldjango = { "djlint", "djlint-reformat", "djlint-django", "djlint-reformat-django" }
 		},
 		-- Set default options
@@ -42,8 +44,16 @@ return {
 			shfmt = {
 				prepend_args = { "-i", "2" },
 			},
+			-- ruff = {
+			-- 	command = "ruff",
+			-- 	args = {
+			-- 		"--unfixable",
+			-- 		"F401",
+			-- 	},
+			-- },
 			djlint = {
-				command = vim.fn.stdpath("data") .. "/mason/bin/djlint",
+				-- command = vim.fn.stdpath("data") .. "/mason/bin/djlint",
+				command = "djlint",
 				args = {
 					"--reformat",
 					"-",

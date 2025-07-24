@@ -14,7 +14,6 @@ return {
       enable_diagnostics = true,
       defaults_components_configs = {
         indent = {
-
           with_markers = true,
           indent_marker = "│",
           last_indent_marker = "└",

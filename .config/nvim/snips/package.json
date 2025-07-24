@@ -10,7 +10,14 @@
           "htmldjango"
         ],
         "path": "./init/htmldjango.json"
-      }
+      },
+
+      {
+      "language": [
+      "matlab"
+    ],
+      "path": "./init/matlab.json"
+    }
     ]
   }
 }

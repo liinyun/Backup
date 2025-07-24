@@ -49,6 +49,7 @@ osc52 = "CopyPaste"
 
 [cursor]
 style.shape = "Block"
+# style.shape = "Beam"
 style.blinking = "On"
 
 [keyboard]

@@ -1,6 +1,5 @@
 -- 这个配置太零散了，以后要找机会将这个配置整理一下
 
-local scripts = require("core.scripts.scripts")
 local opt = vim.opt
 
 -- Session Management it is the default session manager in neovin
@@ -23,6 +22,12 @@ opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
 vim.bo.softtabstop = 2
+vim.o.winborder = "rounded"
+
+-- auto detect fileencodings
+vim.opt.fileencodings = "ucs-bom,utf-8,gb18030,gbk,gb2312,cp936,big5,latin1"
+
+-- vim.o.completeopt = "preview"
 
 -- Line Wrapping
 opt.wrap = true
@@ -47,9 +52,9 @@ opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
 vim.diagnostic.config({
-  float = { border = "rounded" }, -- add border to diagnostic popups
-  virtual_text = true,
-  undofile = true,
+	float = { border = "rounded" }, -- add border to diagnostic popups
+	virtual_text = true,
+	undofile = true,
 })
 
 -- this is to add node_modules to the path, this will search node_modules in the whole project
@@ -74,22 +79,23 @@ opt.mouse = "a"
 -- Folding
 -- opt.foldlevel = 100
 local function myFoldText()
-  return "++-"
+	return "++-"
 end
 
-
 opt.foldlevelstart = 100
+-- opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
 opt.foldmethod = "indent"
-opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
 opt.foldtext = myFoldText()
+-- vim.opt.foldcolumn = "3"
+-- opt.foldtext = vim.fn.getline(vim.v.foldstart)
 vim.opt.fillchars:append("fold:-")
 -- vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
 
 -- 设置撤销文件的保存路径
 local undodir = vim.fn.stdpath("data") .. "/undodir"
 if vim.fn.isdirectory(undodir) == 0 then
-  -- 如果不存在就创建这个文件夹
-  vim.fn.mkdir(undodir, "p")
+	-- 如果不存在就创建这个文件夹
+	vim.fn.mkdir(undodir, "p")
 end
 vim.opt.undodir = undodir
 -- 启用持久化撤销
