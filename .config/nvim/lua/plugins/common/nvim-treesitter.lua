@@ -13,20 +13,24 @@ return {
 		-- 	event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
 		-- },
 	},
+
+	priority = 100,
 	-- treesitter will auto update its parser everytime it updates
 	build = ":TSUpdate",
+
+	lazy = false,
 	opts = {
-		-- highlight = {
-		-- 	enable = true,
-		-- 	disable = { "latex" },
-		-- },
+		highlight = {
+			enable = true,
+			disable = { "latex" },
+		},
 		rainbow = {
 			enable = true, -- enable rainbow parenthesis
 			extended_mode = true, -- enable rainbow parenthesis in comment codes
 			max_file_lines = nil, -- don't restrain the file size
 		},
 		indent = { enable = true },
-		auto_install = true, -- automatically install syntax support when entering new file type buffer
+		auto_install = false, -- automatically install syntax support when entering new file type buffer
 		autotag = {
 			enable = true,
 		},
@@ -52,7 +56,7 @@ return {
 			"markdown",
 			"python",
 			"vue",
-			"rust",
+			-- "rust",
 			"make",
 			"matlab",
 			"toml",

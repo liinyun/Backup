@@ -104,7 +104,7 @@ M = {
 		-- })
 
 		lspconfig["marksman"].setup({
-			cmd = { "marksman-linux-x64" },
+			cmd = { "marksman" },
 			capabilities = lsp_capabilities,
 			filetypes = { "markdown" },
 		})

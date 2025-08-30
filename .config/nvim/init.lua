@@ -8,10 +8,12 @@
 vim.g.mapleader = " "
 -- enable 24-bit RGB support in the terminal
 vim.opt.termguicolors = true
+-- vim.opt.regexpengine = 2
 
 vim.filetype.add({
 	extension = {
 		mc = "monkeyc",
+		peggy = "peggyjs",
 	},
 })
 

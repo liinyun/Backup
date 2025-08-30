@@ -4,6 +4,7 @@ local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
 return {
 	cmd = { "typescript-language-server", "--stdio" },
 	capabilities = lsp_capabilities,
+	root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
 	on_attach = function(client, bufnr) end,
 	on_init = function(client, bufnr)
 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -23,6 +24,7 @@ return {
 			tsserver = {
 				useSyntaxServer = true,
 			},
+			-- tsdk = "/home/linya/.local/share/fnm/node-versions/v22.12.0/installation/lib",
 			inlayHints = {
 				includeInlayParameterNameHints = "all",
 				includeInlayParameterNameHintsWhenArgumentMatchesName = true,

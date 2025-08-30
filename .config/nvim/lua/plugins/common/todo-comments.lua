@@ -23,7 +23,7 @@ return {
 			PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
 			NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
 			TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-			Ques = { icon = "❔", color = "hint", alt = { "WARNING", "XXX" } },
+			QUES = { icon = "❔", color = "warning", alt = { "QUESTION", "QXXX" } },
 			-- QUES = { icon = "?", color = "hint", alt = { "???" } },
 		},
 		gui_style = {

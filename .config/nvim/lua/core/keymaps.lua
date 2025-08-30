@@ -53,7 +53,18 @@ vim.api.nvim_set_keymap("n", "zc", "zc:lua UpdateFoldSigns()<CR>", { noremap = t
 -- how the definition of the function
 -- it will show the doc, but the content is provided by lsp
 -- keymap.set("n", "<leader>gg", "<cmd>lua vim.lsp.buf.hover()<CR>")
--- keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+
+local function quit_floating_win()
+	local win_id = vim.api.nvim_get_current_win()
+	local config = vim.api.nvim_win_get_config(win_id)
+	local flag = config.relative ~= ""
+	if flag then
+		vim.api.nvim_win_close(win_id, true)
+	end
+end
+
+vim.keymap.set("n", "<Esc>", quit_floating_win, { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 -- shortcut to view the source code
 -- vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")

@@ -1,6 +1,7 @@
 local api = vim.api
 local au = api.nvim_create_autocmd
-local group = api.nvim_create_augroup("GlepnirGroup", {})
+local lsp_group = api.nvim_create_augroup("lspGroup", {})
+local monkeyc_group = api.nvim_create_augroup("monkeycGroup", {})
 
 -- au("ExitPre", {
 -- 	group = group,
@@ -30,7 +31,7 @@ local group = api.nvim_create_augroup("GlepnirGroup", {})
 -- })
 
 au("UIEnter", {
-	group = group,
+	group = lsp_group,
 	once = true,
 	callback = function()
 		vim.schedule(function()
@@ -42,6 +43,7 @@ au("UIEnter", {
 				"tinymist",
 				"matlabls",
 				"monkeyc",
+        "marksman",
 				-- "clangd",
 				-- "rust_analyzer",
 				"basedpyright",
@@ -49,23 +51,26 @@ au("UIEnter", {
 				-- "zls",
 				-- "cmake",
 				"volar",
-				"tsls",
+				-- "tsls",
+        "vtsls"
+				-- "rust-analyzer",
 			})
 
 			vim.lsp.log.set_level(vim.log.levels.DEBUG)
 
-			-- vim.diagnostic.config({
-			-- 	virtual_text = { current_line = true },
-			-- 	signs = {
-			-- 		text = { "●", "●", "●", "●" },
-			-- 		numhl = {
-			-- 			"DiagnosticError",
-			-- 			"DiagnosticWarn",
-			-- 			"DiagnosticInfo",
-			-- 			"DiagnosticHint",
-			-- 		},
-			-- 	},
-			-- })
+			vim.diagnostic.config({
+				-- virtual_text = { current_line = true },
+				virtual_text = false,
+				-- signs = {
+				-- 	text = { "●", "●", "●", "●" },
+				-- 	numhl = {
+				-- 		"DiagnosticError",
+				-- 		"DiagnosticWarn",
+				-- 		"DiagnosticInfo",
+				-- 		"DiagnosticHint",
+				-- 	},
+				-- },
+			})
 
 			api.nvim_create_user_command("LspLog", function()
 				vim.cmd(string.format("tabnew %s", vim.lsp.get_log_path()))
@@ -90,3 +95,6 @@ au("UIEnter", {
 	end,
 	desc = "Initializer",
 })
+-- au("BufRead,BufNewFile",{
+--
+-- })

@@ -64,7 +64,7 @@ local function SaveFileEnteringNormalMode()
 	vim.cmd("silent! update")
 	local filetype = vim.bo.filetype
 	if filetype == "rust" then
-		-- this function could get an error. If I change mode before rust lsp is fully loaded, it may rings error, but it's ok, it's just because the lsp is not fully loaded
+		-- this function could get an error. If I change mode before rust lsp is fully loaded, it may throw error, but it's ok, it's just because the lsp is not fully loaded
 		vim.cmd("RustLsp flyCheck")
 		vim.lsp.codelens.refresh()
 	end
@@ -80,6 +80,24 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "*.dae", -- Replace with your file extension (e.g., *.foo)
 	callback = function()
 		vim.bo.commentstring = "# %s" -- Example: Use `#` for comments (like Python)
+		-- Alternatives:
+		-- vim.bo.commentstring = "// %s"  (C-style)
+		-- vim.bo.commentstring = "<!-- %s -->"  (HTML)
+	end,
+})
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.peggy", -- Replace with your file extension (e.g., *.foo)
+	callback = function()
+		vim.bo.commentstring = "// %s" -- Example: Use `#` for comments (like Python)
+		-- Alternatives:
+		-- vim.bo.commentstring = "// %s"  (C-style)
+		-- vim.bo.commentstring = "<!-- %s -->"  (HTML)
+	end,
+})
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.mc", -- Replace with your file extension (e.g., *.foo)
+	callback = function()
+		vim.bo.commentstring = "// %s" -- Example: Use `#` for comments (like Python)
 		-- Alternatives:
 		-- vim.bo.commentstring = "// %s"  (C-style)
 		-- vim.bo.commentstring = "<!-- %s -->"  (HTML)
