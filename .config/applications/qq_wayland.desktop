@@ -1,0 +1,24 @@
+[Desktop Entry]
+Version=2.0.0-b2
+Encoding=UTF-8
+Name=QQ wayland
+Comment=QQ
+# Exec=/usr/local/bin/qq 
+# Exec=flatpak run --env=QT_QPA_PLATFORM=wayland --env=GDK_BACKEND=wayland --socket=wayland com.qq.QQ --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3 --disable-features=WaylandWindowDecorations %U
+# Exec=flatpak run --env=QT_QPA_PLATFORM=wayland --env=GDK_BACKEND=wayland --socket=wayland com.qq.QQ --enable-features=UseOzonePlatform --ozone-platform=wayland --wayland-text-input-version=3 --disable-features=WaylandWindowDecorations %U
+# Exec=flatpak run --env=QT_QPA_PLATFORM=wayland --env=GDK_BACKEND=wayland --socket=wayland com.qq.QQ --enable-features=UseOzonePlatform --wayland-text-input-version=3 --disable-features=WaylandWindowDecorations %U
+# Exec=flatpak run --env=QT_QPA_PLATFORM=wayland --env=GDK_BACKEND=wayland --socket=wayland com.qq.QQ --wayland-text-input-version=3 --disable-features=WaylandWindowDecorations %U
+# Exec=flatpak run --socket=wayland com.qq.QQ --wayland-text-input-version=3 --disable-features=WaylandWindowDecorations %U
+# Exec=flatpak run com.qq.QQ --wayland-text-input-version=3 --disable-features=WaylandWindowDecorations %U
+# Exec=flatpak run com.qq.QQ --socket=wayland %U
+# this is the most inportant param others like --socket=wayland makes it run in wayland when I have configured xwayland-satellite
+Exec=flatpak run --branch=stable --arch=x86_64 --command=qq --file-forwarding com.qq.QQ --wayland-text-input-version=3 --socket=wayland @@u %u @@ 
+# Icon=/usr/local/share/tencent-qq/qq.png
+Icon=com.qq.QQ
+Terminal=false
+Type=Application
+Categories=Application;Network;Tencent Software;
+StartupNotify=true
+Name[zh_CN]=腾讯QQ
+GenericName[zh_CN]=
+Comment[zh_CN]=腾讯QQ

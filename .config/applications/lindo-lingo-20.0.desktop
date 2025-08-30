@@ -1,0 +1,13 @@
+
+[Desktop Entry]
+Version=20.0
+Name=Lingo 20.0
+GenericName=Lingo 20.0
+Comment=www.lindo.com
+Exec=/home/linya/applications/lingo/lingo20
+Terminal=false
+Type=Application
+Icon=/home/linya/applications/lingo/images/lingo128.ico
+Path=/home/linya/applications/lingo/samples
+MimeType=application/x-lingo-model
+    

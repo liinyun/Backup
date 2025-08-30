@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Disco Elysium
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/632470
+Icon=steam_icon_632470
+Terminal=false
+Type=Application
+Categories=Game;

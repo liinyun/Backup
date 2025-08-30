@@ -1,0 +1,20 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "MesloLGLDZ Nerd Font Propo", "MesloLGLDZ Nerd Font Propo";
+  font-size: 15px;
+  min-height: 1px;
+}
+
+window#waybar {
+  /* transparent  backaround  */
+  /* background: rgba(43, 48, 59, 0); */
+  background: transparent;
+  border-bottom: 1px;
+  /* font color or foreground color */
+  color: white;
+}
+#battery.charging {
+  color: white;
+  background-color: #26A65B;
+}

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Comment=
+Exec=/home/linya/applications/DataGrip-2024.3.3/bin/datagrip
+Icon=/home/linya/applications/DataGrip-2024.3.3/bin/datagrip.png
+Name=DataGrip
+NoDisplay=false
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Readest
+Exec=/usr/bin/readest %u
+Terminal=false
+MimeType=x-scheme-handler/readest
+NoDisplay=true

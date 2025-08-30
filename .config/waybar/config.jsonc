@@ -1,0 +1,211 @@
+{
+	"modules-right": [
+		// "mpd",
+		// "idle_inhibitor",
+		// "niri/workspaces",
+		"pulseaudio",
+		"bluetooth",
+		// "jack",
+		"cpu",
+		"memory",
+		// "temperature",
+		"backlight",
+		"keyboard-state",
+		// "sway/language",
+		"power-profiles-daemon",
+		"battery",
+		"network",
+		"clock",
+		"tray"
+		// "group/group-power"
+		// "custom/power"
+	],
+	// this config is useless, to now the window I am in is meaningless
+	// to know the window I am not in is meaningful
+	// "modules-center": ["niri/window"],
+	"pulseaudio": {
+		// "scroll-step": 1, // %, can be a float
+		"format": "{volume}%{format_source}",
+		// "format-bluetooth": "{volume}% {format_source} ",
+		// "format-bluetooth-muted": " {icon} {format_source} ",
+		"format-muted": " {format_source} ",
+		"format-source": "{volume}% ",
+		"format-source-muted": " ",
+		"format-icons": {
+			"headphone": "",
+			"hands-free": "",
+			"headset": "",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": ["", "", ""]
+		},
+		"on-click": "pavucontrol"
+	},
+	"bluetooth": {
+		"format": "{status} ",
+		"format-connected": "{num_connections} ",
+		// "format-connected": "{device_alias} ",
+		// "format-connected-battery": "{device_alias}{device_battery_percentage}% ",
+		// "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+		"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+		"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+	},
+
+	"keyboard-state": {
+		"numlock": true,
+		"capslock": true,
+		"format": "{name} {icon}",
+		"format-icons": {
+			"locked": "",
+			"unlocked": ""
+		}
+	},
+	"tray": {
+		// "icon-size": 21,
+		"spacing": 5
+	},
+	"clock": {
+		// "timezone": "America/New_York",
+		// "tooltip-format": "{:%Y-%m-%d :%H:%M:%S}",
+		"interval": 1,
+		"format": "{:%m-%d %H:%M:%S %a}||",
+		// "format-alt": "{:%Y-%m-%d}",
+		"tooltip": false
+	},
+	"cpu": {
+		"format": "{usage}% ",
+		"tooltip": false
+	},
+	"memory": {
+		"interval": 30,
+		"format": "{used:0.1f}G/{total:0.1f}G "
+	},
+	// "memory": {
+	// 	// "format": "{perchent}%"
+	// 	"format": "{percentage}% "
+	// },
+	"temperature": {
+		// "thermal-zone": 2,
+		// "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+		"critical-threshold": 80,
+		// "format-critical": "{temperatureC}°C {icon}",
+		"format": "{icon}{temperatureC}°C ",
+		"format-icons": ["", "", ""]
+	},
+	"backlight": {
+		// "device": "acpi_video1",
+		"format": "{icon}{percent}% ",
+		"format-icons": ["", "", "", "", "", "", "", "", ""]
+	},
+	"power-profiles-daemon": {
+		"format": "{icon}",
+		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+		"tooltip": true,
+		"format-icons": {
+			"default": "",
+			"performance": "",
+			"balanced": "",
+			"power-saver": ""
+		}
+	},
+	"battery": {
+		"interval": 30,
+		"states": {
+			// "good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{icon}{capacity}% ",
+		// "format-full": "{icon} {capacity}% ",
+		// "format-charging": " {capacity}% ",
+		// "format-plugged": " {capacity}%",
+		// "format-alt": "{time} {icon}",
+		// "format-good": "", // An empty format will hide the module
+		// "format-full": "",
+		"format-icons": ["", "", "", "", ""]
+	},
+	"network": {
+		"interface": "wlo1",
+		"format": "{ifname}||",
+		// "format-wifi": "{essid} ({signalStrength}%)||",
+		"format-wifi": "||{bandwidthDownBytes} {bandwidthUpBytes}||",
+		"format-ethernet": "󰊗{ipaddr}/{cidr}||",
+		"format-disconnected": "", //An empty format will hide the module.
+		"tooltip-format": "{ifname} via {gwaddr} 󰊗",
+		"tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+		"tooltip-format-ethernet": "{ifname} ",
+		"tooltip-format-disconnected": "Disconnected"
+		// "max-length": 400
+	},
+	"group/group-power": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 500,
+			"children-class": "not-power",
+			"transition-left-to-right": false
+		},
+		"modules": [
+			"custom/power", // First element is the "group leader" and won't ever be hidden
+			"custom/quit",
+			"custom/lock",
+			"custom/reboot"
+		]
+	},
+	"custom/quit": {
+		"format": "󰗼",
+		"tooltip": false,
+		"on-click": "hyprctl dispatch exit"
+	},
+	"custom/lock": {
+		"format": "󰍁",
+		"tooltip": false,
+		"on-click": "swaylock"
+	},
+	"custom/reboot": {
+		"format": "󰜉",
+		"tooltip": false,
+		"on-click": "reboot"
+	},
+	"custom/power": {
+		"format": "",
+		"tooltip": false,
+		"on-click": "shutdown now"
+	},
+	// "custom/power": {
+	// 	"format": "⏻ ",
+	// 	"tooltip": true,
+	// 	"tooltip-format": "Click to Power Off",
+	// 	"menu": "on-click",
+	// 	"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+	// 	"menu-actions": {
+	// 		"shutdown": "shutdown",
+	// 		"reboot": "reboot",
+	// 		"suspend": "systemctl suspend",
+	// 		"hibernate": "systemctl hibernate"
+	// 	}
+	// },
+	"niri/workspaces": {
+		"format": "{icon}",
+		"format-icons": {
+			// Named workspaces
+			// (you need to configure them in niri)
+			"browser": "",
+			"discord": "",
+			"chat": "<b></b>",
+
+			// Icons by state
+			"active": "",
+			"default": ""
+		}
+	},
+	"niri/window": {
+		"format": "{}",
+		"rewrite": {
+			"(.*) - Mozilla Firefox": "🌎 $1",
+			"(.*) - zsh": "> [$1]"
+		}
+	}
+}

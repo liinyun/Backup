@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment=3D modeling, animation, rendering and post-production
+Exec=/home/linya/applications/blender-4.3.2-linux-x64/blender %f
+GenericName=3D modeler
+Icon=blender
+Keywords=3d;cg;modeling;animation;painting;sculpting;texturing;video editing;video tracking;rendering;render engine;cycles;python;
+MimeType=application/x-blender;
+Name=Blender
+NoDisplay=false
+Path=
+PrefersNonDefaultGPU=true
+StartupNotify=true
+StartupWMClass=Blender
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-RunOnDiscreteGpu=true
+X-KDE-SubstituteUID=false
+X-KDE-Username=

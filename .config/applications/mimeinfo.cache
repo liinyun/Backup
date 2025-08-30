@@ -1,0 +1,14 @@
+[MIME Cache]
+application/fiddler-classic-filters-archive=appimagekit-fiddler-everywhere.desktop;
+application/fiddler-rules-archive=appimagekit-fiddler-everywhere.desktop;
+application/fiddler-session-archive=appimagekit-fiddler-everywhere.desktop;
+application/http-archive+json=appimagekit-fiddler-everywhere.desktop;
+application/x-blender=blender-2.desktop;
+application/x-lingo-model=lindo-lingo-20.0.desktop;
+x-scheme-handler/clash=clash-verge-handler.desktop;
+x-scheme-handler/clash-verge=clash-verge-handler.desktop;
+x-scheme-handler/fiddlerapp=appimagekit-fiddler-everywhere.desktop;
+x-scheme-handler/mw-matlab=mw-matlab.desktop;
+x-scheme-handler/mw-matlabconnector=mw-matlabconnector.desktop;
+x-scheme-handler/mw-simulink=mw-simulink.desktop;
+x-scheme-handler/readest=readest-handler.desktop;

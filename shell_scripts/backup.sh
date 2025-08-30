@@ -35,6 +35,35 @@ rsync -av --delete "$MPV_PATH_SOURCE" "$CONFIG_PATH_TARGET"
 KITTY_PATH_SOURCE="$HOME/.config/kitty"
 rsync -av --delete "$KITTY_PATH_SOURCE" "$CONFIG_PATH_TARGET"
 
+# niri
+NIRI_PATH_SOURCE="$HOME/.config/niri"
+rsync -av --delete "$NIRI_PATH_SOURCE" "$CONFIG_PATH_TARGET"
+
+# xsettingsd
+XSETTINGSD_PATH_SOURCE="$HOME/.config/xsettingsd"
+rsync -av --delete "$XSETTINGSD_PATH_SOURCE" "$CONFIG_PATH_TARGET"
+
+# mpd
+MPD_PATH_SOURCE="$HOME/.config/mpd"
+rsync -av --delete "$MPD_PATH_SOURCE" "$CONFIG_PATH_TARGET"
+
+# rmpc
+RMPC_PATH_SOURCE="$HOME/.config/rmpc"
+rsync -av --delete "$RMPC_PATH_SOURCE" "$CONFIG_PATH_TARGET"
+
+# waybar
+WAYBAR_PATH_SOURCE="$HOME/.config/waybar"
+rsync -av --delete "$WAYBAR_PATH_SOURCE" "$CONFIG_PATH_TARGET"
+
+
+# hypr
+HYPR_PATH_SOURCE="$HOME/.config/hypr"
+rsync -av --delete "$HYPR_PATH_SOURCE" "$CONFIG_PATH_TARGET"
+
+
+# desktopfile
+DESKTOP_PATH_SOURCE="$HOME/.local/share/applications"
+rsync -av --delete "$DESKTOP_PATH_SOURCE" "$CONFIG_PATH_TARGET"
 
 
 
