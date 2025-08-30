@@ -65,6 +65,11 @@ rsync -av --delete "$HYPR_PATH_SOURCE" "$CONFIG_PATH_TARGET"
 DESKTOP_PATH_SOURCE="$HOME/.local/share/applications"
 rsync -av --delete "$DESKTOP_PATH_SOURCE" "$CONFIG_PATH_TARGET"
 
+# dockerfiles
+DOCKER_PATH_SOURCE="$HOME/codes/DOCKER"
+rsync -av --delete "$DOCKER_PATH_SOURCE" "$CONFIG_PATH_TARGET"
+
+
 
 
 

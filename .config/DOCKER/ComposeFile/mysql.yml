@@ -1,0 +1,25 @@
+# This Docker Compose YAML deploys a MySQL database
+services:
+  container-name:
+
+    image: mysql:9.0.0 # Official MySQL image from Docker Hub
+    restart: always
+
+    environment:
+      # Note - Root password is mandatory for the container to run and grant privileges to our User.
+      MYSQL_ROOT_PASSWORD: 123456
+
+      MYSQL_DATABASE: brasystem # Same name as used in your project
+
+      # DB User Details
+      # MYSQL_USER: ${MYSQL_USER}
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+    ports:
+      # Adjust this port as per your needs -> <hostPort>:<containerPort>
+      - 3308:3306 # DB is available at localhost:3308 on the host.
+
+    volumes:
+      - /home/linya/codes/data/mysql/:/var/lib/mysql
+
+

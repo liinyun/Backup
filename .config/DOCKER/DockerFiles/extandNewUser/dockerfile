@@ -1,0 +1,11 @@
+FROM quay.io/centos/centos:stream9
+
+CMD ["/bin/bash"]
+
+# create new user and add it to wheel and config passwd for it  
+# Install sudo 
+RUN useradd -m linyun && usermod -aG wheel linyun && echo "linyun:Bzjydhr" | chpasswd && dnf install -y sudo
+ENV TERM=xterm-256color
+
+# change the user 
+USER linyun
