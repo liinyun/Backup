@@ -8,7 +8,8 @@ local M
 --   end
 -- end
 local monkeyc_ls_jar_path =
-	"/home/linya/.Garmin/ConnectIQ/Sdks/connectiq-sdk-lin-8.2.2-2025-07-17-cf29b22d5/bin/LanguageServer.jar"
+	-- "/home/linya/.Garmin/ConnectIQ/Sdks/connectiq-sdk-lin-8.2.2-2025-07-17-cf29b22d5/bin/LanguageServer.jar"
+	"/home/linya/.Garmin/ConnectIQ/Sdks/connectiq-sdk-lin-8.2.1-2025-06-19-f69b94140/bin/LanguageServer.jar"
 local monkeycLspCapabilities = vim.lsp.protocol.make_client_capabilities()
 -- Need to set some variables in the client capabilities to prevent the
 -- LanguageServer from raising exceptions

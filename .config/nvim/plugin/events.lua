@@ -43,7 +43,7 @@ au("UIEnter", {
 				"tinymist",
 				"matlabls",
 				"monkeyc",
-        "marksman",
+				"marksman",
 				-- "clangd",
 				-- "rust_analyzer",
 				"basedpyright",
@@ -52,7 +52,7 @@ au("UIEnter", {
 				-- "cmake",
 				"volar",
 				-- "tsls",
-        "vtsls"
+				"vtsls",
 				-- "rust-analyzer",
 			})
 

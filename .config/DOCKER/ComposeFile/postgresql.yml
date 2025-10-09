@@ -5,7 +5,9 @@ services:
 
   db:
     image: postgres
-    restart: always
+    container_name: postgres
+    # start on computer login
+    # restart: always
     # set shared memory limit when using docker-compose
     shm_size: 128mb
     # or set shared memory limit when deploy via swarm stack

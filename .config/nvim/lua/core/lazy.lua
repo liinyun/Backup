@@ -25,7 +25,6 @@ require("lazy").setup({
 	{ import = "plugins.cmp-lsp" },
 	-- { import = "plugins.others" }
 	-- { import = "plugins.lsp.lspconfig" },
-	-- { import = "plugins.lsp.mason" }
 }, {
 	git = {
 		url_format = "git@github.com:%s.git",

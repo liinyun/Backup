@@ -26,7 +26,9 @@ export PATH="$PATH:/home/linya/applications/lsp"
 export PATH="$PATH:/home/linya/applications/kindle/kindlegen"
 
 # export PATH="$PATH:/home/linya/applications/sdks/garmin/share"
-export PATH="$PATH:/home/linya/applications/sdks/garmin/bin"
+# export PATH="$PATH:/home/linya/applications/sdks/garmin/bin"
+export PATH="$PATH: /home/linya/applications/sdkmanager/bin"
+export PATH="$PATH:/home/linya/applications/sdkmanager/share"
 # this is to fix libjpeg.so.8 unfind problem
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/linya/applications/sdks/garmin/lib/jpeg-8d/.libs
 
@@ -37,8 +39,9 @@ GARMIN_SDK_PATH="${GARMIN_SDK_PATH#"${GARMIN_SDK_PATH%%[![:space:]]*}"}" # Trim 
 GARMIN_SDK_PATH="${GARMIN_SDK_PATH%"${GARMIN_SDK_PATH##*[![:space:]]}"}" # Trim trailing whitespace
 GARMIN_SDK_PATH="${GARMIN_SDK_PATH/\~/$HOME}" # Expand tilde to $HOME
 
+export PATH="$PATH:${GARMIN_SDK_PATH}"
 # Add to PATH, ensuring no leading colon if PATH is empty
-export PATH="${PATH:+${PATH}:}${GARMIN_SDK_PATH}/bin"
+# export PATH="${PATH:+${PATH}:}${GARMIN_SDK_PATH}/bin"
 
 
 

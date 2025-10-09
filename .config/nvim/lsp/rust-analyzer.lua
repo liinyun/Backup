@@ -109,6 +109,7 @@ return {
 	},
 	settings = {
 		["rust-analyzer"] = {
+			rustc = { source = "discover" },
 
 			assist = {
 				importEnforceGranularity = true,

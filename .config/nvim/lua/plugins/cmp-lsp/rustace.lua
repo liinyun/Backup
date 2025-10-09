@@ -119,7 +119,6 @@ M = {
 		-- ---@type RustAnalyzerConfig
 		-- local raconfig = {
 		tools = {
-
 			on_initialized = function(status)
 				local health = status.health
 
@@ -147,6 +146,7 @@ M = {
 			end,
 			default_settings = {
 				["rust-analyzer"] = {
+					rustc = { source = "discover" },
 					assist = {
 						importEnforceGranularity = true,
 						importPrefix = "by_self",
@@ -166,6 +166,7 @@ M = {
 						extraArgs = {
 							"--no-deps",
 							"--message-format=json-diagnostic-rendered-ansi",
+							"Wclippy::pedantic",
 						},
 					},
 					diagnostics = {
