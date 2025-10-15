@@ -175,17 +175,15 @@ M = {
 						enable = true,
 						refreshOnChange = true,
 						disabled = {
-							disabled = {
-								"proc-macro-disabled",
-								"unfulfilled_lint_expectations",
-								-- rustc 的 lint 已经有这些了
-								"unused_variables",
-								"unused_mut", -- rustc 更准确
+							"proc-macro-disabled",
+							"unfulfilled_lint_expectations",
+							-- rustc 的 lint 已经有这些了
+							"unused_variables",
+							"unused_mut", -- rustc 更准确
 
-								-- clippy 的 lint 已经有这些了
-								"needless_return",
-							}, -- 要禁用的rust-analyzer诊断列表。
-						},
+							-- clippy 的 lint 已经有这些了
+							"needless_return",
+						}, -- 要禁用的rust-analyzer诊断列表。
 						experimental = {
 							enable = false,
 						},

@@ -128,7 +128,7 @@
 		"format-icons": ["", "", "", "", ""]
 	},
 	"network": {
-		"interface": "wlo1",
+		"interface": "Mihomo",
 		"format": "{ifname}||",
 		// "format-wifi": "{essid} ({signalStrength}%)||",
 		"format-wifi": "||{bandwidthDownBytes} {bandwidthUpBytes}||",

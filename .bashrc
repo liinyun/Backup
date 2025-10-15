@@ -106,13 +106,6 @@ function y() {
 eval "$(direnv hook bash)"
 #
 
-# fnm
-FNM_PATH="/home/linya/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "$(fnm env)"
-fi
-
 
 # lingo config
 export LINGO_20_HOME="/home/linya/applications/lingo"
@@ -121,6 +114,7 @@ export PATH="/home/linya/applications/lingo:$PATH"
 . "$HOME/.cargo/env"
 
 
+# eval "$(mise activate bash)"
 
 # this will attach blesh to the shell
 # source ~/.local/share/blesh/ble.sh

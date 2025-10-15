@@ -317,6 +317,7 @@ window-rule {
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     match app-id="Alacritty"
     match app-id="kitty"
+    match app-id="foot"
     draw-border-with-background false
     opacity 0.85
     default-column-width {}

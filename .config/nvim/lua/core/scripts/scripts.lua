@@ -75,6 +75,16 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 	callback = SaveFileEnteringNormalMode,
 })
 
+-- auto generate png file for typst file
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+-- 	pattern = "*.typ",
+-- 	callback = function()
+-- 		-- vim.cmd("silent !tinymist compile -f png " .. vim.fn.expand("<afile>"))
+-- 		vim.system({ "typst", "compile", "-f", "png", vim.fn.expand("<afile>") }, { text = false })
+-- 	end,
+-- 	group = vim.api.nvim_create_augroup("TypstCompile", { clear = true }),
+-- })
+
 -- set self defined comment pattern
 vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "*.dae", -- Replace with your file extension (e.g., *.foo)
@@ -85,6 +95,17 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		-- vim.bo.commentstring = "<!-- %s -->"  (HTML)
 	end,
 })
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.ini", -- Replace with your file extension (e.g., *.foo)
+	callback = function()
+		vim.bo.commentstring = "# %s" -- Example: Use `#` for comments (like Python)
+		-- Alternatives:
+		-- vim.bo.commentstring = "// %s"  (C-style)
+		-- vim.bo.commentstring = "<!-- %s -->"  (HTML)
+	end,
+})
+
 vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "*.peggy", -- Replace with your file extension (e.g., *.foo)
 	callback = function()
