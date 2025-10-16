@@ -75,16 +75,6 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 	callback = SaveFileEnteringNormalMode,
 })
 
--- auto generate png file for typst file
--- vim.api.nvim_create_autocmd("BufWritePost", {
--- 	pattern = "*.typ",
--- 	callback = function()
--- 		-- vim.cmd("silent !tinymist compile -f png " .. vim.fn.expand("<afile>"))
--- 		vim.system({ "typst", "compile", "-f", "png", vim.fn.expand("<afile>") }, { text = false })
--- 	end,
--- 	group = vim.api.nvim_create_augroup("TypstCompile", { clear = true }),
--- })
-
 -- set self defined comment pattern
 vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "*.dae", -- Replace with your file extension (e.g., *.foo)
@@ -217,3 +207,22 @@ vim.api.nvim_create_autocmd("BufEnter", {
 -- vim.api.nvim_create_autocmd('TermEnter',{
 --   callback = RefreshTmuxClipboardAutoCmd
 -- })
+
+if vim.g.OSName == "Linux" then
+	-- transfer dos to unix
+	vim.api.nvim_create_user_command("Dos2Unix", function()
+		-- Execute the commands in sequence
+		vim.cmd("e ++ff=dos")
+		vim.cmd("set fileformat=unix")
+		vim.cmd("update")
+	end, {})
+elseif vim.g.OSName == "Windows_NT" then
+	-- auto generate png file
+	vim.api.nvim_create_autocmd("BufWritePost", {
+		pattern = "*.typ",
+		callback = function()
+			vim.cmd("silent !tinymist compile -f png " .. vim.fn.expand("<afile>"))
+		end,
+		group = vim.api.nvim_create_augroup("TypstCompile", { clear = true }),
+	})
+end
