@@ -153,7 +153,13 @@ local M = {
 		-- Default list of enabled providers defined so that you can extend it
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-			default = { "lsp", "path", "snippets", "lazydev", "buffer", "dictionary" },
+
+			default = (vim.g.OSName == "Linux" or vim.g.OSName == "Windows_NT")
+					and { "lsp", "path", "snippets", "lazydev", "buffer", "dictionary" }
+				or { "lsp", "path", "snippets", "lazydev", "buffer" },
+			-- default = { "lsp", "path", "snippets", "lazydev", "buffer", "dictionary" },
+
+			-- default = { "lsp", "path", "snippets", "lazydev", "buffer" },
 			providers = {
 				lsp = {
 					score_offset = 100,
@@ -166,21 +172,24 @@ local M = {
 					score_offset = 80,
 				},
 
-				dictionary = {
-					module = "blink-cmp-dictionary",
-					name = "Dict",
-					score_offset = 10,
-					-- Make sure this is at least 2.
-					-- 3 is recommended
-					min_keyword_length = 3,
-					opts = {
-						-- options for blink-cmp-dictionary
-						dictionary_files = { vim.fn.expand("~/.config/nvim/dictionary/words.dict") },
-						dictionary_directories = {
-							vim.fn.expand("~/.config/nvim/dictionary"),
-						},
-					},
-				},
+				dictionary = (vim.g.OSName == "Linux" or vim.g.OSName == "Windows_NT")
+						and {
+							module = "blink-cmp-dictionary",
+							name = "Dict",
+							score_offset = 10,
+							-- Make sure this is at least 2.
+							-- 3 is recommended
+							min_keyword_length = 3,
+							opts = {
+								-- options for blink-cmp-dictionary
+								dictionary_files = { vim.fn.expand("~/.config/nvim/dictionary/words.dict") },
+								dictionary_directories = {
+									vim.fn.expand("~/.config/nvim/dictionary"),
+								},
+							},
+						}
+					or nil, -- Set to nil or an empty table to effectively comment it out/disable it
+
 				path = {
 					score_offset = 120,
 				},
