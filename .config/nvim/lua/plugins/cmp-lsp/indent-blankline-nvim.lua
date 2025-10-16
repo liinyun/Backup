@@ -13,8 +13,6 @@ M = {
 		-- delete them. I will just comment them this config can be found in
 		-- indent-blankline nvim github
 
-		local hooks = require("ibl.hooks")
-
 		-- create the highlight groups in the highlight setup hook, so they are reset
 		local highlight = {
 			"CursorColumn",
@@ -29,15 +27,11 @@ M = {
 		-- 	"RainbowViolet",
 		-- 	"RainbowCyan",
 		-- }
-		hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-			vim.api.nvim_set_hl(0, "RainbowRed", { bg = "#211011" })
-			vim.api.nvim_set_hl(0, "RainbowYellow", { bg = "#221c12" })
-			vim.api.nvim_set_hl(0, "RainbowBlue", { bg = "#0e1a23" })
-			vim.api.nvim_set_hl(0, "RainbowOrange", { bg = "#1f170f" })
-			vim.api.nvim_set_hl(0, "RainbowGreen", { bg = "#161d12" })
-			vim.api.nvim_set_hl(0, "RainbowViolet", { bg = "#1d1221" })
-			vim.api.nvim_set_hl(0, "RainbowCyan", { bg = "#0c1b1d" })
-		end)
+
+		-- this is to conform highlight groups are loaded before the plugin loads
+		-- local hooks = require("ibl.hooks")
+		-- 	hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+		-- end)
 
 		-- vim.opt.ada_rainbow_color
 		-- the mode name here is ibl like mason or other plugin, there, ibl is the name of the plugin

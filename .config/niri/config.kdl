@@ -319,7 +319,7 @@ window-rule {
     match app-id="kitty"
     match app-id="foot"
     draw-border-with-background false
-    opacity 0.85
+    // opacity 0.8
     default-column-width {}
     tiled-state true
 }
