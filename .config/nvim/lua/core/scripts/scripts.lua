@@ -20,11 +20,11 @@ vim.fn.sign_define("SlimeCell", {
 })
 
 -- my test function to test highlight
-function HighlightWord(word)
-	-- vim.fn.matchadd("MySlimeHighlight", "vim")
-end
+-- function HighlightWord(word)
+-- 	-- vim.fn.matchadd("MySlimeHighlight", "vim")
+-- end
 
-vim.api.nvim_create_user_command("TestHigh", HighlightWord, { nargs = "*" })
+-- vim.api.nvim_create_user_command("TestHigh", HighlightWord, { nargs = "*" })
 
 -- 运行脚本并捕获输出
 -- 这是为了 可以使用nvim的
@@ -225,4 +225,5 @@ elseif vim.g.OSName == "Windows_NT" then
 		end,
 		group = vim.api.nvim_create_augroup("TypstCompile", { clear = true }),
 	})
+
 end
