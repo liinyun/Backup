@@ -157,9 +157,7 @@ local M = {
 			default = (vim.g.OSName == "Linux" or vim.g.OSName == "Windows_NT")
 					and { "lsp", "path", "snippets", "lazydev", "buffer", "dictionary" }
 				or { "lsp", "path", "snippets", "lazydev", "buffer" },
-			-- default = { "lsp", "path", "snippets", "lazydev", "buffer", "dictionary" },
 
-			-- default = { "lsp", "path", "snippets", "lazydev", "buffer" },
 			providers = {
 				lsp = {
 					score_offset = 100,
