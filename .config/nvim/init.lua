@@ -10,6 +10,17 @@ vim.g.mapleader = " "
 vim.opt.termguicolors = true
 -- vim.opt.regexpengine = 2
 
+vim.api.nvim_set_hl(0, "RainbowRed", { bg = "#211011" })
+vim.api.nvim_set_hl(0, "RainbowYellow", { bg = "#221c12" })
+vim.api.nvim_set_hl(0, "RainbowBlue", { bg = "#0e1a23" })
+vim.api.nvim_set_hl(0, "RainbowOrange", { bg = "#1f170f" })
+vim.api.nvim_set_hl(0, "RainbowGreen", { bg = "#161d12" })
+vim.api.nvim_set_hl(0, "RainbowViolet", { bg = "#1d1221" })
+vim.api.nvim_set_hl(0, "RainbowCyan", { bg = "#0c1b1d" })
+-- vim.api.nvim_set_hl(0, "thoughts", { bg = "#2D7EFA" })
+vim.api.nvim_set_hl(0, "ques", { bg = "#FAB62D" })
+vim.api.nvim_set_hl(0, "purple", { bg = "#C763FA" })
+
 vim.filetype.add({
 	extension = {
 		mc = "monkeyc",
@@ -47,15 +58,6 @@ vim.filetype.add({
 		["coc-settings.json"] = "jsonc",
 	},
 })
-
-vim.api.nvim_set_hl(0, "RainbowRed", { bg = "#211011" })
-vim.api.nvim_set_hl(0, "RainbowYellow", { bg = "#221c12" })
-vim.api.nvim_set_hl(0, "RainbowBlue", { bg = "#0e1a23" })
-vim.api.nvim_set_hl(0, "RainbowOrange", { bg = "#1f170f" })
-vim.api.nvim_set_hl(0, "RainbowGreen", { bg = "#161d12" })
-vim.api.nvim_set_hl(0, "RainbowViolet", { bg = "#1d1221" })
-vim.api.nvim_set_hl(0, "RainbowCyan", { bg = "#0c1b1d" })
-vim.api.nvim_set_hl(0, "thoughts", { bg = "#0c1b1d" })
 
 -- config differs for different systems
 -- Os_name = vim.uv.os_uname().sysname
@@ -118,4 +120,5 @@ if vim.g.OSName == "Linux" then
 	end
 elseif vim.g.OSName == "Windows_NT" then
 	vim.opt.shadafile = "NONE"
+	require("core.scripts.utils")
 end

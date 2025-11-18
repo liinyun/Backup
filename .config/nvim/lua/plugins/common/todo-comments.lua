@@ -23,8 +23,10 @@ return {
 			PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
 			NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
 			TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-			QUES = { icon = "❔", color = "warning", alt = { "QUESTION", "QXXX" } },
-			-- QUES = { icon = "?", color = "hint", alt = { "???" } },
+			QUES = { icon = "❔", color = "warning", alt = { "QUESTION" } },
+			ques = { icon = "❔", color = "ques", alt = { "YELLOW" } },
+			THOUGHT = { icon = "", color = "thoughts", alt = { "BLUE" } },
+			purple = { icon = "", color = "purple", alt = { "PURPLE" } },
 		},
 		gui_style = {
 			fg = "NONE", -- The gui style to use for the fg highlight group.
@@ -51,6 +53,9 @@ return {
 			hint = { "DiagnosticHint", "#10B981" },
 			default = { "Identifier", "#7C3AED" },
 			test = { "Identifier", "#FF00FF" },
+			thoughts = { "thoughts", "#2D7EFA" },
+			ques = { "ques", "#FAB62D" },
+			purple = { "purple", "#C763FA" },
 		},
 	},
 }
