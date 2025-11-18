@@ -1,7 +1,7 @@
 local M = {
 	"saghen/blink.cmp",
 	-- optional: provides snippets for the snippet source
-	dependencies = { "rafamadriz/friendly-snippets", "Kaiser-Yang/blink-cmp-dictionary" },
+	dependencies = { "rafamadriz/friendly-snippets", "Kaiser-Yang/blink-cmp-dictionary", "L3MON4D3/LuaSnip" },
 
 	-- use a release tag to download pre-built binaries
 	version = "1.*",
@@ -11,7 +11,7 @@ local M = {
 	-- build = 'nix run .#build-plugin',
 
 	---@module 'blink.cmp'
-	---@type blink.cmp.Config
+	-- ---@type blink.cmp.Config
 	opts = {
 		-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
 		-- 'super-tab' for mappings similar to vscode (tab to accept)
@@ -32,8 +32,8 @@ local M = {
 			["<C-k>"] = { "select_prev", "fallback" },
 			["<C-j>"] = { "select_next", "fallback" },
 			["<CR>"] = { "accept", "fallback" },
-			["<C-n>"] = { "snippet_backward", "fallback" },
-			["<C-p>"] = { "snippet_forward", "fallback" },
+			["<c-n>"] = { "snippet_forward", "fallback" },
+			["<c-p>"] = { "snippet_backward", "fallback" },
 		},
 
 		appearance = {
@@ -153,7 +153,6 @@ local M = {
 		-- Default list of enabled providers defined so that you can extend it
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-
 			default = (vim.g.OSName == "Linux" or vim.g.OSName == "Windows_NT")
 					and { "lsp", "path", "snippets", "lazydev", "buffer", "dictionary" }
 				or { "lsp", "path", "snippets", "lazydev", "buffer" },
@@ -186,7 +185,7 @@ local M = {
 								},
 							},
 						}
-					or nil, -- Set to nil or an empty table to effectively comment it out/disable it
+					or nil, --Set to nil or an empty table to effectively comment it out/disable it
 
 				path = {
 					score_offset = 120,

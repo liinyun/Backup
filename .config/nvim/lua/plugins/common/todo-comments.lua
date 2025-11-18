@@ -24,9 +24,11 @@ return {
 			NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
 			TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
 			QUES = { icon = "❔", color = "warning", alt = { "QUESTION" } },
-			ques = { icon = "❔", color = "ques", alt = { "YELLOW" } },
-			THOUGHT = { icon = "", color = "thoughts", alt = { "BLUE" } },
-			purple = { icon = "", color = "purple", alt = { "PURPLE" } },
+			THOUGHT = { icon = " ", color = "thoughts", alt = { "thought" } },
+			question = { icon = "❔", color = "question", alt = { "questions" } },
+			FINISH = { icon = " ", color = "info", alt = { "finish" } },
+			PURPLE = { icon = "❔", color = "purple", alt = { "purp" } },
+			-- QUES = { icon = "?", color = "hint", alt = { "???" } },
 		},
 		gui_style = {
 			fg = "NONE", -- The gui style to use for the fg highlight group.
@@ -53,9 +55,9 @@ return {
 			hint = { "DiagnosticHint", "#10B981" },
 			default = { "Identifier", "#7C3AED" },
 			test = { "Identifier", "#FF00FF" },
-			thoughts = { "thoughts", "#2D7EFA" },
-			ques = { "ques", "#FAB62D" },
-			purple = { "purple", "#C763FA" },
+			thoughts = { "thoughts", "#2563EB" },
+			question = { "question", "#ffee32" },
+			purple = { "purple", "#7C3AED" },
 		},
 	},
 }

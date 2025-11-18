@@ -179,7 +179,7 @@ M = {
 							"unfulfilled_lint_expectations",
 							-- rustc 的 lint 已经有这些了
 							"unused_variables",
-							"unused_mut", -- rustc 更准确
+							-- "unused_mut", -- rustc 更准确
 
 							-- clippy 的 lint 已经有这些了
 							"needless_return",

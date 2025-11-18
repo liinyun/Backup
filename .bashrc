@@ -11,6 +11,7 @@ if ! [[ "$PATH" =~ $HOME/.local/bin:$HOME/bin: ]]; then
   PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 
+bind '\C-p:unix-filename-rubout'
 
 export PATH="$PATH:/home/linya/codes/shell_scripts/bin"
 export PATH="$PATH:/home/linya/codes/github/tdf/target/release"
