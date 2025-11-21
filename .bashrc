@@ -25,6 +25,7 @@ export PATH="$PATH:/home/linya/applications/lsp/lua-language-server/bin"
 export PATH="$PATH:/home/linya/applications/lsp"
 # 
 export PATH="$PATH:/home/linya/applications/kindle/kindlegen"
+export PATH="$PATH:/home/linya/applications/fvm"
 
 # export PATH="$PATH:/home/linya/applications/sdks/garmin/share"
 # export PATH="$PATH:/home/linya/applications/sdks/garmin/bin"

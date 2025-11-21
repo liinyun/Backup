@@ -54,6 +54,7 @@ au("UIEnter", {
 				-- "tsls",
 				"vtsls",
 				-- "rust-analyzer",
+				"dartls",
 			})
 
 			vim.lsp.log.set_level(vim.log.levels.DEBUG)

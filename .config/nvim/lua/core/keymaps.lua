@@ -78,7 +78,7 @@ vim.keymap.set("n", "<M-\\>", "<cmd>lua vim.diagnostic.open_float()<CR>", { nore
 vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 vim.keymap.set("n", "<leader>tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
-vim.keymap.set("n", "<M-CR>", "<cmd>lua vim.ls .buf.code_action()<CR>")
+vim.keymap.set("n", "<M-CR>", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 
 vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
 vim.keymap.set("n", "gp", "<cmd>Lspsaga goto_definition<CR>")
