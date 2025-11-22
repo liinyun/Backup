@@ -1,6 +1,5 @@
 -- scripts or some commands I write myself
 -- if I write all my selfconfig functions in init.lua it will be difficult to read and maintain
-
 -- define my own highlight group
 vim.api.nvim_set_hl(0, "MySlimeHighlight", {
 	fg = "#9399b2", -- Your chosen foreground color
