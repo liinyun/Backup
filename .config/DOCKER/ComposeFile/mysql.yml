@@ -1,8 +1,9 @@
 # This Docker Compose YAML deploys a MySQL database
 services:
-  container-name:
 
+  db:
     image: mysql:9.0.0 # Official MySQL image from Docker Hub
+    container-name: broject
     restart: always
 
     environment:

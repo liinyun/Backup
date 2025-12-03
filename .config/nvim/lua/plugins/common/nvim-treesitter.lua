@@ -55,7 +55,7 @@ return {
 			"markdown_inline",
 			"markdown",
 			"python",
-			"vue",
+			-- "vue",
 			-- "rust",
 			"make",
 			"matlab",

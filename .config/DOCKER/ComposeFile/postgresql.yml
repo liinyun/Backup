@@ -1,6 +1,4 @@
 # Use postgres/example user/password credentials
-version: '3.9'
-
 services:
 
   db:
@@ -26,9 +24,10 @@ services:
     volumes:
       - /home/linya/codes/data/postgresql/:/var/lib/postgresql
 
-
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
+  adminer:
+    image: adminer
+    container_name: adminer
+    # start on computer login
+    restart: always
+    ports:
+      - 8080:8080

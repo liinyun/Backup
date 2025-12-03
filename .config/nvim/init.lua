@@ -97,7 +97,7 @@ if vim.g.OSName == "Linux" then
 		vim.api.nvim_create_autocmd("InsertLeave", {
 			pattern = "*",
 			callback = function()
-				print(vim.g.OSName)
+				-- print(vim.g.OSName)
 				local status, _ = vim.fn.system("which fcitx5-remote")
 				if status then
 					os.execute("fcitx5-remote -c") -- 切换到英文输入法

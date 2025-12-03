@@ -55,9 +55,10 @@ au("UIEnter", {
 				"vtsls",
 				-- "rust-analyzer",
 				"dartls",
+				"csharpls",
 			})
 
-			vim.lsp.log.set_level(vim.log.levels.DEBUG)
+			vim.lsp.log.set_level(vim.log.levels.INFO)
 
 			vim.diagnostic.config({
 				-- virtual_text = { current_line = true },

@@ -1,8 +1,10 @@
 local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
 return {
 	cmd = { "vue-language-server", "--stdio" },
+	root_markers = { "tsconfig.json" },
 	capabilities = lsp_capabilities,
 	on_attach = function(client, bufnr) end,
+
 	on_init = function(client)
 		client.handlers["tsserver/request"] = function(_, result, context)
 			local clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = "vtsls" })
@@ -33,7 +35,8 @@ return {
 	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 	init_options = {
 		typescript = {
-			tsdk = "/home/linya/.local/share/fnm/node-versions/v22.12.0/installation/lib/node_modules/typescript/lib/",
+			-- tsdk = "/home/linya/.local/share/fnm/node-versions/v22.12.0/installation/lib/node_modules/typescript/lib/",
+			tsdk = "/home/linya/.local/share/mise/installs/npm-typescript/5.9.3",
 		},
 		vue = {
 			hybridMode = true,

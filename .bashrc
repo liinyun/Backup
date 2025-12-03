@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+eval "$(mise activate bash)"
 # this config is to load the blesh, but not attach to shell
 [[ $- == *i* ]] && source /home/linya/.local/share/blesh/ble.sh --noattach
 # .bashrc
@@ -17,24 +18,25 @@ export PATH="$PATH:/home/linya/codes/shell_scripts/bin"
 export PATH="$PATH:/home/linya/codes/github/tdf/target/release"
 export PATH="$PATH:/home/linya/codes/github/fancy-cat/zig-out/bin"
 export PATH="$PATH:/home/linya/applications/maven-mvnd-1.0.2-linux-amd64/bin"
-# export PATH="$PATH:/home/linya/Android/Sdk/cmdline-tools/latest/bin"
+export PATH="$PATH:/home/linya/Android/Sdk/cmdline-tools/latest/bin"
 export PATH="$PATH:/home/linya/applications/riscv/bin"
 export PATH="$PATH:/home/linya/applications/riscv_qemu/bin"
-export PATH="$PATH:/home/linya/applications/lsp/lua-language-server/bin"
+# export PATH="$PATH:/home/linya/applications/lsp/lua-language-server/bin"
 # this is for otehr lsp like marksman
-export PATH="$PATH:/home/linya/applications/lsp"
+# export PATH="$PATH:/home/linya/applications/lsp"
 # 
+# export PATH="$PATH:/home/linya/.dotnet/tools"
 export PATH="$PATH:/home/linya/applications/kindle/kindlegen"
 export PATH="$PATH:/home/linya/applications/fvm"
+export PATH="$PATH:/home/linya/applications/blender-4.5.5-linux-x64"
+# export PATH="$PATH:/home/linya/codes/github/zig/build/stage3/bin"
 
 # export PATH="$PATH:/home/linya/applications/sdks/garmin/share"
 # export PATH="$PATH:/home/linya/applications/sdks/garmin/bin"
-export PATH="$PATH: /home/linya/applications/sdkmanager/bin"
+# export PATH="$PATH: /home/linya/applications/sdkmanager/bin"
 export PATH="$PATH:/home/linya/applications/sdkmanager/share"
 # this is to fix libjpeg.so.8 unfind problem
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/linya/applications/sdks/garmin/lib/jpeg-8d/.libs
-
-# export PATH="$PATH:/home/linya/codes/github/zig/build/stage3/bin"
 
 GARMIN_SDK_PATH="$(<"$HOME/.Garmin/ConnectIQ/current-sdk.cfg")"
 GARMIN_SDK_PATH="${GARMIN_SDK_PATH#"${GARMIN_SDK_PATH%%[![:space:]]*}"}" # Trim leading whitespace
@@ -75,7 +77,7 @@ alias gt="source ~/codes/shell_scripts/jump_dir.sh"
 # alias idea="/opt/idea-IU-243.22562.145/bin/idea"
 alias rm='trash-put'
 alias code='code --ozone-platform=wayland'
-
+# alias androidsdk="/home/linya/Android/Sdk/cmdline-tools/latest/bin/sdkmanager"
 
 
 # it will not work properly in tmux, so I write this conditional statement to check current evnironment
@@ -116,7 +118,6 @@ export PATH="/home/linya/applications/lingo:$PATH"
 . "$HOME/.cargo/env"
 
 
-# eval "$(mise activate bash)"
 
 # this will attach blesh to the shell
 # source ~/.local/share/blesh/ble.sh

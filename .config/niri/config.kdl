@@ -271,7 +271,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar" 
 // spawn-at-startup "xsettingsd --config=/home/linya/.config/xsettingsd/xsettingsd.conf"
-spawn-at-startup "xwayland-satellite"
+// spawn-at-startup "xwayland-satellite"
 spawn-at-startup "fcitx5"
 // spawn-at-startup "/usr/lib/pam_kwallet_init"
 // spawn-at-startup "/usr/bin/kwalletd6"

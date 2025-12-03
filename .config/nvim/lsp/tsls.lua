@@ -13,7 +13,8 @@ return {
 		plugins = {
 			{
 				name = "@vue/typescript-plugin",
-				location = "/home/linya/.local/share/fnm/node-versions/v22.12.0/installation/lib/node_modules/@vue/typescript-plugin",
+				-- location = "/home/linya/.local/share/fnm/node-versions/v22.12.0/installation/lib/node_modules/@vue/typescript-plugin",
+				location = "/home/linya/.local/share/mise/installs/npm-vue-typescript-plugin",
 				languages = { "vue" },
 			},
 		},
