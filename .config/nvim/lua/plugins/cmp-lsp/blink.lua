@@ -1,3 +1,5 @@
+-- don't delete this line, I don't understand why vim.g.OSName doesn't take effect
+local OSName = vim.uv.os_uname().sysname
 local M = {
 	"saghen/blink.cmp",
 	-- optional: provides snippets for the snippet source
@@ -153,7 +155,7 @@ local M = {
 		-- Default list of enabled providers defined so that you can extend it
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-			default = (vim.g.OSName == "Linux" or vim.g.OSName == "Windows_NT")
+			default = (OSName == "Linux" or OSName == "Windows_NT")
 					and { "lsp", "path", "snippets", "lazydev", "buffer", "dictionary" }
 				or { "lsp", "path", "snippets", "lazydev", "buffer" },
 
@@ -169,7 +171,7 @@ local M = {
 					score_offset = 80,
 				},
 
-				dictionary = (vim.g.OSName == "Linux" or vim.g.OSName == "Windows_NT")
+				dictionary = (OSName == "Linux" or OSName == "Windows_NT")
 						and {
 							module = "blink-cmp-dictionary",
 							name = "Dict",
