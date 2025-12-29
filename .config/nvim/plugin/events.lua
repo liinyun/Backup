@@ -56,6 +56,8 @@ au("UIEnter", {
 				-- "rust-analyzer",
 				"dartls",
 				"csharpls",
+				"postgres_ls",
+				"texlab",
 			})
 
 			vim.lsp.log.set_level(vim.log.levels.INFO)
