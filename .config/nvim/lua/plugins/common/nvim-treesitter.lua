@@ -62,6 +62,7 @@ return {
 			"toml",
 			-- this is for references file
 			"bibtex",
+			"julia",
 		},
 	},
 	config = function(_, opts)

@@ -58,9 +58,11 @@ au("UIEnter", {
 				"csharpls",
 				"postgres_ls",
 				"texlab",
+				-- "julials",
+				"juliaimagels",
 			})
 
-			vim.lsp.log.set_level(vim.log.levels.INFO)
+			vim.lsp.log.set_level(vim.log.levels.INFO) -- INFO, WARN,DEBUG,TRACE,ERROR,OFF
 
 			vim.diagnostic.config({
 				-- virtual_text = { current_line = true },

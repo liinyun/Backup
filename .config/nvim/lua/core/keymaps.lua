@@ -67,7 +67,7 @@ end
 vim.keymap.set("n", "<Esc>", quit_floating_win, { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 -- shortcut to view the source code
--- vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 -- vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
 vim.keymap.set("n", "<leader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
 vim.keymap.set("n", "<leader>gr", "<cmd>lua vim.lsp.buf.references()<CR>")
@@ -77,17 +77,16 @@ vim.keymap.set("n", "<M-\\>", "<cmd>lua vim.diagnostic.open_float()<CR>", { nore
 
 vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
-vim.keymap.set("n", "<leader>tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
+-- vim.keymap.set("n", "<leader>tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
 vim.keymap.set("n", "<M-CR>", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 
-vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
-vim.keymap.set("n", "gp", "<cmd>Lspsaga goto_definition<CR>")
+-- vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+-- vim.keymap.set("n", "gp", "<cmd>Lspsaga goto_definition<CR>")
 -- vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 -- vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 -- vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 
 -- quickfix
-
 vim.keymap.set("n", "<leader>q", function()
 	local is_open = vim.fn.getqflist({ winid = 0 }).winid ~= 0
 	if is_open then
@@ -98,6 +97,24 @@ vim.keymap.set("n", "<leader>q", function()
 end, {
 	desc = "Toggle quickfix",
 })
+-- 	local qf_winid = nil
+-- 	-- Iterate through all windows in the current tab
+-- 	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+-- 		local buf = vim.api.nvim_win_get_buf(win)
+-- 		if vim.bo[buf].filetype == "qf" then
+-- 			qf_winid = win
+-- 			break
+-- 		end
+-- 	end
+--
+-- 	if qf_winid then
+-- 		vim.api.nvim_win_close(qf_winid, true)
+-- 	else
+-- 		-- If no qf window exists, try to open the standard one
+-- 		-- or trigger your symbol command
+-- 		vim.cmd("copen")
+-- 	end
+-- end, { desc = "Toggle Quickfix/Symbols Window" })
 
 -- telescope
 -- local builtin = require("telescope.builtin")

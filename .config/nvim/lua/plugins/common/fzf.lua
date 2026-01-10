@@ -13,12 +13,11 @@ local M = {
 		vim.keymap.set("n", "<leader>ff", fzf_cmd.files, { desc = "Telescope find files" })
 		vim.keymap.set("n", "<leader>fg", fzf_cmd.live_grep, { desc = "Telescope live grep" })
 		vim.keymap.set("n", "<leader>fb", fzf_cmd.buffers, { desc = "Telescope buffers" })
-		-- vim.keymap.set("n", "<leader>fs", require("telescope.fzf_cmd").current_buffer_fuzzy_find, {})
-		-- vim.keymap.set("n", "<leader>fh", FzfLua.help_tags, { desc = "Telescope help tags" })
+		vim.keymap.set("n", "<leader>ft", fzf_cmd.lsp_document_symbols, { desc = "Telescope buffers" })
+		vim.keymap.set("n", "<leader>fi", fzf_cmd.lsp_incoming_calls, { desc = "Telescope buffers" })
+		vim.keymap.set("n", "<leader>fo", fzf_cmd.lsp_outgoing_calls, { desc = "Telescope buffers" })
 
-		require("fzf-lua").setup({
-
-		})
+		require("fzf-lua").setup({})
 	end,
 }
 
