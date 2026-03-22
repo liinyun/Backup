@@ -25,10 +25,11 @@ return {
 			html = { "djlint" },
 			-- python = { "isort", "black", stop_after_first = true },
 			python = { "ruff" },
-			javascript = { "prettierd", "prettier", stop_after_first = true },
-      -- jsonc = { "prettierd", "prettier", stop_after_first = true },
-      jsonc = { "biome" },
+			javascript = { "prettier", stop_after_first = true },
+			-- jsonc = { "prettierd", "prettier", stop_after_first = true },
+			jsonc = { "biome" },
 			-- htmldjango = { "djlint", "djlint-reformat", "djlint-django", "djlint-reformat-django" }
+			hurl = { "hurlfmt" },
 		},
 		-- Set default options
 		-- default_format_opts = {

@@ -13,7 +13,7 @@ M = {
 				dark = "mocha",
 				light = "frappe",
 			},
-			transparent_background = true,
+			-- transparent_background = true,
 			show_end_of_buffer = true,
 			rainbow_delimiters = true,
 		})

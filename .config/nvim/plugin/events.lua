@@ -1,7 +1,7 @@
 local api = vim.api
 local au = api.nvim_create_autocmd
 local lsp_group = api.nvim_create_augroup("lspGroup", {})
-local monkeyc_group = api.nvim_create_augroup("monkeycGroup", {})
+-- local monkeyc_group = api.nvim_create_augroup("monkeycGroup", {})
 
 -- au("ExitPre", {
 -- 	group = group,
@@ -44,7 +44,7 @@ au("UIEnter", {
 				"matlabls",
 				"monkeyc",
 				"marksman",
-				-- "clangd",
+				"clangd",
 				-- "rust_analyzer",
 				"basedpyright",
 				-- "ruff",
@@ -56,13 +56,14 @@ au("UIEnter", {
 				-- "rust-analyzer",
 				"dartls",
 				"csharpls",
-				"postgres_ls",
+				-- "postgres_ls",
+				"sqls",
 				"texlab",
 				-- "julials",
 				"juliaimagels",
 			})
 
-			vim.lsp.log.set_level(vim.log.levels.INFO) -- INFO, WARN,DEBUG,TRACE,ERROR,OFF
+			vim.lsp.log.set_level(vim.log.levels.WARN) -- INFO, WARN,DEBUG,TRACE,ERROR,OFF
 
 			vim.diagnostic.config({
 				-- virtual_text = { current_line = true },

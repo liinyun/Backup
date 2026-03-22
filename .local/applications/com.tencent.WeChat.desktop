@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=WeChat wayland
+Name[zh_CN]=微信
+# Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=wechat --file-forwarding com.tencent.WeChat --socket=wayland %U
+Exec=flatpak run --socket=wayland com.tencent.WeChat --enable-features=UseOzonePlatfor --ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3 --disable-features=WaylandWindowDecorations %U
+Terminal=false
+Type=Application
+Icon=com.tencent.WeChat
+StartupWMClass=WeChat
+Categories=Network;
+Comment=WeChat Desktop
+Comment[zh_CN]=微信桌面版
+X-Flatpak=com.tencent.WeChat

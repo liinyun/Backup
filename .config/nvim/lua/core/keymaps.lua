@@ -7,6 +7,13 @@
 -- =====================================================================================
 
 -- =====================================================================================
+-- ================================== select mode ======================================
+-- =====================================================================================
+
+vim.keymap.del("s", "<Tab>")
+vim.keymap.del("s", "<S-Tab>")
+
+-- =====================================================================================
 -- ================================== visual mode ======================================
 -- =====================================================================================
 
@@ -68,6 +75,8 @@ vim.keymap.set("n", "<Esc>", quit_floating_win, { noremap = true, silent = true 
 vim.keymap.set("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 -- shortcut to view the source code
 vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+-- delete neovim's built-in gd
+vim.keymap.set("n", "gd", "<Nop>")
 -- vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
 vim.keymap.set("n", "<leader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
 vim.keymap.set("n", "<leader>gr", "<cmd>lua vim.lsp.buf.references()<CR>")
@@ -85,6 +94,10 @@ vim.keymap.set("n", "<M-CR>", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 -- vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 -- vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 -- vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+
+-- vim.keymap.set("i", "<C-tab>", function()
+-- 	require("blink.cmp").show()
+-- end)
 
 -- quickfix
 vim.keymap.set("n", "<leader>q", function()

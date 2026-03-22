@@ -153,9 +153,12 @@ M = {
 						emitMustUse = false, -- Whether to insert #[must_use] when generating as_ methods for enum variants.
 						expressionFillDefault = "todo", -- Placeholder expression to use for missing expressions in assists.
 					},
+					cachePriming = {
+						enable = false,
+					},
 					cargo = {
 						autoreload = true,
-						allFeatures = true,
+						features = "all",
 						loadOutDirsFromCheck = true,
 					},
 					checkOnSave = true,

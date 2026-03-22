@@ -63,6 +63,7 @@ return {
 			-- this is for references file
 			"bibtex",
 			"julia",
+			"hurl",
 		},
 	},
 	config = function(_, opts)

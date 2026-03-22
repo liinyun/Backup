@@ -327,6 +327,7 @@ window-rule {
     tiled-state true
 }
 
+
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
     // This app-id regular expression will work for both:
@@ -361,6 +362,10 @@ gestures {
         off
     }
 }
+
+// xwayland {
+//   use-system-scale false
+// }
 
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name

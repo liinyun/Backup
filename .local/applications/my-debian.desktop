@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=My-debian
+GenericName=Terminal entering My-debian
+Comment=Terminal entering My-debian
+Categories=Distrobox;System;Utility
+Exec=/usr/bin/distrobox enter  my-debian
+Icon=/home/linya/.local/share/icons/distrobox/debian.png
+Keywords=distrobox;
+NoDisplay=false
+Terminal=true
+TryExec=/usr/bin/distrobox
+Type=Application
+Actions=Remove;
+
+[Desktop Action Remove]
+Name=Remove My-debian from system
+Exec=/usr/bin/distrobox rm  my-debian

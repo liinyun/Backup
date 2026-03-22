@@ -61,7 +61,7 @@ local M = {
 		"--history-file=no",
 		-- tracecompilelsp.jl file won't be overwritten with lsp changes
 		-- so after update of a lsp, I should delete the original tracecompilelsp.jl file
-		"--sysimage=/home/linya/applications/lsp/julials/julials.so",
+		"--sysimage=/home/linya/opt/lsp/julials/julials.so",
 		"--sysimage-native-code=yes",
 		"-e",
 		[[

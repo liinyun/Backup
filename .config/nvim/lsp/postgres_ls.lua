@@ -10,12 +10,13 @@ local M = {
 			--  Enable/disable the linter entirely
 			enabled = true,
 			rules = {
+				recommended = true,
 				-- Configure rule groups
 				safety = {
 					-- Individual rule configuration
 					banDropColumn = "error", -- error, warn, info, hint, off
 					banDropTable = "warn",
-					addingRequiredField = "off",
+					addingRequiredField = "on",
 				},
 			},
 		},

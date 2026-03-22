@@ -71,6 +71,7 @@ local function SaveFileEnteringNormalMode()
 end
 
 vim.api.nvim_create_autocmd("ModeChanged", {
+	pattern = "i*:*",
 	-- nested = true,
 	callback = SaveFileEnteringNormalMode,
 })
@@ -226,3 +227,39 @@ elseif vim.g.OSName == "Windows_NT" then
 		group = vim.api.nvim_create_augroup("TypstCompile", { clear = true }),
 	})
 end
+
+local function count_plugins()
+	local pack_path = vim.fn.stdpath("data") .. "/site/pack"
+	local count = 0
+
+	-- Scans the 'start' and 'opt' directories within every package folder
+	local handle = vim.loop.fs_scandir(pack_path)
+	if handle then
+		while true do
+			local pkg_name, type = vim.loop.fs_scandir_next(handle)
+			if not pkg_name then
+				break
+			end
+
+			-- Check both 'start' and 'opt' folders for each package category
+			for _, sub in ipairs({ "start", "opt" }) do
+				local sub_path = pack_path .. "/" .. pkg_name .. "/" .. sub
+				local sub_handle = vim.loop.fs_scandir(sub_path)
+				if sub_handle then
+					while true do
+						local plugin_name = vim.loop.fs_scandir_next(sub_handle)
+						if not plugin_name then
+							break
+						end
+						count = count + 1
+					end
+				end
+			end
+		end
+	end
+	return count
+end
+
+vim.api.nvim_create_user_command("Plugins", function()
+	print("You have " .. count_plugins() .. " plugins installed.")
+end, {})

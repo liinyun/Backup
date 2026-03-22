@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=WemeetApp
+Name[zh_CN]=腾讯会议
+Keywords=wemeet;tencent;meeting;
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=wemeetapp --file-forwarding com.tencent.wemeet --wayland-text-input-version=3 @@u %u @@
+Icon=com.tencent.wemeet
+Type=Application
+Terminal=false
+Categories=Office;
+MimeType=x-scheme-handler/wemeet;
+X-Flatpak-RenamedFrom=wemeet.desktop;
+X-Flatpak=com.tencent.wemeet

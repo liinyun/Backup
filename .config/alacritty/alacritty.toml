@@ -18,8 +18,8 @@ opacity = 0.7
 # 这是是毛玻璃，或者叫磨砂
 # blur = true
 # 这个调整的是打开的时候的窗口大小
-dimensions.columns = 120
-dimensions.lines = 39
+# dimensions.columns = 120
+# dimensions.lines = 39
 # 这个配置是用于macos 中的，将 option 当作alt，
 # 如果是linux 的话，是没有这个问题的
 # option_as_alt = "Both"

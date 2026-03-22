@@ -36,6 +36,7 @@ local M = {
 			["<CR>"] = { "accept", "fallback" },
 			["<c-n>"] = { "snippet_forward", "fallback" },
 			["<c-p>"] = { "snippet_backward", "fallback" },
+			["<c-tab>"] = { "show" }, -- show the autocomplete manu
 		},
 
 		appearance = {
@@ -209,11 +210,17 @@ local M = {
 		fuzzy = { implementation = "prefer_rust_with_warning" },
 		-- this config is very unusable, my cmdline command should be short not be too long like a luanguage snippet
 		cmdline = {
-			enabled = false,
+			enabled = true,
 			keymap = { preset = "inherit" },
 			completion = {
 				menu = {
 					auto_show = true,
+				},
+				list = {
+					selection = {
+						preselect = false,
+						auto_insert = true, -- Set to false if you also don't want it to ghost-fill the text
+					},
 				},
 				ghost_text = { enabled = true },
 			},
