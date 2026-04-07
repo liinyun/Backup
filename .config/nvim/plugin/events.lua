@@ -30,7 +30,7 @@ local lsp_group = api.nvim_create_augroup("lspGroup", {})
 -- 	end,
 -- })
 
-au("UIEnter", {
+vim.api.nvim_create_autocmd("UIEnter", {
 	group = lsp_group,
 	once = true,
 	callback = function()
@@ -45,9 +45,9 @@ au("UIEnter", {
 				"monkeyc",
 				"marksman",
 				"clangd",
-				-- "rust_analyzer",
-				"basedpyright",
-				-- "ruff",
+				-- "basedpyright",
+				"ty",
+				"ruff",
 				-- "zls",
 				-- "cmake",
 				"volar",
@@ -59,8 +59,9 @@ au("UIEnter", {
 				-- "postgres_ls",
 				"sqls",
 				"texlab",
+				"jetls",
 				-- "julials",
-				"juliaimagels",
+				-- "juliaimagels",
 			})
 
 			vim.lsp.log.set_level(vim.log.levels.WARN) -- INFO, WARN,DEBUG,TRACE,ERROR,OFF
@@ -102,6 +103,41 @@ au("UIEnter", {
 	end,
 	desc = "Initializer",
 })
--- au("BufRead,BufNewFile",{
---
--- })
+
+-- Create an augroup to manage the autocmds
+local progress_group = vim.api.nvim_create_augroup("UserLspProgress", { clear = true })
+
+vim.api.nvim_create_autocmd("LspProgress", {
+	group = progress_group,
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if not client then
+			return
+		end
+
+		-- Extract data from the event
+		local value = args.data.params.value
+		if not value or type(value) ~= "table" then
+			return
+		end
+
+		local client_name = client.name
+		local title = value.title or ""
+		local message = value.message or ""
+		local percentage = value.percentage and (value.percentage .. "%%") or ""
+
+		-- Format the message
+		local msg = string.format("[%s] %s %s %s", client_name, title, message, percentage)
+
+		-- Clean up when finished
+		if value.kind == "end" then
+			vim.defer_fn(function()
+				vim.api.nvim_echo({ { "" } }, false, {})
+			end, 2000)
+			msg = string.format("[%s] Finished", client_name)
+		end
+
+		-- Display the message without it being stuck in :messages history
+		vim.api.nvim_echo({ { msg, "None" } }, true, {})
+	end,
+})

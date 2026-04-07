@@ -21,6 +21,10 @@ vim.pack.add({
 	{ src = "https://github.com/L3MON4D3/LuaSnip.git" },
 }, { confirm = false })
 
+-- vim.pack.add({
+-- 	{ src = "https://github.com/liinyun/codelens_eol.nvim" },
+-- }, { confirm = false })
+
 require("luasnip").setup({
 	load_ft_func = require("luasnip.extras.filetype_functions").extend_load_ft({
 		htmldjango = { "html" },
@@ -56,6 +60,7 @@ require("lazydev").setup({
 		-- It can also be a table with trigger words / mods
 		-- Only load luvit types when the `vim.uv` word is found
 		{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+
 		-- always load the LazyVim library
 		-- "LazyVim",
 		-- Only load the lazyvim library when the `LazyVim` global is found
@@ -63,6 +68,7 @@ require("lazydev").setup({
 		-- Load the wezterm types when the `wezterm` module is required
 		-- Needs `justinsgithub/wezterm-types` to be installed
 		{ path = "wezterm-types", mods = { "wezterm" } },
+
 		-- Load the xmake types when opening file named `xmake.lua`
 		-- Needs `LelouchHe/xmake-luals-addon` to be installed
 		{ path = "xmake-luals-addon/library", files = { "xmake.lua" } },
@@ -88,6 +94,7 @@ require("blink.cmp").setup({
 		preset = "none",
 		["<Up>"] = { "select_prev", "fallback" },
 		["<Down>"] = { "select_next", "fallback" },
+		["<tab>"] = { "select_next", "fallback" },
 		["<C-k>"] = { "select_prev", "fallback" },
 		["<C-j>"] = { "select_next", "fallback" },
 		["<CR>"] = { "accept", "fallback" },
@@ -271,132 +278,7 @@ vim.g.rustaceanvim = {
 			-- vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 		end,
 		default_settings = {
-			["rust-analyzer"] = {
-				rustc = { source = "discover" },
-				assist = {
-					importEnforceGranularity = true,
-					importPrefix = "by_self",
-					emitMustUse = false, -- Whether to insert #[must_use] when generating as_ methods for enum variants.
-					expressionFillDefault = "todo", -- Placeholder expression to use for missing expressions in assists.
-				},
-				cachePriming = {
-					enable = true,
-				},
-				cargo = {
-					autoreload = true,
-					features = "all",
-					loadOutDirsFromCheck = true,
-				},
-				checkOnSave = true,
-				check = {
-					-- if true this would cause #![no_std] report error for no test
-					allTargets = false,
-					command = "clippy",
-					extraArgs = {
-						"--no-deps",
-						"--message-format=json-diagnostic-rendered-ansi",
-						"Wclippy::pedantic",
-					},
-				},
-				diagnostics = {
-					-- I don't actually know the functionality of this configuration
-					-- but this config indeed extend my codeactions choices
-					enable = true,
-					refreshOnChange = true,
-					disabled = {
-						"proc-macro-disabled",
-						"unfulfilled_lint_expectations",
-						-- rustc 的 lint 已经有这些了
-						"unused_variables",
-						-- "unused_mut", -- rustc 更准确
-
-						-- clippy 的 lint 已经有这些了
-						"needless_return",
-					}, -- 要禁用的rust-analyzer诊断列表。
-					experimental = {
-						enable = false,
-						serverStatusNotification = true,
-					},
-					styleLints = {
-						enable = true,
-					},
-				},
-				highlightRelated = {
-					breakPoints = { enable = true }, -- 当光标位于 break 、 loop 、 while 或 for 关键字上时，启用相关引用的高亮显示。
-					closureCaptures = { enable = true }, -- 当光标位于闭包的 | 或move关键字上时，启用对闭包的所有捕获的高亮显示。
-					exitPoints = { enable = true }, -- 当光标位于 return 、 ? 、 fn 或返回类型箭头（ → ）上时，启用所有退出点的高亮显示。
-					references = { enable = true }, -- 当光标位于任何标识符上时，启用相关引用的高亮显示。
-					yieldPoints = { enable = true }, -- 当光标位于任何 async 或 await 关键字上时，启用高亮显示循环或块上下文的所有断点。
-				},
-				procMacro = {
-					enable = true,
-				},
-				---@type Hover
-				hover = {
-					actions = {
-						enable = true,
-						debug = {
-							enable = true,
-						},
-					},
-				},
-				---@type InlayHints
-				inlayHints = {
-					closingBraceHints = { enable = true, minLines = 40 },
-					closureCaptureHints = { enable = false },
-					closureReturnTypeHints = { enable = "always" }, -- never
-					closureStyle = "impl_fn",
-					expressionAdjustmentHints = { -- reborrow, loop的返回值
-						enable = "always",
-						hideOutsideUnsafe = true,
-						mode = "prefix",
-						-- mode = "postfix ",
-					},
-					lifetimeElisionHints = { enable = "always", useParameterNames = true },
-					parameterHints = { enable = true },
-					renderColons = true,
-					typeHints = { enable = true, hideClosureInitialization = false, hideNamedConstructor = false },
-					interpret = { tests = false },
-					joinLines = {
-						joinAssignments = true, -- Join lines merges consecutive declaration and initialization of an assignment.
-						joinElseIf = true, -- Join lines inserts else between consecutive ifs.
-						removeTrailingComma = true, -- Join lines removes trailing commas.
-						unwrapTrivialBlock = true, -- Join lines unwraps trivial blocks.
-					},
-
-					maxLength = 100,
-					bindingModeHints = {
-						enable = true,
-					},
-					chainingHints = {
-						enable = true,
-					},
-					discriminantHints = {
-						enable = "always",
-					},
-				},
-				typing = {
-					autoClosingAngleBrackets = { enable = true }, -- 键入泛型参数列表的左尖括号时是否插入右尖括号。
-				},
-				---@type Lens
-				lens = {
-					enable = true,
-					run = {
-						enable = false,
-					},
-					debug = {
-						enable = false,
-					},
-					references = {
-						adt = {
-							enable = true,
-						},
-						trait = {
-							enable = true,
-						},
-					},
-				},
-			},
+			["rust-analyzer"] = {},
 		},
 	},
 }
@@ -450,41 +332,3 @@ require("hurl").setup(
 	-- 	{ "<leader>h", ":HurlRunner<CR>", desc = "Hurl Runner", mode = "v" },
 	-- }
 )
-
--- Create an augroup to manage the autocmds
-local progress_group = vim.api.nvim_create_augroup("UserLspProgress", { clear = true })
-
-vim.api.nvim_create_autocmd("LspProgress", {
-	group = progress_group,
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if not client then
-			return
-		end
-
-		-- Extract data from the event
-		local value = args.data.params.value
-		if not value or type(value) ~= "table" then
-			return
-		end
-
-		local client_name = client.name
-		local title = value.title or ""
-		local message = value.message or ""
-		local percentage = value.percentage and (value.percentage .. "%%") or ""
-
-		-- Format the message
-		local msg = string.format("[%s] %s %s %s", client_name, title, message, percentage)
-
-		-- Clean up when finished
-		if value.kind == "end" then
-			vim.defer_fn(function()
-				vim.api.nvim_echo({ { "" } }, false, {})
-			end, 2000)
-			msg = string.format("[%s] Finished", client_name)
-		end
-
-		-- Display the message without it being stuck in :messages history
-		vim.api.nvim_echo({ { msg, "None" } }, false, {})
-	end,
-})

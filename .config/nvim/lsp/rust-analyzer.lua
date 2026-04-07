@@ -1,4 +1,4 @@
----@brief
+-- ---@brief
 ---
 --- https://github.com/rust-lang/rust-analyzer
 ---
@@ -22,82 +22,6 @@
 --- https://github.com/rust-lang/rust-analyzer/blob/eb5da56d839ae0a9e9f50774fa3eb78eb0964550/docs/dev/lsp-extensions.md?plain=1#L26.
 
 local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
-local function is_descendant(root, path)
-	if not path or not root then
-		return false
-	end
-
-	local ok, relpath = pcall(vim.fs.relpath, path, root)
-	if not ok or not relpath then
-		return false
-	end
-
-	return relpath == "." or not relpath:match("^%.%./")
-end
-
-local function escape_wildcards(path)
-	return path:gsub("([%[%]%?%*])", "\\%1")
-end
-
-local function root_pattern(...)
-	local patterns = vim.iter({ ... }):flatten(math.huge):totable()
-
-	return function(startpath)
-		startpath = startpath or vim.fn.expand("%:p:h")
-
-		for _, pattern in ipairs(patterns) do
-			for path in vim.fs.parents(startpath) do
-				local matches = vim.fn.glob(escape_wildcards(path) .. "/" .. pattern, true, true)
-
-				for _, p in ipairs(matches) do
-					if vim.uv.fs_stat(p) then
-						return path
-					end
-				end
-			end
-
-			local matches = vim.fn.glob(escape_wildcards(startpath) .. "/" .. pattern, true, true)
-			for _, p in ipairs(matches) do
-				if vim.uv.fs_stat(p) then
-					return startpath
-				end
-			end
-		end
-
-		return nil
-	end
-end
-
-local function reload_workspace(bufnr)
-	bufnr = bufnr == 0 and vim.api.nvim_get_current_buf() or bufnr
-	local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })
-	for _, client in ipairs(clients) do
-		vim.notify("Reloading Cargo Workspace")
-		client.request("rust-analyzer/reloadWorkspace", nil, function(err)
-			if err then
-				error(tostring(err))
-			end
-			vim.notify("Cargo workspace reloaded")
-		end, 0)
-	end
-end
-
--- local function is_library(fname)
--- 	local user_home = vim.fs.normalize(vim.env.HOME)
--- 	local cargo_home = os.getenv("CARGO_HOME") or user_home .. "/.cargo"
--- 	local registry = cargo_home .. "/registry/src"
--- 	local git_registry = cargo_home .. "/git/checkouts"
---
--- 	local rustup_home = os.getenv("RUSTUP_HOME") or user_home .. "/.rustup"
--- 	local toolchains = rustup_home .. "/toolchains"
---
--- 	for _, item in ipairs({ toolchains, registry, git_registry }) do
--- 		if is_descendant(item, fname) then
--- 			local clients = vim.lsp.get_clients({ name = "rust_analyzer" })
--- 			return #clients > 0 and clients[#clients].config.root_dir or nil
--- 		end
--- 	end
--- end
 
 return {
 	cmd = { "rust-analyzer" },
@@ -117,10 +41,15 @@ return {
 				emitMustUse = false, -- Whether to insert #[must_use] when generating as_ methods for enum variants.
 				expressionFillDefault = "todo", -- Placeholder expression to use for missing expressions in assists.
 			},
+			cachePrimint = {
+				enable = true,
+			},
+
 			cargo = {
 				autoreload = true,
 				allFeatures = true,
 				loadOutDirsFromCheck = true,
+				features = "all",
 			},
 			checkOnSave = true,
 			check = {
@@ -128,10 +57,16 @@ return {
 				allTargets = false,
 				command = "clippy",
 				extraArgs = {
+					-- "--no-deps",
+					-- "--message-format=json-diagnostic-rendered-ansi",
+					-- "Wclippy::pedantic",
+					-- "Wclippy::clone_on_ref_ptr",
 					"--no-deps",
-					"--message-format=json-diagnostic-rendered-ansi",
-
-					"Wclippy::pedantic",
+					"--", -- Separator: Everything after this goes to Clippy, not Cargo
+					"-W",
+					"clippy::pedantic",
+					-- "-W",
+					-- "clippy::clone_on_ref_ptr",
 				},
 			},
 			diagnostics = {
@@ -151,6 +86,7 @@ return {
 				}, -- 要禁用的rust-analyzer诊断列表。
 				experimental = {
 					enable = false,
+					serverStatusNotification = true,
 				},
 				styleLints = {
 					enable = true,
@@ -243,59 +179,6 @@ return {
 			},
 		},
 	},
-	-- root_dir = function(bufnr, on_dir)
-	-- 	local fname = vim.api.nvim_buf_get_name(bufnr)
-	-- 	local reused_dir = is_library(fname)
-	-- 	if reused_dir then
-	-- 		on_dir(reused_dir)
-	-- 		return
-	-- 	end
-	--
-	-- 	local cargo_crate_dir = root_pattern("Cargo.toml")(fname)
-	-- 	local cargo_workspace_root
-	--
-	-- 	if cargo_crate_dir == nil then
-	-- 		on_dir(
-	-- 			root_pattern("rust-project.json")(fname)
-	-- 				or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
-	-- 		)
-	-- 		return
-	-- 	end
-	--
-	-- 	local cmd = {
-	-- 		"cargo",
-	-- 		"metadata",
-	-- 		"--no-deps",
-	-- 		"--format-version",
-	-- 		"1",
-	-- 		"--manifest-path",
-	-- 		cargo_crate_dir .. "/Cargo.toml",
-	-- 	}
-	--
-	-- 	vim.system(cmd, { text = true }, function(output)
-	-- 		if output.code == 0 then
-	-- 			if output.stdout then
-	-- 				local result = vim.json.decode(output.stdout)
-	-- 				if result["workspace_root"] then
-	-- 					cargo_workspace_root = vim.fs.normalize(result["workspace_root"])
-	-- 				end
-	-- 			end
-	--
-	-- 			on_dir(cargo_workspace_root or cargo_crate_dir)
-	-- 		else
-	-- 			vim.schedule(function()
-	-- 				vim.notify(
-	-- 					("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(output.code, cmd, output.stderr)
-	-- 				)
-	-- 			end)
-	-- 		end
-	-- 	end)
-	-- end,
-	-- capabilities = {
-	-- 	experimental = {
-	-- 		serverStatusNotification = true,
-	-- 	},
-	-- },
 	capabilities = lsp_capabilities,
 	-- before_init = function(init_params, config)
 	-- 	-- See https://github.com/rust-lang/rust-analyzer/blob/eb5da56d839ae0a9e9f50774fa3eb78eb0964550/docs/dev/lsp-extensions.md?plain=1#L26
@@ -305,6 +188,16 @@ return {
 	-- end,
 	on_attach = function(client, bufnr)
 		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		vim.lsp.codelens.enable(true)
+		-- local caps = client.server_capabilities
+		-- if caps.codeLensProvider then
+		-- 	local my_codelens = require("custom_codelens")
+		-- 	my_codelens.enable(true, { bufnr = bufnr })
+		-- 	-- my_codelens.refresh({ bufnr = bufnr })
+		--
+		-- 	-- Keymap specifically for this buffer
+		-- 	-- vim.keymap.set("n", "<leader>cl", my_codelens.run, { buffer = bufnr, desc = "LSP CodeLens" })
+		-- end
 		-- vim.api.nvim_buf_create_user_command(0, "LspCargoReload", function()
 		-- 	reload_workspace(0)
 		-- end, { desc = "Reload current cargo workspace" })

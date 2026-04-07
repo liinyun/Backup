@@ -26,6 +26,9 @@ opt.autoindent = true
 vim.bo.softtabstop = 2
 vim.o.winborder = "rounded"
 
+-- enable 24bit RGB color in TUI
+vim.opt.termguicolors = true
+
 -- auto detect fileencodings
 vim.opt.fileencodings = "ucs-bom,utf-8,gb18030,gbk,gb2312,cp936,big5,latin1"
 
@@ -113,6 +116,14 @@ vim.opt.undofile = true
 -- 中的格式是一样的
 vim.opt.expandtab = true
 
+vim.filetype.add({
+	pattern = {
+		-- Matches a file named "config.txt" in the root directory
+		["kdeglobals"] = "ini",
+	},
+	-- You can also use "extension" or "magic" (content inspection) here
+})
+
 -- transfer dos to unix
 vim.api.nvim_create_user_command("Dos2Unix", function()
 	-- Execute the commands in sequence
@@ -122,21 +133,21 @@ vim.api.nvim_create_user_command("Dos2Unix", function()
 end, {})
 
 -- Auto-save when leaving Insert mode (entering Normal mode)
-local function SaveFileEnteringNormalMode()
-	vim.cmd("silent! update")
-	local filetype = vim.bo.filetype
-	if filetype == "rust" then
-		-- this function could get an error. If I change mode before rust lsp is fully loaded, it may throw error, but it's ok, it's just because the lsp is not fully loaded
-		vim.cmd("RustLsp flyCheck")
-		vim.lsp.codelens.refresh()
-	end
-end
-
-vim.api.nvim_create_autocmd("ModeChanged", {
-	pattern = "i*:*",
-	-- nested = true,
-	callback = SaveFileEnteringNormalMode,
-})
+-- local function SaveFileEnteringNormalMode()
+-- 	vim.cmd("silent! update")
+-- 	local filetype = vim.bo.filetype
+-- 	if filetype == "rust" then
+-- 		-- this function could get an error. If I change mode before rust lsp is fully loaded, it may throw error, but it's ok, it's just because the lsp is not fully loaded
+-- 		vim.cmd("RustLsp flyCheck")
+-- 		vim.lsp.codelens.refresh()
+-- 	end
+-- end
+--
+-- vim.api.nvim_create_autocmd("ModeChanged", {
+-- 	pattern = "i*:*",
+-- 	-- nested = true,
+-- 	callback = SaveFileEnteringNormalMode,
+-- })
 
 -- set self defined comment pattern
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -150,7 +161,17 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = "*.ini", -- Replace with your file extension (e.g., *.foo)
+	pattern = "*.kdl", -- Replace with your file extension (e.g., *.foo)
+	callback = function()
+		vim.bo.commentstring = "// %s" -- Example: Use `#` for comments (like Python)
+		-- Alternatives:
+		-- vim.bo.commentstring = "// %s"  (C-style)
+		-- vim.bo.commentstring = "<!-- %s -->"  (HTML)
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "ini", -- Replace with your file extension (e.g., *.foo)
 	callback = function()
 		vim.bo.commentstring = "# %s" -- Example: Use `#` for comments (like Python)
 		-- Alternatives:

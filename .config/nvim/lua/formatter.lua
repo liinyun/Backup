@@ -13,6 +13,7 @@ require("conform").setup({
 		jsonc = { "biome" },
 		-- htmldjango = { "djlint", "djlint-reformat", "djlint-django", "djlint-reformat-django" }
 		hurl = { "hurlfmt" },
+		julia = { "jlfmt" },
 	},
 	-- Set default options
 	-- default_format_opts = {
@@ -48,5 +49,14 @@ require("conform").setup({
 			}, -- "-" tells it to read from stdin
 			stdin = true,
 		},
+		jlfmt = {
+			command = "jlfmt",
+			args = {
+				"-",
+			},
+			stdin = true,
+		},
 	},
 })
+
+vim.keymap.set("n", "<leader>f", require("conform").format({ async = true }), { desc = "Format buffer" })

@@ -1,9 +1,9 @@
-vim.pack.add({
-	{ src = "https://github.com/numToStr/Comment.nvim.git" },
-}, { confirm = false })
-require("Comment").setup({
-	ignore = nil,
-})
+-- vim.pack.add({
+-- 	{ src = "https://github.com/numToStr/Comment.nvim.git" },
+-- }, { confirm = false })
+-- require("Comment").setup({
+-- 	ignore = nil,
+-- })
 
 vim.pack.add({
 	{ src = "https://github.com/LunarVim/bigfile.nvim.git" },
@@ -21,10 +21,151 @@ vim.pack.add({
 	{ src = "https://github.com/lambdalisue/vim-suda.git" },
 }, { confirm = false })
 
+vim.pack.add({
+	{ src = "https://github.com/brenoprata10/nvim-highlight-colors.git" },
+}, { confirm = false })
+require("nvim-hight-colors").setup({
+	---Render style
+	---@usage 'background'|'foreground'|'virtual'
+	render = "background",
+
+	---Set virtual symbol (requires render to be set to 'virtual')
+	virtual_symbol = "■",
+
+	---Set virtual symbol suffix (defaults to '')
+	virtual_symbol_prefix = "",
+
+	---Set virtual symbol suffix (defaults to ' ')
+	virtual_symbol_suffix = " ",
+
+	---Set virtual symbol position()
+	---@usage 'inline'|'eol'|'eow'
+	---inline mimics VS Code style
+	---eol stands for `end of column` - Recommended to set `virtual_symbol_suffix = ''` when used.
+	---eow stands for `end of word` - Recommended to set `virtual_symbol_prefix = ' ' and virtual_symbol_suffix = ''` when used.
+	virtual_symbol_position = "inline",
+
+	---Highlight hex colors, e.g. '#FFFFFF'
+	enable_hex = true,
+
+	---Highlight short hex colors e.g. '#fff'
+	enable_short_hex = true,
+
+	---Highlight rgb colors, e.g. 'rgb(0 0 0)'
+	enable_rgb = true,
+
+	---Highlight hsl colors, e.g. 'hsl(150deg 30% 40%)'
+	enable_hsl = true,
+
+	---Highlight CSS variables, e.g. 'var(--testing-color)'
+	enable_var_usage = true,
+
+	---Highlight named colors, e.g. 'green'
+	enable_named_colors = true,
+
+	---Highlight tailwind colors, e.g. 'bg-blue-500'
+	enable_tailwind = false,
+
+	---Set custom colors
+	---Label must be properly escaped with '%' to adhere to `string.gmatch`
+	--- :help string.gmatch
+	custom_colors = {
+		{ label = "%-%-theme%-primary%-color", color = "#0f1219" },
+		{ label = "%-%-theme%-secondary%-color", color = "#5a5d64" },
+	},
+
+	-- Exclude filetypes or buftypes from highlighting e.g. 'exclude_buftypes = {'text'}'
+	exclude_filetypes = {},
+	exclude_buftypes = {},
+})
+
 -- ==============================TODO-comments====================================
 vim.pack.add({
 	{ src = "https://github.com/folke/todo-comments.nvim.git" },
 }, { confirm = false })
+
+require("todo-comments").setup({
+	sign = true, -- show icons in the signs column
+	-- 这个是用来控制 符号的优先级的，防止和其他插件的符号冲突
+	-- 如果别的插件想要使用符号栏，那么可能会与 todo-comments 的符号冲突，那么nvim 会选择显示哪个符号看的就是这个符号的优先级
+	-- 所以有些插件就会使用 virtual text 来避免冲突，比如 lsp 。事实上，我个人感觉 lsp 其实对于符号的占用还是比较有限的，lsp 很多时候都是 virtual texg 在起作用
+	-- 而且，我一般也不会看lsp 的 icons 而是选择使用 Trouble 之类的插件直接进行跳转才是更加合适的方案
+	sign_priority = 8, -- sign priority
+	keywords = {
+		FIX = {
+			icon = " ", -- icon used for the sign, and in search results
+			color = "error", -- can be a hex color, or a named color (see below)
+			alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+			-- signs = false, -- configure signs for some keywords individually
+		},
+		TODO = { icon = " ", color = "info" },
+		HACK = { icon = " ", color = "warning" },
+		WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+		PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+		NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+		TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+		QUES = { icon = "❔", color = "warning", alt = { "QUESTION" } },
+		THOUGHT = { icon = " ", color = "thoughts", alt = { "thought" } },
+		question = { icon = "❔", color = "question", alt = { "questions" } },
+		FINISH = { icon = " ", color = "info", alt = { "finish" } },
+		PURPLE = { icon = "❔", color = "purple", alt = { "purp" } },
+		-- QUES = { icon = "?", color = "hint", alt = { "???" } },
+	},
+	gui_style = {
+		fg = "NONE", -- The gui style to use for the fg highlight group.
+		bg = "BOLD", -- The gui style to use for the bg highlight group.
+	},
+	highlight = {
+		multiline = true, -- enable multine todo comments
+		multiline_pattern = "^.", -- lua pattern to match the next multiline from the start of the matched keyword
+		multiline_context = 10, -- extra lines that will be re-evaluated when changing a line
+		before = "", -- "fg" or "bg" or empty
+		keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+		after = "fg", -- "fg" or "bg" or empty
+		pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)
+		comments_only = true, -- uses treesitter to match keywords in comments only
+		max_line_len = 400, -- ignore lines longer than this
+		exclude = {}, -- list of file types to exclude highlighting
+	},
+	-- list of named colors where we try to extract the guifg from the
+	-- list of highlight groups or use the hex color if hl not found as a fallback
+	colors = {
+		error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+		warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+		info = { "DiagnosticInfo", "#2563EB" },
+		hint = { "DiagnosticHint", "#10B981" },
+		default = { "Identifier", "#7C3AED" },
+		test = { "Identifier", "#FF00FF" },
+		thoughts = { "thoughts", "#2563EB" },
+		question = { "question", "#ffee32" },
+		purple = { "purple", "#7C3AED" },
+	},
+})
+
+-- ===================================ui2=========================================
+require("vim._core.ui2").enable({
+	enable = true, -- Whether to enable or disable the UI.
+	msg = { -- Options related to the message module.
+		---@type 'cmd'|'msg' Default message target, either in the
+		---cmdline or in a separate ephemeral message window.
+		---@type string|table<string, 'cmd'|'msg'|'pager'> Default message target
+		---or table mapping |ui-messages| kinds and triggers to a target.
+		targets = "msg",
+		cmd = { -- Options related to messages in the cmdline window.
+			height = 0.5, -- Maximum height while expanded for messages beyond 'cmdheight'.
+		},
+		dialog = { -- Options related to dialog window.
+			height = 0.5, -- Maximum height.
+		},
+		msg = { -- Options related to msg window.
+			height = 0.5, -- Maximum height.
+			timeout = 4000, -- Time a message is visible in the message window.
+		},
+		pager = { -- Options related to message window.
+			height = 1, -- Maximum height.
+		},
+	},
+})
 
 -- ================================persisted======================================
 vim.pack.add({
@@ -46,7 +187,7 @@ require("persisted").setup({
 		return vim.bo.filetype == "alpha" and false or true
 	end,
 	-- 这个不是官方写法，感觉有点脑残了，不过也能用，不管了
-	allowed_dirs = { "~" }, -- Table of dirs that the plugin will start and autoload from
+	-- allowed_dirs = { "~" }, -- Table of dirs that the plugin will start and autoload from
 })
 
 -- ==============================render markdown==================================

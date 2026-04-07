@@ -60,21 +60,21 @@ vim.api.nvim_create_user_command("Dos2Unix", function()
 end, {})
 
 -- Auto-save when leaving Insert mode (entering Normal mode)
-local function SaveFileEnteringNormalMode()
-	vim.cmd("silent! update")
-	local filetype = vim.bo.filetype
-	if filetype == "rust" then
-		-- this function could get an error. If I change mode before rust lsp is fully loaded, it may throw error, but it's ok, it's just because the lsp is not fully loaded
-		vim.cmd("RustLsp flyCheck")
-		vim.lsp.codelens.refresh()
-	end
-end
+-- local function SaveFileEnteringNormalMode()
+-- 	vim.cmd("silent! update")
+-- 	local filetype = vim.bo.filetype
+-- 	if filetype == "rust" then
+-- 		-- this function could get an error. If I change mode before rust lsp is fully loaded, it may throw error, but it's ok, it's just because the lsp is not fully loaded
+-- 		vim.cmd("RustLsp flyCheck")
+-- 		vim.lsp.codelens.refresh()
+-- 	end
+-- end
 
-vim.api.nvim_create_autocmd("ModeChanged", {
-	pattern = "i*:*",
-	-- nested = true,
-	callback = SaveFileEnteringNormalMode,
-})
+-- vim.api.nvim_create_autocmd("ModeChanged", {
+-- 	pattern = "i*:*",
+-- 	-- nested = true,
+-- 	callback = SaveFileEnteringNormalMode,
+-- })
 
 -- set self defined comment pattern
 vim.api.nvim_create_autocmd("BufEnter", {

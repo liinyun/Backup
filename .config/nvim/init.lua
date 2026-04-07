@@ -217,5 +217,4 @@ elseif vim.g.OSName == "Windows_NT" then
 	vim.opt.shadafile = "NONE"
 end
 
--- require("fzf-lua").setup({})
--- fzf_cmd.setup({})
+-- vim.opt.rtp:prepend("/home/linya/codes/lua/codelens_eol.nvim")

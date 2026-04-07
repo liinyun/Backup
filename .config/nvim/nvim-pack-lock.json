@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "Comment.nvim": {
-      "rev": "e30b7f2008e52442154b66f7c519bfd2f1e32acb",
-      "src": "https://github.com/numToStr/Comment.nvim.git"
-    },
     "LuaSnip": {
       "rev": "dae4f5aaa3574bd0c2b9dd20fb9542a02c10471c",
       "src": "https://github.com/L3MON4D3/LuaSnip.git"
@@ -19,6 +15,10 @@
     "blink.cmp": {
       "rev": "b650e976a927be6b46487a0a610b75af111376c5",
       "src": "https://github.com/saghen/blink.cmp.git"
+    },
+    "codelens_eol.nvim": {
+      "rev": "7727dced8f598f21fef375804f8dba600551b605",
+      "src": "https://github.com/liinyun/codelens_eol.nvim"
     },
     "conform.nvim": {
       "rev": "e969e302bced7ffb9a0a0323629f31feb0ca35a6",

@@ -33,20 +33,3 @@ require("nvim-treesitter").install({
 	"julia",
 	"hurl",
 })
-
--- require("nvim-treesitter").setup({
--- 		highlight = {
--- 			enable = true,
--- 			disable = { "latex" },
--- 		},
--- 		rainbow = {
--- 			enable = true, -- enable rainbow parenthesis
--- 			extended_mode = true, -- enable rainbow parenthesis in comment codes
--- 			max_file_lines = nil, -- don't restrain the file size
--- 		},
--- 		indent = { enable = true },
--- 		auto_install = false, -- automatically install syntax support when entering new file type buffer
--- 		autotag = {
--- 			enable = true,
--- 		},
--- })
