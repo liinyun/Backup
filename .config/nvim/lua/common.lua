@@ -24,7 +24,7 @@ vim.pack.add({
 vim.pack.add({
 	{ src = "https://github.com/brenoprata10/nvim-highlight-colors.git" },
 }, { confirm = false })
-require("nvim-hight-colors").setup({
+require("nvim-highlight-colors").setup({
 	---Render style
 	---@usage 'background'|'foreground'|'virtual'
 	render = "background",

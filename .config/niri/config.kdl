@@ -8,6 +8,11 @@
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 environment {
   DISPLAY ":0"
+// Force Dolphin to use KDE's theme engine instead of the GNOME portal
+    QT_QPA_PLATFORMTHEME "kde"
+    
+    // Tell the app it is running in a KDE-like desktop to unlock kdeglobals
+    XDG_CURRENT_DESKTOP "KDE"
 }
 input {
     keyboard {
@@ -389,6 +394,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+E hotkey-overlay-title="Run an Application: dolphin" { spawn "dolphin"; }
+    // Mod+E hotkey-overlay-title="Run an Application: yazi" { spawn "kitty" "-e" "yazi"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
