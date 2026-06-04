@@ -13,6 +13,7 @@ local M = {
 	},
 	on_init = function(client)
 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		-- vim.lsp.codelens.enable(true)
 	end,
 
 	capabilities = lsp_capabilities,

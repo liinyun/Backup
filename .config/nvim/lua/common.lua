@@ -225,9 +225,11 @@ local fzf_cmd = require("fzf-lua")
 vim.keymap.set("n", "<leader>ff", fzf_cmd.files, { desc = "Telescope find files" })
 vim.keymap.set("n", "<leader>fg", fzf_cmd.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", fzf_cmd.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>ft", fzf_cmd.lsp_document_symbols, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fi", fzf_cmd.lsp_incoming_calls, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fo", fzf_cmd.lsp_outgoing_calls, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>fs", fzf_cmd.lsp_document_symbols, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>fw", fzf_cmd.lsp_workspace_symbols, { desc = "Telescope buffers" })
+
+vim.keymap.set("n", "<leader>fi", fzf_cmd.lsp_implementations, { desc = "Telescope buffers" })
+-- vim.keymap.set("n", "<leader>fo", fzf_cmd.lsp_outgoing_calls, { desc = "Telescope buffers" })
 
 -- =================================autopairs=================================
 vim.pack.add({

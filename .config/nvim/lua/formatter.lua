@@ -1,9 +1,24 @@
 vim.pack.add({
+	{ src = "https://github.com/eraserhd/parinfer-rust.git" },
+}, { confirm = false })
+-- require("parinfer-rust").setup({
+-- 	-- You MUST point this to the .so file you built in Step 1
+-- 	lib_path = "/home/linya/codes/github/parinfer-rust/target/release/libparinfer_rust.so",
+--
+-- 	-- Recommended settings for Lisp-like languages
+-- 	-- Parinfer works best when it "just works" as you type.
+-- 	smart_mode = true,
+-- 	check_mode = true,
+-- })
+
+
+vim.pack.add({
 	{ src = "https://github.com/stevearc/conform.nvim.git" },
 }, { confirm = false })
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
+		fennel = { "fnlfmt" },
 		htmldjango = { "djlint" },
 		html = { "djlint" },
 		-- python = { "isort", "black", stop_after_first = true },
@@ -14,6 +29,10 @@ require("conform").setup({
 		-- htmldjango = { "djlint", "djlint-reformat", "djlint-django", "djlint-reformat-django" }
 		hurl = { "hurlfmt" },
 		julia = { "jlfmt" },
+		toml = { "taplo" },
+		rust = { "rustfmt" },
+		kdl = { "kdlfmt" },
+		xml = { "xmllint" },
 	},
 	-- Set default options
 	-- default_format_opts = {
@@ -55,6 +74,10 @@ require("conform").setup({
 				"-",
 			},
 			stdin = true,
+		},
+		xml = {
+			command = "xmllint",
+			args = { "--format", "-" },
 		},
 	},
 })

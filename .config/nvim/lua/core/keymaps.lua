@@ -50,6 +50,8 @@ vim.api.nvim_set_keymap("n", "J", "<nop>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "zo", "zo:lua UpdateFoldSigns()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "zc", "zc:lua UpdateFoldSigns()<CR>", { noremap = true, silent = true })
 
+vim.keymap.set("n", "yyy", "yy", { noremap = true, silent = true, desc = "Yank current line" })
+
 -- ==================== plugins ==================== --
 -- neo-tree
 
@@ -60,7 +62,7 @@ vim.api.nvim_set_keymap("n", "zc", "zc:lua UpdateFoldSigns()<CR>", { noremap = t
 -- how the definition of the function
 -- it will show the doc, but the content is provided by lsp
 -- keymap.set("n", "<leader>gg", "<cmd>lua vim.lsp.buf.hover()<CR>")
-vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+-- vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
 
 local function quit_floating_win()
 	local win_id = vim.api.nvim_get_current_win()
@@ -72,6 +74,7 @@ local function quit_floating_win()
 end
 
 vim.keymap.set("n", "<Esc>", quit_floating_win, { noremap = true, silent = true })
+
 vim.keymap.set("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 -- shortcut to view the source code
 vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
@@ -88,6 +91,12 @@ vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 -- vim.keymap.set("n", "<leader>tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
 vim.keymap.set("n", "<M-CR>", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+
+vim.keymap.del("n", "gra")
+vim.keymap.del("n", "gri")
+vim.keymap.del("n", "grn")
+vim.keymap.del("n", "grr")
+vim.keymap.del("n", "grt")
 
 -- vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
 -- vim.keymap.set("n", "gp", "<cmd>Lspsaga goto_definition<CR>")

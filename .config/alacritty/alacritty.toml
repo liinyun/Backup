@@ -6,7 +6,7 @@ https_proxy = "http://127.0.0.1:7897"
 
 [window]
 # 这个是将标题栏隐藏
-decorations = "buttonless"
+decorations = "None"
 # 这两个控制的是文本的内容和窗口边缘的距离
 padding.x = 10
 padding.y = 10
@@ -53,8 +53,9 @@ style.shape = "Block"
 style.blinking = "On"
 
 [keyboard]
-bindings = [{key="F11",action="ToggleFullscreen"},
-            {key="n", mods="Control|Shift", action="CreateNewWindow"},
+bindings = [
+  { key = "F11", action = "ToggleFullscreen" },
+  { key = "n", mods = "Control|Shift", action = "CreateNewWindow" },
 ]
 
 
@@ -78,4 +79,3 @@ foreground = '#FFFFFF'
 
 # 实时重载配置文件，不用重启测试配置选项
 live_config_reload = true
-

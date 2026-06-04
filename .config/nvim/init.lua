@@ -10,13 +10,6 @@ vim.g.mapleader = " "
 vim.opt.termguicolors = true
 -- vim.opt.regexpengine = 2
 
-vim.filetype.add({
-	extension = {
-		mc = "monkeyc",
-		peggy = "peggyjs",
-	},
-})
-
 -- require("core.lazy")
 -- These modules are not loaded by lazy
 -- require("core.options")
@@ -24,14 +17,11 @@ require("core.keymaps")
 require("lib")
 require("common")
 require("lsp")
+require("daps")
 require("treesitter")
 require("formatter")
--- require("packs.lib")
--- require("packs.common")
--- require("core.keymaps-bak")
-require("core.scripts.scripts")
+-- require("core.scripts.scripts")
 
--- require("public.rust")
 vim.o.autoread = true
 
 -- vim.ui.select = function(items, opts, on_choice)
@@ -44,16 +34,22 @@ vim.o.autoread = true
 -- 这里是选择使用系统寄存器，就可以实现跨应用复制和粘贴了
 vim.opt.clipboard:append("unnamedplus")
 
--- this is to config the backgournd coclr to be transparent
-vim.cmd("colorscheme catppuccin")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#2E2E2E", fg = "#FFFFFF" })
+vim.filetype.add({
+	extension = {
+		mc = "monkeyc",
+		peggy = "peggyjs",
+		Dockerfile = "dockerfile",
+		-- sps = "r6rs",
+	},
+})
 
 vim.filetype.add({
 	filename = {
+		["launch.json"] = "jsonc",
 		["pages.json"] = "jsonc",
 		["manifest.json"] = "jsonc",
 		["coc-settings.json"] = "jsonc",
+		["config"] = "ini",
 	},
 })
 
@@ -126,7 +122,6 @@ end
 -- require("core.keymaps-bak")
 -- require("core.scripts.scripts")
 
--- require("public.rust")
 vim.o.autoread = true
 
 -- vim.ui.select = function(items, opts, on_choice)
@@ -140,9 +135,14 @@ vim.o.autoread = true
 vim.opt.clipboard:append("unnamedplus")
 
 -- this is to config the backgournd coclr to be transparent
+-- vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#2E2E2E", fg = "#FFFFFF" })
+
+-- this is to config the backgournd coclr to be transparent
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "#FFFFFF" })
+-- vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#2E2E2E", fg = "#FFFFFF" })
+
 vim.cmd("colorscheme catppuccin")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#2E2E2E", fg = "#FFFFFF" })
 
 vim.filetype.add({
 	filename = {

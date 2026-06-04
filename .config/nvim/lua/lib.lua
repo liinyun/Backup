@@ -57,6 +57,12 @@ require("nvim-web-devicons").setup({
 			icon = "🐒",
 			name = "monkeyC",
 		},
+		["dockerfile"] = {
+			color = "#458EE6",
+			cterm_color = "68",
+			icon = "󰡨",
+			name = "Dockerfile",
+		},
 	},
 	-- same as `override` but specifically for operating system
 	-- takes effect when `strict` is true

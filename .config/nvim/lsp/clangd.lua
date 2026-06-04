@@ -66,7 +66,7 @@ end
 
 ---@type vim.lsp.Config
 return {
-	cmd = { "clangd" },
+	cmd = { "clangd", "--enable-config" },
 	filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 	root_markers = {
 		".clangd",
@@ -103,5 +103,8 @@ return {
 		vim.api.nvim_buf_create_user_command(bufnr, "LspClangdShowSymbolInfo", function()
 			symbol_info(bufnr, client)
 		end, { desc = "Show symbol info" })
+
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		vim.lsp.codelens.enable(true)
 	end,
 }

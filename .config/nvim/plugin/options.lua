@@ -60,7 +60,6 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
 -- Appearance
-opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
 vim.diagnostic.config({
@@ -199,27 +198,27 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
--- defin the correspond highlightt group
-vim.api.nvim_set_hl(0, "MyFoldColumn", { fg = "#85EEA7" })
--- Define signs for open and closed folds
-vim.fn.sign_define("FoldClosed", { text = "▼", texthl = "MyFoldColumn" })
-
-function UpdateFoldSigns()
-	local bufnr = vim.api.nvim_get_current_buf()
-	-- Clear previous fold signs
-	vim.fn.sign_unplace("FoldSigns", { buffer = bufnr })
-	-- Iterate through all lines and place fold signs only for closed folds
-	for lnum = 1, vim.api.nvim_buf_line_count(bufnr) do
-		if vim.fn.foldclosed(lnum) ~= -1 then -- Only place if fold is closed
-			vim.fn.sign_place(0, "FoldSigns", "FoldClosed", bufnr, { lnum = lnum, priority = 10 })
-		end
-	end
-end
-
--- refresh folder symbol in gutter everytime enter a buffer
-vim.api.nvim_create_autocmd("BufEnter", {
-	callback = UpdateFoldSigns,
-})
+-- -- defin the correspond highlightt group
+-- vim.api.nvim_set_hl(0, "MyFoldColumn", { fg = "#85EEA7" })
+-- -- Define signs for open and closed folds
+-- vim.fn.sign_define("FoldClosed", { text = "▼", texthl = "MyFoldColumn" })
+--
+-- function UpdateFoldSigns()
+-- 	local bufnr = vim.api.nvim_get_current_buf()
+-- 	-- Clear previous fold signs
+-- 	vim.fn.sign_unplace("FoldSigns", { buffer = bufnr })
+-- 	-- Iterate through all lines and place fold signs only for closed folds
+-- 	for lnum = 1, vim.api.nvim_buf_line_count(bufnr) do
+-- 		if vim.fn.foldclosed(lnum) ~= -1 then -- Only place if fold is closed
+-- 			vim.fn.sign_place(0, "FoldSigns", "FoldClosed", bufnr, { lnum = lnum, priority = 10 })
+-- 		end
+-- 	end
+-- end
+--
+-- -- refresh folder symbol in gutter everytime enter a buffer
+-- vim.api.nvim_create_autocmd("BufEnter", {
+-- 	callback = UpdateFoldSigns,
+-- })
 
 if OSName == "Linux" then
 	-- transfer dos to unix
@@ -228,6 +227,10 @@ if OSName == "Linux" then
 		vim.cmd("e ++ff=dos")
 		vim.cmd("set fileformat=unix")
 		vim.cmd("update")
+	end, {})
+	vim.api.nvim_create_user_command("Xxd", function()
+		-- Execute the commands in sequence
+		vim.cmd("%!xxd")
 	end, {})
 elseif OSName == "Windows_NT" then
 	-- auto generate png file

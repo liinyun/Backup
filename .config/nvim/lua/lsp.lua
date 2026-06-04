@@ -5,6 +5,10 @@ vim.pack.add({
 }, { confirm = false })
 
 -- vim.pack.add({
+-- 	{ src = "https://github.com/neovim/nvim-lspconfig" },
+-- })
+
+-- vim.pack.add({
 -- 	{ src = "https://github.com/gelguy/wilder.nvim.git" },
 -- }, { confirm = false })
 -- local wilder = require("wilder")
@@ -17,13 +21,45 @@ vim.pack.add({
 -- 	})
 -- )
 
-vim.pack.add({
-	{ src = "https://github.com/L3MON4D3/LuaSnip.git" },
-}, { confirm = false })
-
 -- vim.pack.add({
 -- 	{ src = "https://github.com/liinyun/codelens_eol.nvim" },
 -- }, { confirm = false })
+
+vim.pack.add({
+	{ src = "https://github.com/Olical/conjure.git" },
+}, { confirm = false })
+
+vim.g["conjure#filetypes"] = {
+	"clojure",
+	"elixir",
+	"fennel",
+	"janet",
+	"hy",
+	-- "julia",
+	"racket",
+	"scheme",
+	-- "lua",
+	"lisp",
+	-- "python",
+	-- "ruby",
+	-- "rust",
+	-- "sql",
+}
+
+vim.g["conjure#extract#tree_sitter#enabled"] = true
+
+-- vim.g["conjure#filetype#r6rs"] = "conjure.client.scheme.stdio"
+vim.g["conjure#client#scheme#stdio#command"] = "petite"
+vim.g["conjure#client#scheme#stdio#prompt_pattern"] = "> $?"
+vim.g["conjure#filetype_suffixes#scheme"] = { "scm", "ss", "sps" }
+vim.g["conjure#client#scheme#stdio#enable_completions"] = true
+vim.g["conjure#mapping#doc_word"] = false
+-- Rebind it from K to <prefix>gk
+-- vim.g["conjure#mapping#doc_word"] = "k"
+
+vim.pack.add({
+	{ src = "https://github.com/L3MON4D3/LuaSnip.git" },
+}, { confirm = false })
 
 require("luasnip").setup({
 	load_ft_func = require("luasnip.extras.filetype_functions").extend_load_ft({
@@ -72,6 +108,7 @@ require("lazydev").setup({
 		-- Load the xmake types when opening file named `xmake.lua`
 		-- Needs `LelouchHe/xmake-luals-addon` to be installed
 		{ path = "xmake-luals-addon/library", files = { "xmake.lua" } },
+		{ "nvim-dap-ui" },
 	},
 	-- always enable unless `vim.g.lazydev_enabled = false`
 	-- This is the default
@@ -246,42 +283,42 @@ require("blink.cmp").setup({
 
 -- ==================================rustaceanvim=======================================
 
-vim.pack.add({
-	{ src = "https://github.com/mrcjkb/rustaceanvim.git" },
-}, { confirm = false })
-
-vim.g.rustaceanvim = {
-	tools = {
-		on_initialized = function(status)
-			local health = status.health
-
-			if health == "ok" then
-				vim.cmd.RustLsp("flyCheck")
-				-- vim.lsp.codelens.refresh()
-				-- elseif health == "warning" then
-				--   vim.notify("ra health is " .. health, vim.log.levels.WARN)
-				-- elseif health == "error" then
-				--   vim.notify("ra health is " .. health, vim.log.levels.ERROR)
-			end
-		end,
-	},
-	server = {
-		-- don't use on_init, it will thow error, but I don't know the reason why it can throw error
-		on_attach = function(client, bufnr)
-			-- if client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, { bufnr = bufnr }) then
-			-- local _ = pcall(vim.lsp.inlay_hint.enable, true, { bufnr = bufnr })
-			if not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }) then
-				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
-			end
-			-- end
-
-			-- vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-		end,
-		default_settings = {
-			["rust-analyzer"] = {},
-		},
-	},
-}
+-- vim.pack.add({
+-- 	{ src = "https://github.com/mrcjkb/rustaceanvim.git" },
+-- }, { confirm = false })
+--
+-- vim.g.rustaceanvim = {
+-- 	tools = {
+-- 		on_initialized = function(status)
+-- 			local health = status.health
+--
+-- 			if health == "ok" then
+-- 				vim.cmd.RustLsp("flyCheck")
+-- 				-- vim.lsp.codelens.refresh()
+-- 				-- elseif health == "warning" then
+-- 				--   vim.notify("ra health is " .. health, vim.log.levels.WARN)
+-- 				-- elseif health == "error" then
+-- 				--   vim.notify("ra health is " .. health, vim.log.levels.ERROR)
+-- 			end
+-- 		end,
+-- 	},
+-- 	server = {
+-- 		-- don't use on_init, it will thow error, but I don't know the reason why it can throw error
+-- 		on_attach = function(client, bufnr)
+-- 			if client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, { bufnr = bufnr }) then
+-- 				local _ = pcall(vim.lsp.inlay_hint.enable, true, { bufnr = bufnr })
+-- 				if not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }) then
+-- 					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
+-- 				end
+-- 			end
+--
+-- 			-- vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+-- 		end,
+-- 		default_settings = {
+-- 			["rust-analyzer"] = {},
+-- 		},
+-- 	},
+-- }
 
 -- =================================hurl===============================================
 
@@ -319,6 +356,7 @@ require("hurl").setup(
 		-- 	prev_panel = "<C-p>", -- Move to the previous response popup window
 		-- },
 	}
+
 	-- keys = {
 	-- 	-- Run API request
 	-- 	{ "<leader>A", "<cmd>HurlRunner<CR>", desc = "Run All requests" },

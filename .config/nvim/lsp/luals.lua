@@ -15,7 +15,8 @@ return {
 	capabilities = lsp_capabilities,
 
 	on_init = function(client)
-		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		vim.lsp.inlay_hint.enable(true)
+		vim.lsp.codelens.enable(true)
 		if client.workspace_folders then
 			local path = client.workspace_folders[1].name
 			if
@@ -34,11 +35,10 @@ return {
 
 	settings = {
 		Lua = {
-
 			workspace = {
 				checkThirdParty = false,
 				library = {
-					-- vim.env.VIMRUNTIME,
+					vim.env.VIMRUNTIME,
 					-- Depending on the usage, you might want to add additional paths here.
 					"${3rd}/luv/library",
 					-- this enables  the busted library

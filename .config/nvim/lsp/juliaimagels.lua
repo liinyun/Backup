@@ -90,6 +90,7 @@ local M = {
 		-- 	complete = "file",
 		-- })
 		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		vim.lsp.codelens.enable(true)
 	end,
 }
 return M

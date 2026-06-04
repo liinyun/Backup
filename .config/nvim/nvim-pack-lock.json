@@ -16,13 +16,13 @@
       "rev": "b650e976a927be6b46487a0a610b75af111376c5",
       "src": "https://github.com/saghen/blink.cmp.git"
     },
-    "codelens_eol.nvim": {
-      "rev": "7727dced8f598f21fef375804f8dba600551b605",
-      "src": "https://github.com/liinyun/codelens_eol.nvim"
-    },
     "conform.nvim": {
       "rev": "e969e302bced7ffb9a0a0323629f31feb0ca35a6",
       "src": "https://github.com/stevearc/conform.nvim.git"
+    },
+    "conjure": {
+      "rev": "f66b3e7f45d325bd556cd785502761e583971920",
+      "src": "https://github.com/Olical/conjure.git"
     },
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
@@ -60,6 +60,14 @@
       "rev": "f65fba733268ffcf9c5b8ac381287eca7c223422",
       "src": "https://github.com/kevinhwang91/nvim-bqf.git"
     },
+    "nvim-dap": {
+      "rev": "45a69eba683a2c448dd9ecfc4de89511f0646b5f",
+      "src": "https://github.com/mfussenegger/nvim-dap.git"
+    },
+    "nvim-dap-view": {
+      "rev": "1dd4ba2307245ca9517a4b9d99f3bf80830e4397",
+      "src": "https://github.com/igorlfs/nvim-dap-view.git"
+    },
     "nvim-highlight-colors": {
       "rev": "e2cb22089cc2358b2b995c09578224f142de6039",
       "src": "https://github.com/brenoprata10/nvim-highlight-colors.git"
@@ -81,8 +89,12 @@
       "src": "https://github.com/windwp/nvim-ts-autotag.git"
     },
     "nvim-web-devicons": {
-      "rev": "737cf6c657898d0c697311d79d361288a1343d50",
+      "rev": "c72328a5494b4502947a022fe69c0c47e53b6aa6",
       "src": "https://github.com/nvim-tree/nvim-web-devicons.git"
+    },
+    "parinfer-rust": {
+      "rev": "845bfbb9916687cba5b6bae088c9eab70dbb83a3",
+      "src": "https://github.com/eraserhd/parinfer-rust.git"
     },
     "persisted.nvim": {
       "rev": "14cc1db0052ea26f2d2d2f1b861845dae58b7ead",
@@ -95,10 +107,6 @@
     "render-markdown.nvim": {
       "rev": "1c958131c083c8557ea499fdb08c88b8afb05c4e",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim.git"
-    },
-    "rustaceanvim": {
-      "rev": "d50597d482a6f44ddfc54d1af2f69f052053b4de",
-      "src": "https://github.com/mrcjkb/rustaceanvim.git"
     },
     "sqls": {
       "rev": "04ed055c93f0e01d246a6d75a3f7c356f532d4ab",
