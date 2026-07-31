@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Reaper
+Comment=Digital Audio Workstation
+Categories=Audio;Video;AudioVideo;AudioVideoEditing;Recorder;
+Exec=reaper
+Icon=/home/linya/opt/reaper_linux_x86_64/REAPER/Resources/main.png
+MimeType=application/x-reaper-project;application/x-reaper-project-backup;application/x-reaper-theme;
+Type=Application

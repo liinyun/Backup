@@ -37,9 +37,9 @@ vim.g["conjure#filetypes"] = {
 	"hy",
 	-- "julia",
 	"racket",
-	"scheme",
+	-- "scheme",
 	-- "lua",
-	"lisp",
+	-- "lisp",
 	-- "python",
 	-- "ruby",
 	-- "rust",
@@ -370,3 +370,9 @@ require("hurl").setup(
 	-- 	{ "<leader>h", ":HurlRunner<CR>", desc = "Hurl Runner", mode = "v" },
 	-- }
 )
+
+-- =================================lean===============================================
+vim.pack.add({
+	{ src = "https://github.com/Julian/lean.nvim" },
+}, { confirm = false })
+require("lean").setup({ mappings = false })

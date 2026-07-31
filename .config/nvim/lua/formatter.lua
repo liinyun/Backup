@@ -11,7 +11,6 @@ vim.pack.add({
 -- 	check_mode = true,
 -- })
 
-
 vim.pack.add({
 	{ src = "https://github.com/stevearc/conform.nvim.git" },
 }, { confirm = false })
@@ -19,19 +18,20 @@ require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		fennel = { "fnlfmt" },
+		hurl = { "hurlfmt" },
 		htmldjango = { "djlint" },
 		html = { "djlint" },
-		-- python = { "isort", "black", stop_after_first = true },
-		python = { "ruff" },
+		julia = { "runic" },
 		javascript = { "prettier", stop_after_first = true },
 		-- jsonc = { "prettierd", "prettier", stop_after_first = true },
 		jsonc = { "biome" },
 		-- htmldjango = { "djlint", "djlint-reformat", "djlint-django", "djlint-reformat-django" }
-		hurl = { "hurlfmt" },
-		julia = { "jlfmt" },
-		toml = { "taplo" },
-		rust = { "rustfmt" },
 		kdl = { "kdlfmt" },
+		ocaml = { "ocamlformat" },
+		-- python = { "isort", "black", stop_after_first = true },
+		python = { "ruff" },
+		rust = { "rustfmt" },
+		toml = { "taplo" },
 		xml = { "xmllint" },
 	},
 	-- Set default options
@@ -68,13 +68,24 @@ require("conform").setup({
 			}, -- "-" tells it to read from stdin
 			stdin = true,
 		},
-		jlfmt = {
-			command = "jlfmt",
-			args = {
-				"-",
-			},
-			stdin = true,
-		},
+		-- ocamlformat = {
+		-- 	prepend_args = {
+		-- 		"--if-then-else",
+		-- 		"vertical",
+		-- 		"--break-cases",
+		-- 		"fit-or-vertical",
+		-- 		"--type-decl",
+		-- 		"sparse",
+		-- 	},
+		-- },
+
+		-- jlfmt = {
+		-- 	command = "jlfmt",
+		-- 	args = {
+		-- 		"-",
+		-- 	},
+		-- 	stdin = true,
+		-- },
 		xml = {
 			command = "xmllint",
 			args = { "--format", "-" },

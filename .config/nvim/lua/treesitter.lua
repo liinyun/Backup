@@ -22,19 +22,22 @@ require("nvim-treesitter").install({
 	"matlab",
 	"markdown_inline",
 	"markdown",
+	"ocaml",
 	"prisma",
-	"svelte",
-	"query",
 	"python",
+	"query",
 	-- "vue",
+	"readline",
 	"rust",
 	"scheme",
+	"svelte",
 	"tsx",
 	"toml",
 	"typescript",
 	-- this is for references file
 	"vim",
 	"yaml",
+	"zathurarc",
 })
 
 local parsers = require("nvim-treesitter.parsers")
@@ -45,6 +48,7 @@ local disable = {
 	["csv"] = true,
 	["dockerfile"] = true,
 	["typst"] = true,
+	-- ["scheme"] = true,
 }
 
 vim.api.nvim_create_autocmd("FileType", {

@@ -47,10 +47,8 @@ vim.api.nvim_set_keymap("n", "J", "<nop>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("n", "L", "$", { noremap = true, silent = true })
 
 -- this two keymaps append my function after the default zo and zc
-vim.api.nvim_set_keymap("n", "zo", "zo:lua UpdateFoldSigns()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "zc", "zc:lua UpdateFoldSigns()<CR>", { noremap = true, silent = true })
-
-vim.keymap.set("n", "yyy", "yy", { noremap = true, silent = true, desc = "Yank current line" })
+-- vim.api.nvim_set_keymap("n", "zo", "zo:lua UpdateFoldSigns()<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "zc", "zc:lua UpdateFoldSigns()<CR>", { noremap = true, silent = true })
 
 -- ==================== plugins ==================== --
 -- neo-tree
@@ -79,7 +77,7 @@ vim.keymap.set("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 -- shortcut to view the source code
 vim.keymap.set("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 -- delete neovim's built-in gd
-vim.keymap.set("n", "gd", "<Nop>")
+-- vim.keymap.set("n", "gd", "<Nop>")
 -- vim.keymap.set("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
 vim.keymap.set("n", "<leader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
 vim.keymap.set("n", "<leader>gr", "<cmd>lua vim.lsp.buf.references()<CR>")

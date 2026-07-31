@@ -40,6 +40,10 @@
       "rev": "5231c62aa83c2f8dc8e7ba957aa77098cda1257d",
       "src": "https://github.com/folke/lazydev.nvim.git"
     },
+    "lean.nvim": {
+      "rev": "fde0d5692edcc0a0cadad77067dfd49a51332236",
+      "src": "https://github.com/Julian/lean.nvim"
+    },
     "lualine.nvim": {
       "rev": "47f91c416daef12db467145e16bed5bbfe00add8",
       "src": "https://github.com/nvim-lualine/lualine.nvim.git"
@@ -67,6 +71,10 @@
     "nvim-dap-view": {
       "rev": "1dd4ba2307245ca9517a4b9d99f3bf80830e4397",
       "src": "https://github.com/igorlfs/nvim-dap-view.git"
+    },
+    "nvim-file-operations": {
+      "rev": "d491d763be6686bbb8eae3b26e8e46e431852c29",
+      "src": "https://github.com/Crysthamus/nvim-file-operations.git"
     },
     "nvim-highlight-colors": {
       "rev": "e2cb22089cc2358b2b995c09578224f142de6039",

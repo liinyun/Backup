@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Mahjong Soul
-Comment=Play this game on Steam
-Exec=steam steam://rungameid/2739990
-Icon=steam_icon_2739990
-Terminal=false
-Type=Application
-Categories=Game;

@@ -4,6 +4,8 @@
 (set vim.g.mapleader " ")
 (set vim.opt.number true)
 (set vim.opt.termguicolors true)
+; (set vim.opt.shiftwidth 2)
+(set vim.opt.tabstop 2)
 
 (require :lsp)
 (require :lang)

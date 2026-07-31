@@ -40,6 +40,7 @@ vim.filetype.add({
 		peggy = "peggyjs",
 		Dockerfile = "dockerfile",
 		-- sps = "r6rs",
+		sls = "scheme",
 	},
 })
 

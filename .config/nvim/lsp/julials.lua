@@ -1,5 +1,4 @@
-local root_files = { "Project.toml", "JuliaProject.toml" }
-local server_path = "/home/linya/.julia/packages/LanguageServer/Fwm1f/src/"
+local server_path = "/home/linya/.julia/environments/v1.12/"
 local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
 
 -- local function activate_env(path)

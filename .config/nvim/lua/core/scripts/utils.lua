@@ -56,11 +56,6 @@ function M.force_switch_to_english()
 		0, -- wParam
 		ENGLISH_US_LAYOUT_ID -- lParam (the desired locale ID)
 	)
-
-	if success == 0 then
-		-- Error handling
-		-- print("Error sending WM_INPUTLANGCHANGEREQUEST.")
-	end
 end
 vim.api.nvim_create_autocmd("InsertLeave", {
 	-- nested = true,

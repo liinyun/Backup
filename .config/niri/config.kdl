@@ -100,12 +100,21 @@ output "eDP-1" {
 }
 output "PNP(NEW) KUXIONG Unknown" {
     mode "1920x1080@60.000"
-    scale 1
+    scale 0.85
+    // scale 1
     transform "normal"
-    position x=-1920 y=0
+    position x=-2260 y=0
+ // position x=-1920 y=0
 }
 // library 创意空间
 output "Lenovo Group Limited L27qe UTP051F7" {
+    mode "2560x1440@59.951"
+    // Using the higher refresh rate available
+    scale 1.07
+    transform "normal"
+    position x=-2400 y=0
+}
+output "Lenovo Group Limited L27qe UTP0519Y" {
     mode "2560x1440@59.951"
     // Using the higher refresh rate available
     scale 1.07
@@ -132,6 +141,12 @@ output "Lenovo Group Limited L27qe UTP051DV" {
     scale 1.07
     transform "normal"
     position x=-2400 y=0
+}
+output "Lenovo Group Limited T24a-20 UTA50490     " {
+    mode "1920x1080@60.000"
+    scale 1.0
+    transform "normal"
+    position x=-2133 y=0
 }
 output "HDMI-A-1" {
     transform "normal"

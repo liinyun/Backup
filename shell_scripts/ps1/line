@@ -302,6 +302,7 @@ function set_default_segments {
         'screen_session_segment  None       Purple'
         'virtual_env_segment     None       Blue'
         'conda_env_segment       None       Blue'
+        'scheme_env_segment      None       Blue'
         'aws_profile_segment     None       Yellow'
         'kubernetes_segment      None       Yellow'
         'path_segment            None       Blue'

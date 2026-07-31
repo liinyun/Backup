@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# schene_env_segment
+
+# Set default symbol for Scheme if not defined
+[[ -z ${PL_SYMBOLS[scheme]} ]] && PL_SYMBOLS[scheme]='λ'
+
+function scheme_env_segment {
+    # it only works in akku package manager, should add more config for other package managers
+    if [[ -n "$AKKU_ENV" || -n "$CHEZSCHEMELIBDIRS" ]] ; then
+        local bg_color="$1"
+        local fg_color="$2"
+        
+        # Get the version from Chez (adjust if your binary is named differently)
+        # Using 'scheme --version' and extracting the last word
+        local scheme_ver=$(scheme --version 2>&1 )
+        
+        local content=" ${PL_SYMBOLS[scheme]} $scheme_ver"
+        
+        PS1+="$(segment_end "$fg_color" "$bg_color")"
+        PS1+="$(segment_content "$fg_color" "$bg_color" "$content ")"
+        __last_color="$bg_color"
+    fi
+}

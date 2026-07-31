@@ -45,14 +45,16 @@ vim.api.nvim_create_autocmd("UIEnter", {
 				"csharpls",
 				"dartls",
 				"fennel",
-				"jetls",
+				-- "jetls",
 				-- "julials",
-				-- "juliaimagels",
+				"juliaimagels",
 				"kotlin_lsp",
 				"luals",
 				"matlabls",
 				"monkeyc",
 				"marksman",
+				"ocaml",
+				"pyrefly",
 				-- "postgres_ls",
 				"ruff",
 				"rust-analyzer",
@@ -64,11 +66,11 @@ vim.api.nvim_create_autocmd("UIEnter", {
 				-- "ty",
 				"volar",
 				"vtsls",
-				"zuban",
+				-- "zuban",
 				-- "zls",
 			})
 
-			vim.lsp.log.set_level(vim.log.levels.WARN) -- INFO, WARN,DEBUG,TRACE,ERROR,OFF
+			vim.lsp.log.set_level(vim.log.levels.WARN) -- DEBUG,ERROR,TINFO,RACE,WARN,OFF
 
 			vim.diagnostic.config({
 				-- virtual_text = { current_line = true },
@@ -108,78 +110,78 @@ vim.api.nvim_create_autocmd("UIEnter", {
 
 -- Create an augroup to manage the autocmds
 local progress_group = vim.api.nvim_create_augroup("UserLspProgress", { clear = true })
---
--- vim.api.nvim_create_autocmd("LspProgress", {
--- 	group = progress_group,
--- 	callback = function(args)
--- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
--- 		if not client then
--- 			return
--- 		end
---
--- 		-- Extract data from the event
--- 		local value = args.data.params.value
--- 		if not value or type(value) ~= "table" then
--- 			return
--- 		end
---
--- 		local client_name = client.name
--- 		local title = value.title or ""
--- 		local message = value.message or ""
--- 		local percentage = value.percentage and (value.percentage .. "%%") or ""
---
--- 		-- Format the message
--- 		local msg = string.format("[%s] %s %s %s", client_name, title, message, percentage)
---
--- 		-- Clean up when finished
--- 		if value.kind == "end" then
--- 			vim.defer_fn(function()
--- 				vim.api.nvim_echo({ { "" } }, false, {})
--- 			end, 2000)
--- 			msg = string.format("[%s] Finished", client_name)
--- 		end
---
--- 		-- Display the message without it being stuck in :messages history
--- 		vim.api.nvim_echo({ { msg, "None" } }, true, {})
--- 	end,
--- })
 
-api.nvim_create_autocmd("LspProgress", {
-	desc = "Display LSP progress in the terminal",
-	callback = function(ev)
-		---@type
-		---| lsp.WorkDoneProgressBegin
-		---| lsp.WorkDoneProgressReport
-		---| lsp.WorkDoneProgressEnd
-		local value = ev.data.params.value
-
-		local name = "ofseed_lsp_progress_clear:" .. ev.data.params.token
-		if value.kind == "begin" then
-			api.nvim_create_autocmd("VimLeave", {
-				desc = "Clear LSP progress on exit",
-				group = api.nvim_create_augroup(name, { clear = true }),
-				callback = function()
-					api.nvim_echo({}, false, {
-						id = "lsp." .. ev.data.params.token,
-						kind = "progress",
-						source = "vim.lsp",
-						title = value.title,
-						status = "cancel",
-					})
-				end,
-			})
-		elseif value.kind == "end" then
-			api.nvim_del_augroup_by_name(name)
+vim.api.nvim_create_autocmd("LspProgress", {
+	group = progress_group,
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if not client then
+			return
 		end
 
-		api.nvim_echo({ { value.message or "done" } }, false, {
-			id = "lsp." .. ev.data.params.token,
-			kind = "progress",
-			source = "vim.lsp",
-			title = value.title,
-			status = value.kind ~= "end" and "running" or "success",
-			percent = value.percentage,
-		})
+		-- Extract data from the event
+		local value = args.data.params.value
+		if not value or type(value) ~= "table" then
+			return
+		end
+
+		local client_name = client.name
+		local title = value.title or ""
+		local message = value.message or ""
+		local percentage = value.percentage and (value.percentage .. "%%") or ""
+
+		-- Format the message
+		local msg = string.format("[%s] %s %s %s", client_name, title, message, percentage)
+
+		-- Clean up when finished
+		if value.kind == "end" then
+			vim.defer_fn(function()
+				vim.api.nvim_echo({ { "" } }, false, {})
+			end, 2000)
+			msg = string.format("[%s] Finished", client_name)
+		end
+
+		-- Display the message without it being stuck in :messages history
+		vim.api.nvim_echo({ { msg, "None" } }, true, {})
 	end,
-	group = progress_group,
 })
+
+-- api.nvim_create_autocmd("LspProgress", {
+-- 	desc = "Display LSP progress in the terminal",
+-- 	callback = function(ev)
+-- 		---@type
+-- 		---| lsp.WorkDoneProgressBegin
+-- 		---| lsp.WorkDoneProgressReport
+-- 		---| lsp.WorkDoneProgressEnd
+-- 		local value = ev.data.params.value
+--
+-- 		local name = "ofseed_lsp_progress_clear:" .. ev.data.params.token
+-- 		if value.kind == "begin" then
+-- 			api.nvim_create_autocmd("VimLeave", {
+-- 				desc = "Clear LSP progress on exit",
+-- 				group = api.nvim_create_augroup(name, { clear = true }),
+-- 				callback = function()
+-- 					api.nvim_echo({}, false, {
+-- 						id = "lsp." .. ev.data.params.token,
+-- 						kind = "progress",
+-- 						source = "vim.lsp",
+-- 						title = value.title,
+-- 						status = "cancel",
+-- 					})
+-- 				end,
+-- 			})
+-- 		elseif value.kind == "end" then
+-- 			api.nvim_del_augroup_by_name(name)
+-- 		end
+--
+-- 		api.nvim_echo({ { value.message or "done" } }, false, {
+-- 			id = "lsp." .. ev.data.params.token,
+-- 			kind = "progress",
+-- 			source = "vim.lsp",
+-- 			title = value.title,
+-- 			status = value.kind ~= "end" and "running" or "success",
+-- 			percent = value.percentage,
+-- 		})
+-- 	end,
+-- 	group = progress_group,
+-- })

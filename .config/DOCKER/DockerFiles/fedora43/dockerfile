@@ -1,0 +1,51 @@
+# This is a Jinja2 compatible Dockerfile template
+# FROM scratch AS builder
+# LABEL maintainer="Clement Verna <cverna@fedoraproject.org>"
+# ENV DISTTAG=f43container FGC=f43 FBR=f43
+# ADD fedora-20260426.tar /
+
+# RUN dnf install -y \
+#     ninja-build cmake gcc gcc-c++ make gettext git curl unzip
+
+# WORKDIR /src
+# RUN git clone https://github.com/neovim/neovim.git
+
+# WORKDIR /src/neovim
+# We target /home/linyun/.local inside the container
+# RUN make CMAKE_BUILD_TYPE=RelWithDebInfo \
+#          CMAKE_INSTALL_PREFIX=/home/linyun/.local \
+#          install
+
+FROM scratch AS final
+LABEL maintainer="Clement Verna <cverna@fedoraproject.org>"
+ENV DISTTAG=f43container FGC=f43 FBR=f43
+ADD fedora-20260426.tar /
+
+# Install only runtime dependencies (libraries Neovim needs to run)
+RUN dnf install -y git python3 nodejs xsel wl-clipboard \
+ninja-build cmake gcc gcc-c++ make gettext git curl unzip cargo && \
+    dnf clean all
+
+# 1. Create the group with a fixed ID
+RUN groupadd -g 1000 lingroup && \
+# 2. Create the user, assign to that group (-g), and set the UID (-u)
+    useradd -u 1000 -g lingroup -m linyun
+
+USER linyun
+WORKDIR /home/linyun/codes
+
+RUN git clone --branch custom https://github.com/liinyun/neovim.git
+
+WORKDIR /home/linyun/codes/neovim
+# We target /home/linyun/.local inside the container
+RUN make CMAKE_BUILD_TYPE=RelWithDebInfo \
+         CMAKE_INSTALL_PREFIX=/home/linyun/.local \
+         install
+
+
+
+# COPY --from=builder /home/linyun/.local /home/linyun/.local
+
+# Update PATH so the shell can find 'nvim'
+ENV PATH="/home/linyun/.local/bin:${PATH}"
+CMD ["/bin/bash"]

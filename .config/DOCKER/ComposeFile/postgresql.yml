@@ -24,10 +24,10 @@ services:
     volumes:
       - /home/linya/codes/data/postgresql/:/var/lib/postgresql
 
-  adminer:
-    image: adminer
-    container_name: adminer
-    # start on computer login
-    restart: always
-    ports:
-      - 8080:8080
+  # adminer:
+  #   image: adminer
+  #   container_name: adminer
+  #   # start on computer login
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
